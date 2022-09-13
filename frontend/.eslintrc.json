@@ -8,8 +8,7 @@
         "plugin:react/recommended",
         "plugin:@typescript-eslint/recommended"
     ],
-    "overrides": [
-    ],
+    "overrides": [],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": "latest",
@@ -19,6 +18,11 @@
         "react",
         "@typescript-eslint"
     ],
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
     "rules": {
         "indent": [
             "error",
@@ -35,6 +39,8 @@
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        //Project is configured so this is unnecessary
+        "react/react-in-jsx-scope": "off"
     }
 }
