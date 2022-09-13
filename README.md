@@ -8,9 +8,22 @@ This project aims to analyse data related to knitting from various sources in or
 ### Requirements
 
 #### Business requirements
+<ins>Fucntional requirements:</ins>
+
+
+<img width="473" alt="image" src="https://user-images.githubusercontent.com/91326398/189893013-f0807602-b5ee-4abb-8aed-b4a8999d9238.png">
+
+<ins>Non-functional requirements:</ins>
+
+
+<img width="472" alt="image" src="https://user-images.githubusercontent.com/91326398/189893147-8314a95c-d14e-4e3d-9f7e-0ef848f7a36d.png">
+
 
 #### Product requirements
 <ins>Functional requirements:</ins> 
+
+<img width="474" alt="image" src="https://user-images.githubusercontent.com/91326398/189893374-5392ea47-73e5-4a0a-bfca-fbed535b4a08.png">
+
 
 
 <ins>Non-functional requirements:</ins>
@@ -23,11 +36,17 @@ This project aims to analyse data related to knitting from various sources in or
 
 
 ### Current solution 
-
+The current solution for the customer is to visit several different sites to identify current trends
+in the knitting community. Sites include among other things Google Trends, hashtags and com-
+petitor analysis on Instagram and Tiktok. Dreamknit also browse different fashion magazines like
+Vogue and Min mote and fashion brands like Holzweiler and Acne Studios. This research is done
+continuously and daily manually by the product owners
 
 
 ### Wanted Solution
 
+
+Usikker på om vi trenger de 3 under
 
 ### Evaluation Criteria 
 
