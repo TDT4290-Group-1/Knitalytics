@@ -5,17 +5,17 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    paths: 
+      -frontend/**
+    # branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
 jobs:
   build:
 
-  frontend: 
     runs-on: ubuntu-latest
-    defaults:
-      run: working-directory: frontend
+    
 
     strategy:
       matrix:
@@ -34,8 +34,3 @@ jobs:
           npm run lint
           npm run test
         
-
-    backend:
-    defaults:
-      run: working-directory: frontend
-
