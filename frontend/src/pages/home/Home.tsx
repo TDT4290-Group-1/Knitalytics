@@ -1,28 +1,15 @@
-import style from "./style/home.module.css";
-
-import logo from "assets/logo.svg";
-
-import { Heading, Text } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
+import ContentBox from "components/ContentBox";
 
 const HomePage = () => {
-	return(
-		<div className={style.container}>
-			<img
-				src={logo}
-				alt={"react-logo"}
-				className={style.logo}
+	return (
+		<ChakraProvider>
+			<ContentBox
+				category="Clothes"
+				statName="Growth"
+				items={[{ name: "Gucci", value: "50%" }, { name: "Gucci2", value: "50kg" }]}
 			/>
-			<Heading>Welcome to react-archi</Heading>
-			<Text fontSize='4xl'>A Typescript + ChakraUI template</Text>
-			<a
-				href="https://github.com/protoxvga/react-clean-architecture"
-				target="_blank"
-				rel="noreferrer"
-				className={style.link}
-			>
-                Documentation
-			</a>
-		</div>
+		</ChakraProvider>
 	);
 };
 
