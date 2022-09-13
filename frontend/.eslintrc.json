@@ -40,7 +40,10 @@
             "error",
             "always"
         ],
-        //Project is configured so this is unnecessary
+        "eol-last": [
+            "error",
+            "always"
+        ],
         "react/react-in-jsx-scope": "off"
     }
 }
