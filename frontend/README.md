@@ -20,6 +20,14 @@ about
 [running tests](https://facebook.github.io/create-react-app/docs/running-tests)
 for more information.
 
+### `npm run lint`
+
+Runs the lint script and shows all errors
+
+### `npm run lint:fix`
+
+Tries to fix all lint errors
+
 ### `npm run build`
 
 Builds the app for production to the `build` folder.<br /> It correctly bundles
