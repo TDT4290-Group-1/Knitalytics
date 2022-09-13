@@ -31,11 +31,11 @@ To apply migrations run
 $ python manage.py migrate
 ```
 
-To create a superuser (Initial admin account) run
+<!-- To create a superuser (Initial admin account) run
 ```bash
 $ python manage.py createsuperuser
 ```
-This account can be used to log in to the admin panel for the first time.
+This account can be used to log in to the admin panel for the first time. -->
 
 If you change or add a model, you have to make and apply migrations. You can do this using
 ```bash
@@ -50,7 +50,7 @@ To run tests run
 $ python manage.py test
 ```
 
-## Fix Formatting
+<!-- ## Fix Formatting
 
 Check if formatting is correct using
 ```bash
@@ -60,7 +60,7 @@ $ black ./ --check
 To fix any formatting errors run
 ```bash
 $ black ./
-```
+``` -->
 
 ## Further Reading
 
