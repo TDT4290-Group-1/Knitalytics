@@ -12,25 +12,24 @@ interface Props {
     items: Item[];
 }
 
-
 const ContentBox: React.FC<Props> = ({ category, statName, items }: Props) => {
 	return (
 		<Flex>
 			<Center>
-				<Flex>
+				<VStack>
 					<HStack>
 						<Heading>{category}</Heading>
 						<Heading>{statName}</Heading>
 					</HStack>
 					<VStack>
 						{items.map((item, index) => {
-							return (<Text>
-                                `${index + 1}`. `${item.name}`
+							return (<Text key={index}>
+								{`${index + 1}. ${item.name}`}
 							</Text>);
 						}
 						)};
 					</VStack>
-				</Flex>
+				</VStack>
 			</Center>
 		</Flex>
 	);
