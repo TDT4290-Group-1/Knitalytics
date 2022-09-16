@@ -3,9 +3,9 @@ import ContentBox from "components/ContentBox";
 const HomePage = () => {
 	return (
 		<ContentBox
-			category="Clothes"
+			category="Word"
 			statName="Growth"
-			items={[{ name: "Gucci", value: "50%" }, { name: "Gucci2", value: "50kg" }]}
+			items={[{ name: "American dream", value: "50%" }, { name: "Irish wool", value: "10%" }]}
 		/>
 	);
 };
