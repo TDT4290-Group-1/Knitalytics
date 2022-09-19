@@ -1,16 +1,17 @@
 import { extendTheme } from "@chakra-ui/react";
-import "@fontsource/playfair-display";
   
-const theme = extendTheme(
-	{
-		colors: {
-			mediumGrey:"#D9D9D9",
-		},
-		fonts: {
-			heading: "'Playfair Display'",
-			body: "'Playfair Display'",
-		}
+const theme = extendTheme({
+	colors: {
+		feather: "#77C9D4",
+		marine: "#57BC90",
+		forest: "#015249",
+		sleekgrey:"#A5A5AF",
 	},
+	fonts: {
+		heading: "'Nunito', 'sans-serif'",
+		body: "'Nunito', 'sans-serif'",
+	}
+},
 );
 
 export default theme;
