@@ -1,9 +1,8 @@
-from typing import List
 import json
+from typing import List
 from flask import Flask
 from api.DataCollectorInterface import DataCollector
 from api.GoogleTrendsDataCollector import GoogleTrendsDataCollector
-from models.trending_word import TrendingWord
 
 app = Flask(__name__)
 
@@ -14,12 +13,12 @@ def add_data_collector(data_collector: DataCollector):
     data_collectors.append(data_collector)
 
 
-
-@app.route('/')
+@app.route("/")
 def hello_world():
-    return 'Hello, World!'
+    return "Hello, World!"
 
-@app.route('/getTrendingWords')
+
+@app.route("/getTrendingWords")
 def getTrendingWords():
     googleCollector = GoogleTrendsDataCollector()
     print("jhk")
@@ -32,7 +31,7 @@ def getTrendingWords():
     return json.dumps(all_trending_words_as_JSON)
 
 
-if __name__ == '__app__':
+if __name__ == "__app__":
     googleCollector = GoogleTrendsDataCollector()
     print("jhk")
     add_data_collector(googleCollector)
