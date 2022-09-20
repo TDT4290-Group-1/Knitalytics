@@ -5,7 +5,7 @@ const HomePage = () => {
 		<ContentBox
 			category="Word"
 			statName="Growth"
-			items={[{ name: "American dream", value: "50%" }, { name: "Irish wool", value: "10%" }]}
+			items={[{ name: "American dream", value: "50%", value2: "1023 søk" }, { name: "Irish wool", value: "10%", value2: "543 søk" }]}
 		/>
 	);
 };
