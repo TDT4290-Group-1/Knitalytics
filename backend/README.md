@@ -1,6 +1,6 @@
 # [Knitalytics](../README.md) > Backend
 
-This folder the Knitalytics backend. Implemented using Django. Endpoints are outlined [here](./ENDPOINTS.md).
+This folder is for the Knitalytics backend. Implemented using Flask. Endpoints are outlined [here](./ENDPOINTS.md).
 
 ## Getting Started
 
@@ -17,13 +17,14 @@ If running Windows use `venv\bin\activate` instead of `source venv/bin/activate`
 
 ```bash
 $ source venv/bin/activate
-$ python manage.py runserver
+$ flask run
 ```
 
 If running Windows use `venv\bin\activate` instead of `source venv/bin/activate`. Remember to activate 
 
-This will launch the app at [http://localhost:8000](http://localhost:8000). Django admin panel available at [http://localhost:8000/admin](http://localhost:8000/admin).
+This will launch the app at [http://localhost:5000](http://localhost:5000). 
 
+<!-- 
 ## Migrations
 
 To apply migrations run
@@ -31,25 +32,25 @@ To apply migrations run
 $ python manage.py migrate
 ```
 
-<!-- To create a superuser (Initial admin account) run
+To create a superuser (Initial admin account) run
 ```bash
 $ python manage.py createsuperuser
 ```
-This account can be used to log in to the admin panel for the first time. -->
+This account can be used to log in to the admin panel for the first time. 
 
 If you change or add a model, you have to make and apply migrations. You can do this using
 ```bash
 $ python manage.py makemigrations
 $ python manage.py migrate
 ```
+-->
 
 ## Run tests
-
 To run tests run
 ```bash
-$ python manage.py test
+$ pytest
 ```
-
+This will execute all tests in all files whose names follow the form test_*.py or \*_test.py in the current directory and its subdirectories.
 ## Fix Formatting
 
 Check if formatting is correct using
@@ -64,5 +65,6 @@ $ black ./
 
 ## Further Reading
 
- - [Django](https://www.djangoproject.com/start/)
- - [Django Testing](https://docs.djangoproject.com/en/3.1/topics/testing/overview/)
+ - [Flask](https://flask.palletsprojects.com/en/2.2.x/)
+ - [Flask testing with pytest](https://flask.palletsprojects.com/en/2.2.x/testing/)
+ - [Pytest](https://docs.pytest.org/en/7.1.x/)
