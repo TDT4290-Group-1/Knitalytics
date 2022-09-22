@@ -1,5 +1,6 @@
+from app import create_app
 import pytest
-from my_project import create_app
+
 
 @pytest.fixture()
 def app():

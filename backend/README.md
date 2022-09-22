@@ -8,7 +8,7 @@ Set up environment
 ```bash
 $ python3 -m venv venv
 $ source venv/bin/activate
-$ pip install -r requirements.txt
+$ pip3 install -r requirements.txt
 ```
 
 If running Windows use `venv\bin\activate` instead of `source venv/bin/activate`. Remember to apply migrations. If you do not apply migrations a warning will be displayed when starting the application.
@@ -17,7 +17,7 @@ If running Windows use `venv\bin\activate` instead of `source venv/bin/activate`
 
 ```bash
 $ source venv/bin/activate
-$ flask run
+$ python3 -m flask run
 ```
 
 If running Windows use `venv\bin\activate` instead of `source venv/bin/activate`. Remember to activate 
@@ -48,7 +48,7 @@ $ python manage.py migrate
 ## Run tests
 To run tests run
 ```bash
-$ pytest
+$ python3 -m pytest
 ```
 This will execute all tests in all files whose names follow the form test_*.py or \*_test.py in the current directory and its subdirectories.
 ## Fix Formatting

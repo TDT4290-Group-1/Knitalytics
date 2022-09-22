@@ -5,7 +5,7 @@
 
 Server front page, may be changed later. Returns currently a blank page with "hello world"
 
-## GET /getTrendingWords/
+## GET /api/v1/trends/
 
 Returns a list of all trending words from the differant data collectors.
 
