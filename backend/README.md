@@ -51,6 +51,19 @@ To run tests run
 $ python3 -m pytest
 ```
 This will execute all tests in all files whose names follow the form test_*.py or \*_test.py in the current directory and its subdirectories.
+
+### View test coverage
+```bash
+$ python3 -m coverage run -m pytest
+$ python3 -m coverage report
+```
+To view test coverage in browser as html file:
+
+```bash
+$ python3 -m coverage html
+```
+
+
 ## Fix Formatting
 
 Check if formatting is correct using
