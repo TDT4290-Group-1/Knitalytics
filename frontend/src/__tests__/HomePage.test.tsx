@@ -4,8 +4,8 @@ import { render, screen } from "@testing-library/react";
 
 import HomePage from "pages/home/";
 
-test("Renders Documentation link", () => {
+test("Renders Words link", () => {
 	render(<HomePage />);
-	const linkElement = screen.getByText(/Documentation/i);
+	const linkElement = screen.getByText(/Word/i);
 	expect(linkElement).toBeInTheDocument();
 });
