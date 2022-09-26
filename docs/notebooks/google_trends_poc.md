@@ -22,55 +22,93 @@ from pytrends import request
 
 ## PyTrends
 
+
+PyTrends usage is documented on [GitHub](https://github.com/GeneralMills/pytrends). 
+
+
+### Communicating with Google
+We create a client using the `TrendReq`-class that communicates with Google. There are two parameters:
+
+* `hl`: query language. Typically "en-US"
+* `tz`: UTC timezone difference. Oslo is +2, i.e. 120 minutes
+
 ```python
 pytrends_client = request.TrendReq(hl="en-US", tz=120)
 ```
 
-```python
-kw_list = ["/m/047fr"] #keywords to get data for
-```
+All remaining method calls are made using our `pytrends_client`.
+
+
+### Get Trends data
+We can specify keywords to get trends data for. The keywords can either be raw search terms, or specific topics. 
+
+
+#### Topic encoding
+The topics are encoded by Google. We can use PyTrends to get a likely encoding for the topic we're looking for.
 
 ```python
+# get suggested encodings
 pytrends_client.suggestions(keyword="Knitting")
 ```
 
+We see that `"Knitting"` corresponds to encoding `"/m/047fr"`.
+
 ```python
+# create list of keywords to get data for
+kw_list = ["/m/047fr"]
+```
+
+#### Build the payload
+The payload must be correctly formatted to be accepted by the API. Important parameters include:
+
+* `geo`: location to get search data for, e.g. `"NO"` for Norway
+* `timeframe`: the timeframe of the data. Valid values are explained in the [documentation](https://github.com/GeneralMills/pytrends#common-api-parameters).
+
+```python
+# We get the search data for topic "Knittin" in Norway for the last day
 pytrends_client.build_payload(kw_list, geo="NO", timeframe="now 1-d")
 ```
 
+<!-- #region -->
+#### Get data
+The two most relevant API-methods are
+
+* `related_topics()`: get related topics information
+* `related_queries()`: get related queries information
+
+Both methods return a dictionary on the format
+
 ```python
-pytrends_client.related_topics()
+{"keyword": {"rising": DataFrame, "top":, DataFrame}}
+```
+
+* `"rising"`: change in search popularity in timeframe 
+* `"top"`: absolute search popularity in timeframe
+
+Both categories rank the terms according to the metric.
+<!-- #endregion -->
+
+```python
+related_topics = pytrends_client.related_topics()["/m/047fr"]
+related_queries = pytrends_client.related_queries()["/m/047fr"]
 ```
 
 ```python
-pytrends_client.related_queries()
-```
-
-## URL string converter
-
-```python
-parsed_url = parse.urlparse(valid_string)
+related_topics["top"].head()
 ```
 
 ```python
-query_params = {}
-for query_param in parsed_url.query.split('&'):
-    query_param_lst = query_param.split('=')
-    query_params[query_param_lst[0]] = query_param_lst[1]
+related_queries["top"].head()
 ```
 
-```python
-query_params['req'] = json.loads(parse.unquote(query_params['req']))
-```
-
-```python
-query_params
-```
-
-### `req` object
-This object places restrictions on the search. An example is outlined below.
+## Appendix
 
 <!-- #region -->
+### `req` object
+This object places restrictions on the search, and is the most complicated to fit the valid format of Trends URIs.
+
+The object is generated automatically by `PyTrends`, but an example is provided here for reference.
+
 ```python
 {
     "restriction":
@@ -112,66 +150,3 @@ This object places restrictions on the search. An example is outlined below.
 }
 ```
 <!-- #endregion -->
-
-The parameters are the following:
-
-* geo: region to search
-* time: time-based search range for query
-
-
-## Parameter constants
-
-
-## Build request
-
-```python
-request_string = ""
-```
-
-### URI
-
-```python
-uri = f"{parsed_url.scheme}://{parsed_url.netloc}{parsed_url.path}"
-print(uri)
-```
-
-```python
-request_string += uri
-print(request_string)
-```
-
-## Query
-
-```python
-safe_quote = "/:,+-"
-```
-
-```python
-query = "?"
-for param,val in query_params.items():
-    query += f"{param}={json.dumps(val)}&"
-query = query[:-1] # drop final &
-```
-
-#### `time`:  timerange to retrieve
-
-```python
-time_fmt = "%Y-%m-%dT%H\\:%M\\:%S"
-end_time = datetime.datetime.now() - datetime.timedelta(minutes=-int(tz))
-start_time = end_time - datetime.timedelta(days=7)
-
-compare_end_time = start_time
-compare_start_time = start_time - datetime.timedelta(days=7)
-
-# place in request
-req["restriction"]["time"] = f"{start_time.strftime(time_fmt)}+{end_time.strftime(time_fmt)}"
-req["trendinessSettings"]["compareTime"] = f"{compare_start_time.strftime(time_fmt)}+{compare_end_time.strftime(time_fmt)}"
-```
-
-## Retrieve data
-
-```python
-r = requests.get(quoted_request_string)
-```
-
-
