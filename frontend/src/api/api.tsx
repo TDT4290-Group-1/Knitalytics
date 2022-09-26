@@ -12,7 +12,7 @@ class API {
 	/**
      * @returns All existing ads
      */
-	async getAllTrendingWords():Promise<TrendingWord> {
+	async getAllTrendingWords():Promise<TrendingWord[]> {
 		console.log("khjkjk");
 		const response = await client.get("/api/v1/trends");
 		//  await fetch("/api/v1/trends").then((response) => {

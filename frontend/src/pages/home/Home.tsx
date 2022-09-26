@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 
 const HomePage = () => {
 
-	const [trendingWords, setTrendingWords] = useState<TrendingWord>();
+	const [trendingWords, setTrendingWords] = useState<TrendingWord[]>();
 
 
 	useEffect(() => {
@@ -13,7 +13,7 @@ const HomePage = () => {
 		API.getAllTrendingWords().then((trendingWords) => {
 			console.log("TRJKBJJKHB", trendingWords);
 		
-			setTrendingWords(trendingWords as TrendingWord,);
+			setTrendingWords(trendingWords as TrendingWord[],);
 		});
 		// setTrendingWords(API.getAllTrendingWords());
 
@@ -26,7 +26,7 @@ const HomePage = () => {
 		<ContentBox
 			category="Word"
 			statName="Growth"
-			items={[trendingWords]}
+			items={trendingWords}
 		/>}
 		</>
 	);

@@ -10,7 +10,6 @@ from flask_cors import CORS
 
 
 def create_app():
-    app = Flask(__name__)
 
     # bør definere api linker slikt
     # @app.route("/api/v1/trends/<string:keyword>")
@@ -38,16 +37,15 @@ def create_app():
         add_data_collector(googleCollector)
         all_trending_words: List[TrendingWord] = []
 
-        # for data_collector in data_collectors:
-        #     for trending_word in data_collector.get_trending_words():
-        #         # print(trending_word.strip())
-        #         # print("KKKK", trending_word)
-        #         # print("KKKK", trending_word.frequency_growth)
-        #         # print("KKKK", trending_word.search_count)
-        #         # print(trending_word.to_json())
-        #         all_trending_words_as_JSON.append(trending_word)
-        #         # print(all_trending_words_as_JSON)
-        # return json.dumps(all_trending_words_as_JSON)
+# TODO: FIX THIS
+        for data_collector in data_collectors:
+            for trending_word in data_collector.get_trending_words():
+                # print(trending_word.to_json())
+                print(trending_word.to_)
+                all_trending_words.append(trending_word)
+                # print(all_trending_words_as_JSON)
+        print("HEER")
+        print(all_trending_words)
         return data_collectors[0].get_trending_words()
 
     if __name__ == "__app__":
