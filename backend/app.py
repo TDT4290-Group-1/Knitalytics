@@ -36,15 +36,17 @@ def create_app():
         add_data_collector(googleCollector)
         all_trending_words_as_JSON: List[str] = []
 
-        for data_collector in data_collectors:
-            for trending_word in data_collector.get_trending_words():
-                # print(trending_word.strip())
-                # print("KKKK", trending_word)
-                # print("KKKK", trending_word.frequency_growth)
-                # print("KKKK", trending_word.search_count)
-                all_trending_words_as_JSON.append(trending_word.toJSON())
-                # print(all_trending_words_as_JSON)
-        return json.dumps(all_trending_words_as_JSON)
+        # for data_collector in data_collectors:
+        #     for trending_word in data_collector.get_trending_words():
+        #         # print(trending_word.strip())
+        #         # print("KKKK", trending_word)
+        #         # print("KKKK", trending_word.frequency_growth)
+        #         # print("KKKK", trending_word.search_count)
+        #         # print(trending_word.to_json())
+        #         all_trending_words_as_JSON.append(trending_word)
+        #         # print(all_trending_words_as_JSON)
+        # return json.dumps(all_trending_words_as_JSON)
+        return data_collectors[0].get_trending_words()
 
 
     if __name__ == "__app__":
