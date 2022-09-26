@@ -3,20 +3,23 @@ import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, Switch, HStack
 import { TiSortNumerically } from "react-icons/ti";
 import { BsPercent } from "react-icons/bs";
 import theme from "theme";
+import { TrendingWord } from "../../models/trendingword";
 
-interface Item {
-    name: string;
-    value: string;
-	value2: string;
-}
+// interface Item {
+//     name: string;
+//     value: string;
+// 	value2: string;
+// }
 
 interface Props {
     category: string;
     statName: string;
-    items: Item[];
+    items: TrendingWord[];
 }
 
 const ContentBox: React.FC<Props> = ({ category, statName, items }: Props) => {
+
+	console.log("HJEHJEH", items);
 	const [toggle, setToggle] = useState(false);
 
 	function toggleSwitch() {
@@ -43,10 +46,10 @@ const ContentBox: React.FC<Props> = ({ category, statName, items }: Props) => {
 					<Tbody>
 						{items.map((item, index) => {
 							return (<Tr key={index}>
-								<Td fontSize="3xl" p="20px">{`${index + 1}. ${item.name}`}</Td>
+								<Td fontSize="3xl" p="20px">{`${index + 1}. ${item.word}`}</Td>
 								{ toggle ? 
-									<Td fontSize="3xl" p="20px">{`${item.value2}`}</Td> :
-									<Td fontSize="3xl" p="20px">{`${item.value}`}</Td>
+									<Td fontSize="3xl" p="20px">{item.frequency_growth}</Td> :
+									<Td fontSize="3xl" p="20px">{item.search_count}</Td>
 								}
 							</Tr>);})}
 					</Tbody>

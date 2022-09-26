@@ -5,25 +5,30 @@ import { useState, useEffect } from "react";
 
 const HomePage = () => {
 
-	const [trendingWords, setTrendingWords] = useState<TrendingWord[]>([]);
+	const [trendingWords, setTrendingWords] = useState<TrendingWord>();
 
-console.log(trendingWords)
 
 	useEffect(() => {
-		console.log("Jhjkj")
+		console.log("Jhjkj");
 		API.getAllTrendingWords().then((trendingWords) => {
-			setTrendingWords(trendingWords);
+			console.log("TRJKBJJKHB", trendingWords);
+		
+			setTrendingWords(trendingWords as TrendingWord,);
 		});
+		// setTrendingWords(API.getAllTrendingWords());
 
-	});
-
+	},[]);
+	console.log("qqq",trendingWords);
 
 	return (
+		<>
+			{trendingWords && 
 		<ContentBox
 			category="Word"
 			statName="Growth"
-			items={[{ name: "JK", value: "JK", value2: "JKl" }, { name: "Irish wool", value: "10%", value2: "543 søk" }]}
-		/>
+			items={[trendingWords]}
+		/>}
+		</>
 	);
 };
 

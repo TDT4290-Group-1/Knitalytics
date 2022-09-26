@@ -19,6 +19,6 @@ class DataCollector:
 
     
     #Method used by the endpoint to get the trending words. Returns a list of TrendingWord objects.
-    def get_trending_words(self) -> str:
+    def get_trending_words(self) -> List[TrendingWord]:
 
         pass
