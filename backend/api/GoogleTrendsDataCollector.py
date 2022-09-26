@@ -21,17 +21,7 @@ class GoogleTrendsDataCollector(DataCollector):
 
     #Method used to process the raw data of trending words. Returns a list of TrendingWord objects from the given data frames.
     def __process_trending_word_data__(self, data_frame: DataFrame) -> List[TrendingWord]:
-        trending_words: List[TrendingWord] = []
-
-        for row in data_frame.itertuples():
-            print("JJ", row.word, float(row.frequency_growth), int(row.search_count))
-            ol = TrendingWord(row.word, float(row.frequency_growth), int(row.search_count))
-            print("JKHBK", ol.word, ol.frequency_growth, ol.search_count)
-            trending_words.append(
-                TrendingWord(row.word, float(row.frequency_growth), int(row.search_count))
-            )
-
-        return trending_words
+            return data_frame.to_json(orient='records')
 
     #Method used by the endpoint to get the trending words. Returns a list of TrendingWord objects.
     def get_trending_words(self) -> List[TrendingWord]:
