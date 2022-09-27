@@ -1,12 +1,14 @@
+import { Heading, Center } from "@chakra-ui/react";
 import ContentBox from "components/ContentBox";
 import SideBar from "components/SideBar";
 
 const HomePage = () => {
 	return (
 		<div>
-			<SideBar
-			
-			/>
+			<SideBar/>
+			<Center>
+				<Heading>Trending Words</Heading>
+			</Center>
 			<ContentBox
 				category="Word"
 				statName="Growth"
