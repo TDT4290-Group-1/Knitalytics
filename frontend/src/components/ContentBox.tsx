@@ -26,6 +26,8 @@ const ContentBox: React.FC<Props> = ({ category, statName, items }: Props) => {
 		setToggle(!toggle);
 	}
 
+
+
 	return (
 		<Center>
 			<TableContainer w="60vw" p="20px" bg="sleekgrey">
@@ -44,12 +46,13 @@ const ContentBox: React.FC<Props> = ({ category, statName, items }: Props) => {
 						</Tr>
 					</Thead>
 					<Tbody>
-						{items.map((item, index) => {
+				
+						{items.sort((o1, o2) => toggle ? (o1.frequency_growth<o2.frequency_growth ? 1 : -1) : ( o1.search_count<o2.search_count ? 1:-1)).map((item, index) => {
 							return (<Tr key={index}>
 								<Td fontSize="3xl" p="20px">{`${index + 1}. ${item.word}`}</Td>
 								{ toggle ? 
-									<Td fontSize="3xl" p="20px">{item.frequency_growth}</Td> :
-									<Td fontSize="3xl" p="20px">{item.search_count}</Td>
+									<Td fontSize="3xl" p="20px">{item.frequency_growth}</Td>:
+									<Td fontSize="3xl" p="20px">{item.search_count}</Td> 
 								}
 							</Tr>);})}
 					</Tbody>
