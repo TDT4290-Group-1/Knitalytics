@@ -6,12 +6,12 @@ from api.DataCollectorInterface import DataCollector
 from pandas import DataFrame
 
 raw_data = """word;frequency_growth;search_count
-American dreams;5.4;1100
-New knit sweater;3.4;90
-Blabla;6.4;19"""
+Australian dreams;1.4;1000
+Old knit sweater;3.4;100
+asdsad;9.4;10"""
 
 
-class GoogleTrendsDataCollector(DataCollector):
+class MetaDataCollector(DataCollector):
     # Method use to collect raw data of trending words. Returns a pandas DataFrame of the raw data.
     def __collect_trending_word_data__(self, data: str) -> DataFrame:
         dataframe = pd.read_csv(
