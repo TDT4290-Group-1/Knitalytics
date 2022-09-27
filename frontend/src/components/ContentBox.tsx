@@ -5,11 +5,6 @@ import { BsPercent } from "react-icons/bs";
 import theme from "theme";
 import { TrendingWord } from "../../models/trendingword";
 
-// interface Item {
-//     name: string;
-//     value: string;
-// 	value2: string;
-// }
 
 interface Props {
     category: string;
