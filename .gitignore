@@ -4,8 +4,8 @@
 
 ###FRONTEND
 
-# dependencies
-/node_modules
+# Node.js
+node_modules/
 /.pnp
 .pnp.js
 
