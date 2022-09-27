@@ -20,12 +20,12 @@ const HomePage = () => {
 
 	return (
 		<>
-			{trendingWords && 
-		<ContentBox
-			category="Word"
-			statName="Growth"
-			items={trendingWords}
-		/>}
+			{trendingWords ?
+				<ContentBox
+					category="Word"
+					statName="Growth"
+					items={trendingWords}
+				/> : <div>loading</div>}
 		</>
 	);
 };
