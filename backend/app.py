@@ -1,3 +1,4 @@
+
 from typing import List
 from models.trending_word import TrendingWord
 from flask import Flask
@@ -36,8 +37,10 @@ def create_app():
         trending_words_dataframes: List[DataFrame] = []
         googleCollector = GoogleTrendsDataCollector()
         metaCollector = MetaDataCollector()
-        add_dataframe_from_collector(trending_words_dataframes, googleCollector)
-        add_dataframe_from_collector(trending_words_dataframes, metaCollector)
+        add_dataframe_from_collector(
+            trending_words_dataframes, googleCollector)
+        add_dataframe_from_collector(
+            trending_words_dataframes, metaCollector)
 
         main_data_frame = pd.concat(trending_words_dataframes)
 
@@ -46,6 +49,4 @@ def create_app():
     return app
 
 
-
 app = create_app()
-
