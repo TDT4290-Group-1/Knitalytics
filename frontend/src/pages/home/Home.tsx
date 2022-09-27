@@ -19,6 +19,7 @@ const HomePage = () => {
 
 	},[]);
 
+	console.log(trendingWords);
 
 	return (
 		<>
