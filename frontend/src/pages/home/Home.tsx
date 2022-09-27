@@ -1,4 +1,6 @@
+import { Heading, Center } from "@chakra-ui/react";
 import ContentBox from "components/ContentBox";
+import SideBar from "components/SideBar";
 import  API  from "api/api";
 import {TrendingWord} from "../../../models/trendingword";
 import { useState, useEffect } from "react";
@@ -17,9 +19,14 @@ const HomePage = () => {
 
 	},[]);
 
+	console.log(trendingWords);
 
 	return (
 		<>
+			<SideBar/>
+			<Center>
+				<Heading>Trending Words</Heading>
+			</Center>
 			{trendingWords ?
 				<ContentBox
 					category="Word"
