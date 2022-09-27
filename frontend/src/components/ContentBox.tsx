@@ -25,7 +25,7 @@ const ContentBox: React.FC<Props> = ({ category, statName, items }: Props) => {
 
 	return (
 		<Center>
-			<TableContainer w="60vw" p="20px">
+			<TableContainer w="60vw" p="50px">
 				<Table variant='unstyled'>
 					<Thead>
 						<Tr borderBottom="2px" w="90%">
