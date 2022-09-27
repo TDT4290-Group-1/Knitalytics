@@ -1,12 +1,16 @@
-import json
+
 from typing import List
+from models.trending_word import TrendingWord
 from flask import Flask
 from api.DataCollectorInterface import DataCollector
 from api.GoogleTrendsDataCollector import GoogleTrendsDataCollector
+from api.MetaDataCollector import MetaDataCollector
+from flask_cors import CORS
+import pandas as pd
+from pandas import DataFrame
 
 
 def create_app():
-    app = Flask(__name__)
 
     # bør definere api linker slikt
     # @app.route("/api/v1/trends/<string:keyword>")
@@ -16,11 +20,13 @@ def create_app():
     #     return json.dumps(data)
 
     app = Flask(__name__)
+    CORS(app)
+    app.config["CORS_HEADERS"] = "Content-Type"
 
-    data_collectors: List[DataCollector] = []
-
-    def add_data_collector(data_collector: DataCollector):
-        data_collectors.append(data_collector)
+    def add_dataframe_from_collector(
+        trending_words_dataframes: List[DataFrame], data_collector: DataCollector
+    ):
+        trending_words_dataframes.append(data_collector.get_trending_words())
 
     @app.route("/")
     def hello_world():
@@ -28,20 +34,19 @@ def create_app():
 
     @app.route("/api/v1/trends")
     def getTrendingWords():
+        trending_words_dataframes: List[DataFrame] = []
         googleCollector = GoogleTrendsDataCollector()
-        print("jhk")
-        add_data_collector(googleCollector)
-        all_trending_words_as_JSON: List[str] = []
+        metaCollector = MetaDataCollector()
+        add_dataframe_from_collector(
+            trending_words_dataframes, googleCollector)
+        add_dataframe_from_collector(
+            trending_words_dataframes, metaCollector)
 
-        for data_collector in data_collectors:
-            for trending_word in data_collector.get_trending_words():
-                all_trending_words_as_JSON.append(trending_word.toJSON())
-        return json.dumps(all_trending_words_as_JSON)
+        main_data_frame = pd.concat(trending_words_dataframes)
 
-    if __name__ == "__app__":
-        googleCollector = GoogleTrendsDataCollector()
-        print("jhk")
-        add_data_collector(googleCollector)
+        return main_data_frame.to_json(orient="records")
+
+    return app
 
 
 app = create_app()

@@ -1,17 +1,15 @@
 from app import create_app
 import pytest
-import sys
-import os
+from flask import Flask
 
 
 @pytest.fixture()
 def app():
     app = create_app()
-    app.config.update(
-        {
-            "TESTING": True,
-        }
-    )
+    app.config.update({
+        "TESTING": True,
+    })
+
     # other setup can go here
 
     yield app
