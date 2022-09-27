@@ -47,9 +47,4 @@ def create_app():
     return app
 
 
-<< << << < HEAD: backend/__init__.py
 app = create_app()
-== == == =
-
-app = create_app()
->>>>>> > 8-connect-frontend-to-backend-api: backend/app.py
