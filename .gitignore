@@ -1,3 +1,7 @@
+# Jupyter notebooks
+*.ipynb
+.DS_Store
+
 ###FRONTEND
 
 # dependencies
