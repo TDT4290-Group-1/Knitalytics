@@ -13,13 +13,10 @@ class API {
      * @returns All existing ads
      */
 	async getAllTrendingWords():Promise<TrendingWord[]> {
-		console.log("khjkjk");
 		const response = await client.get("/api/v1/trends");
 		//  await fetch("/api/v1/trends").then((response) => {
 		// 	console.log(response);
 		// 	response.json().then((data) => {
-		// 		console.log("KAVU");
-		// 		console.log(data);
 		// 	}).catch((error) => {console.log(error);});
 		// });
 		return response.data;

@@ -9,16 +9,14 @@ const HomePage = () => {
 
 
 	useEffect(() => {
-		console.log("Jhjkj");
 		API.getAllTrendingWords().then((trendingWords) => {
-			console.log("TRJKBJJKHB", trendingWords);
 		
 			setTrendingWords(trendingWords as TrendingWord[],);
 		});
 		// setTrendingWords(API.getAllTrendingWords());
 
 	},[]);
-	console.log("qqq",trendingWords);
+
 
 	return (
 		<>
