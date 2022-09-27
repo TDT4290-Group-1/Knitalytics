@@ -7,6 +7,8 @@ from api.GoogleTrendsDataCollector import GoogleTrendsDataCollector
 import html
 import os
 from flask_cors import CORS
+import pandas as pd
+from pandas import DataFrame
 
 
 def create_app():
@@ -20,11 +22,12 @@ def create_app():
 
     app = Flask(__name__)
     CORS(app)
+    app.config['CORS_HEADERS'] = 'Content-Type'
 
-    data_collectors: List[DataCollector] = []
+    trending_words_dataframes: List[DataFrame] = []
 
-    def add_data_collector(data_collector: DataCollector):
-        data_collectors.append(data_collector)
+    def add_dataframe_from_collector(data_collector: DataCollector):
+        trending_words_dataframes.append(data_collector.get_trending_words())
 
     @app.route("/")
     def hello_world():
@@ -34,24 +37,16 @@ def create_app():
     def getTrendingWords():
         googleCollector = GoogleTrendsDataCollector()
         print("jhk")
-        add_data_collector(googleCollector)
-        all_trending_words: List[TrendingWord] = []
+        add_dataframe_from_collector(googleCollector)
 
-# TODO: FIX THIS
-        for data_collector in data_collectors:
-            for trending_word in data_collector.get_trending_words():
-                # print(trending_word.to_json())
-                print(trending_word.to_)
-                all_trending_words.append(trending_word)
-                # print(all_trending_words_as_JSON)
-        print("HEER")
-        print(all_trending_words)
-        return data_collectors[0].get_trending_words()
+        main_data_frame = pd.concat(trending_words_dataframes)
+
+        return main_data_frame.to_json(orient='records')
 
     if __name__ == "__app__":
         googleCollector = GoogleTrendsDataCollector()
         print("jhk")
-        add_data_collector(googleCollector)
+        # add_data_collector(googleCollector)
 
     return app
 
