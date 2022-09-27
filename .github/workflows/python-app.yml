@@ -5,7 +5,7 @@ name: Python application
 
 on:
   push:
-    branches: [ "main", "39-backend-pipeline-fix" ]
+    branches: [ "main"]
   pull_request:
     branches: [ "main" ]
 
