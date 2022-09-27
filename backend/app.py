@@ -7,6 +7,10 @@ from api.MetaDataCollector import MetaDataCollector
 from flask_cors import CORS
 import pandas as pd
 from pandas import DataFrame
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def create_app():
@@ -43,6 +47,15 @@ def create_app():
 
         return main_data_frame.to_json(orient="records")
 
+    @app.route("/api/v1/hashtag")
+    def getTrendingHashtag():
+        metaCollector = MetaDataCollector(
+            os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
+        )
+
+        return metaCollector.get_trending_words()
+
     return app
 
-app=create_app()
+
+app = create_app()
