@@ -24,13 +24,13 @@ const ContentBox: React.FC<Props> = ({ category, statName, items }: Props) => {
 	return (
 		<Center>
 			
-			<TableContainer w="35vw" >
+			<TableContainer >
 				<Table variant='simple' color={theme.colors.forest}>
 					<Thead>
 					
 						<Tr borderBottom="2px" color={theme.colors.forest}>
-							<Th  fontSize="xl">{category}</Th>
-							<Th fontSize="xl" isNumeric>{statName}
+							<Th  fontSize="l">{category}</Th>
+							<Th fontSize="l" isNumeric>{statName}
 								<HStack justifyContent="flex-end" marginTop={"4%"}>
 									<BsPercent size="18px" color={theme.colors.forest}/>
 									<Switch size='md' onChange={toggleSwitch} colorScheme={theme.colors.forest}/>
@@ -46,8 +46,8 @@ const ContentBox: React.FC<Props> = ({ category, statName, items }: Props) => {
 							return (<Tr key={index}>
 								<Td fontSize="xl" >{`${index + 1}. ${item.word}`}</Td>
 								{ toggle ? 
-									<Td fontSize="xl"  isNumeric>{item.frequency_growth}</Td>:
-									<Td fontSize="xl" isNumeric>{item.search_count}</Td> 
+									<Td fontSize="l"  isNumeric>{item.frequency_growth}</Td>:
+									<Td fontSize="l" isNumeric>{item.search_count}</Td> 
 								}
 							</Tr>);})}
 					</Tbody>
