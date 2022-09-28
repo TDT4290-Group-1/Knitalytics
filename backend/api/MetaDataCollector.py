@@ -5,6 +5,8 @@ from api.DataCollectorInterface import DataCollector
 import requests
 import json
 from typing import List
+import re
+import unicodedata
 
 raw_data = """word;frequency_growth;search_count
 Australian dreams;1.4;1000
@@ -51,11 +53,39 @@ class MetaDataCollector(DataCollector):
         except requests.exceptions.RequestException as e:  # This is the correct syntax
             raise SystemExit(e)
 
-    def __parse_hashtags_from_posts__(self, posts: List[TrendingPost]):
+    def __parse_hashtags_from_posts__(self, posts: List[TrendingPost]) -> List[str]:
         hashtags = []
         for post in posts:
-            strings = post["caption"].strip().split("#")[1:]
-            hashtags += strings
+            print(post)
+            hashtag_list = re.findall("#(\w+)", post["caption"])
+            hashtags += hashtag_list
+        return self.__remove_irrelevant_hashtags__(hashtags)
 
-        print(hashtags)
-        return hashtags
+    def __remove_irrelevant_hashtags__(self, hashtags: List[str]) -> List[str]:
+        relevant_hashtags = []
+        for hashtag in hashtags:
+            # "tilfeldig" valgte ord for åprøve
+            match = re.search("(knit)", hashtag)
+            match_2 = re.search("(strik)", hashtag)
+            match_3 = re.search("(love)", hashtag)
+            match_4 = re.search("(insp)", hashtag)
+            match_5 = re.search("(addict)", hashtag)
+            match_6 = re.search("(insta)", hashtag)
+            if (
+                match == None
+                and match_2 == None
+                and match_3 == None
+                and match_4 == None
+                and match_5 == None
+                and match_6 == None
+            ):
+                relevant_hashtags.append(hashtag)
+        return relevant_hashtags
+
+    def __unicode_to_ascii__(self, hashtags: List[str]) -> List[str]:
+        print()
+        # æ, ø og å feks blir dekodet til unicode (\u005 = å). Må dekodet dette tilbake til ascii bokstaver
+
+    def __remove_foreign_languages__(self, hashtags: List[str]) -> List[str]:
+        print()
+        # noen hashtags er på kinesisk, russisk etc. Fjern alle s hashtags om har ikke-latinske bokstaver i seg.
