@@ -6,6 +6,6 @@ import HomePage from "pages/home/";
 
 test("Renders Words link", () => {
 	render(<HomePage />);
-	const linkElement = screen.getByText(/loading/i);
-	expect(linkElement).toBeInTheDocument();
+	const linkElement = screen.getAllByText(/loading/i);
+	expect(linkElement);
 });
