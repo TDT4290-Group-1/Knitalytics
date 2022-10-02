@@ -39,9 +39,7 @@ def create_app():
     def getTrendingWords():
         trending_words_dataframes: List[DataFrame] = []
         googleCollector = GoogleTrendsDataCollector()
-        metaCollector = MetaDataCollector()
         add_dataframe_from_collector(trending_words_dataframes, googleCollector)
-        add_dataframe_from_collector(trending_words_dataframes, metaCollector)
 
         main_data_frame = pd.concat(trending_words_dataframes)
 

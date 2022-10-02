@@ -56,7 +56,6 @@ class MetaDataCollector(DataCollector):
     def __parse_hashtags_from_posts__(self, posts: List[TrendingPost]) -> List[str]:
         hashtags = []
         for post in posts:
-            print(post)
             hashtag_list = re.findall("#(\w+)", post["caption"])
             hashtags += hashtag_list
         return self.__remove_irrelevant_hashtags__(hashtags)
