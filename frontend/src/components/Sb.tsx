@@ -38,7 +38,7 @@ const LinkItems: Array<LinkItemProps> = [
 export default function SimpleSidebar({ children }: { children: ReactNode }) {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	return (
-		<Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
+		<Box minH="100vh" bg={useColorModeValue("white", "gray.900")}>
 			<SidebarContent
 				onClose={() => onClose}
 				display={{ base: "none", md: "block" }}
@@ -71,7 +71,7 @@ interface SidebarProps extends BoxProps {
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 	return (
 		<Box
-			bg={useColorModeValue("white", "gray.900")}
+			bg={useColorModeValue("forest", "gray.900")}
 			borderRight="1px"
 			borderRightColor={useColorModeValue("gray.200", "gray.700")}
 			w={{ base: "full", md: 60 }}
@@ -79,13 +79,13 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 			h="full"
 			{...rest}>
 			<Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-				<Text fontSize="2xl" fontWeight="bold">
+				<Text fontSize="2xl" fontWeight="bold" color={"white"}>
           Knitalytics
 				</Text>
-				<CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
+				<CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} color={"white"}/>
 			</Flex>
 			{LinkItems.map((link) => (
-				<NavItem key={link.name} icon={link.icon}>
+				<NavItem key={link.name} icon={link.icon} color={"white"}>
 					{link.name}
 				</NavItem>
 			))}
@@ -138,7 +138,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 			px={{ base: 4, md: 24 }}
 			height="20"
 			alignItems="center"
-			bg={useColorModeValue("white", "gray.900")}
+			bg={useColorModeValue("forest", "gray.900")}
 			borderBottomWidth="1px"
 			borderBottomColor={useColorModeValue("gray.200", "gray.700")}
 			justifyContent="flex-start"
@@ -147,11 +147,11 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 				variant="outline"
 				onClick={onOpen}
 				aria-label="open menu"
-				icon={<FiMenu />}
+				icon={<FiMenu color="white" />}
 			/>
 
-			<Text fontSize="2xl" ml="8" fontFamily="monospace" fontWeight="bold">
-        Logo
+			<Text fontSize="2xl" ml="8" fontWeight="bold" color={"white"}>
+        Knitalytics
 			</Text>
 		</Flex>
 	);

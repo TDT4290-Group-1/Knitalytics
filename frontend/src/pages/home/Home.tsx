@@ -1,4 +1,4 @@
-import { Heading, Center, HStack, VStack, Text } from "@chakra-ui/react";
+import { Center, VStack, Text, SimpleGrid, Box } from "@chakra-ui/react";
 import ContentBox from "components/ContentBox";
 import  API  from "api/api";
 import {TrendingWord} from "../../../models/trendingword";
@@ -33,12 +33,11 @@ const HomePage = () => {
 			<SidebarWithHeader>
 				
 				<Center>
-					<Heading size={"3xl"} marginBottom={"8%"} marginTop={"3%"} color={theme.colors.forest}>Trending words</Heading>
+					<Text fontSize={"6xl"} marginBottom={"6%"} color={theme.colors.forest}>Trending words</Text>
 				</Center>
-
-				<Center>
-					<HStack >
-						<VStack marginRight={"10%"}>
+				<SimpleGrid minChildWidth='350px' spacingY='50px' spacingX="0px">
+					<Box>
+						<VStack >
 							<Center>
 								<Text marginBottom={"10%"} fontSize={"2xl"}  color={theme.colors.forest}>Google Trends</Text>
 							</Center>
@@ -50,6 +49,9 @@ const HomePage = () => {
 								/> : <div>loading</div>}
 						</VStack>
 
+					</Box>
+
+					<Box>
 						<VStack>
 							<Center>
 								<Text marginBottom={"10%"} fontSize={"2xl"} color={theme.colors.forest}>Instagram Hashtags</Text>
@@ -61,8 +63,11 @@ const HomePage = () => {
 									items={trendingHashtags}
 								/> : <div>loading</div>}
 						</VStack>
-					</HStack>
-				</Center>
+
+					</Box>
+
+				</SimpleGrid>
+
 				
 			</SidebarWithHeader>
 
