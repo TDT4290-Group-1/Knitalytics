@@ -23,7 +23,7 @@ const ContentBox: React.FC<Props> = ({ category, statName, items }: Props) => {
 	return (
 		<Center>
 			
-			<TableContainer >
+			<TableContainer maxHeight={"200px"} overflowY={"scroll"}>
 				<Table variant='simple' color={theme.colors.forest} size={"sm"}>
 					<Thead>
 					
