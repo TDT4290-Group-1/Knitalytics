@@ -14,11 +14,6 @@ class API {
      */
 	async getAllTrendingWords():Promise<TrendingWord[]> {
 		const response = await client.get("/api/v1/trends");
-		//  await fetch("/api/v1/trends").then((response) => {
-		// 	console.log(response);
-		// 	response.json().then((data) => {
-		// 	}).catch((error) => {console.log(error);});
-		// });
 		return response.data;
 	}
         

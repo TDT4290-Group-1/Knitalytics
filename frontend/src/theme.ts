@@ -7,10 +7,10 @@ const theme = extendTheme({
 		forest: "#015249",
 		sleekgrey:"#A5A5AF",
 	},
-	fonts: {
-		heading: "'Nunito', 'sans-serif'",
-		body: "'Nunito', 'sans-serif'",
-	}
+	// fonts: {
+	// 	heading: "'Open Sans', 'sans-serif'",
+	// 	body: "'Raleway', 'sans-serif'",
+	// }
 },
 );
 
