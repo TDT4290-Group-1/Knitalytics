@@ -14,7 +14,7 @@ Old knit sweater;3.4;100
 asdsad;9.4;10"""
 
 
-class MetaDataCollector(DataCollector):
+class InstagramCollector(DataCollector):
     def __init__(self, access_token, user_id) -> None:
         self.base_url = "https://graph.facebook.com/v15.0"
         self.access_token = access_token

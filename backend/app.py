@@ -3,7 +3,7 @@ from models.trending_word import TrendingWord
 from flask import Flask
 from api.DataCollectorInterface import DataCollector
 from api.GoogleTrendsDataCollector import GoogleTrendsDataCollector
-from api.MetaDataCollector import MetaDataCollector
+from api.InstagramCollector import InstagramCollector
 from flask_cors import CORS
 import pandas as pd
 from pandas import DataFrame
@@ -47,7 +47,7 @@ def create_app():
 
     @app.route("/api/v1/hashtag")
     def getTrendingHashtag():
-        metaCollector = MetaDataCollector(
+        metaCollector = InstagramCollector(
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
         )
 
