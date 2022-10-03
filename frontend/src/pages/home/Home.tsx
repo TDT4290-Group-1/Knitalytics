@@ -18,6 +18,8 @@ const HomePage = () => {
 	useEffect(() => {
 		API.getAllTrendingWords().then((trendingWords) => {
 			setTrendingGoogleWords(trendingWords as TrendingWord[]);
+		}).catch(error => {
+			console.error("Failed to fetch hashtags: %o", error);
 		});
 		API.getAllTrendingHashtags().then((trendingHashtags) => {
 			const hashtags = trendingHashtags;
@@ -27,6 +29,8 @@ const HomePage = () => {
 				};
 			});
 			setTrendingHashtags(hashtagsMap);
+		}).catch(error => {
+			console.error("Failed to fetch hashtags: %o", error);
 		});
 		// setTrendingWords(API.getAllTrendingWords());
 
