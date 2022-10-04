@@ -53,6 +53,17 @@ def create_app():
 
         return metaCollector.get_trending_words("knitting")
 
+    @app.route("/api/v1/business_hashtags")
+    def getBusinessHashtags():
+        try: 
+            metaCollector = InstagramCollector(
+            os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
+            )
+
+            return metaCollector.get_hashtags_business_users()
+        except ValueError as e:
+            return str(e)
+
     return app
 
 

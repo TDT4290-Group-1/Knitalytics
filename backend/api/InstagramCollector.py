@@ -45,6 +45,38 @@ class InstagramCollector(DataCollector):
         hashtags = self.__remove_foreign_languages__(hashtags)
         return hashtags
 
+    def get_hashtags_business_users(self, business_users=None) -> List[TrendingWord]:
+        captions = self.__get_captions_from_ig_users__()
+        hashtags = self.__parse_hashtags_from_captions__(captions)
+        hashtags = self.__remove_irrelevant_hashtags__(hashtags)
+        hashtags = self.__remove_foreign_languages__(hashtags)
+        return hashtags
+
+    # Business discovery of ig_users, returns captions of recent media from ig_users, ig_users must be instagram professionals, or else id error
+    def __get_captions_from_ig_users__(self, ig_users=["knittingforolive"]) -> List[str]:
+        PARAMS = {
+            "access_token": self.access_token,
+            "user_id": self.user_id,
+        }
+        endpoint = "/" + self.user_id
+
+        captions: List[str] = []
+        for ig_user in ig_users:
+            PARAMS["fields"] = "business_discovery.username(" + ig_user + "){media{caption}}"
+            try:
+                response_promise = requests.get(url=self.base_url + endpoint, params=PARAMS)
+                response = json.loads(response_promise.text)
+                if "error" in response:
+                    raise ValueError(response["error"]["message"])
+                posts: List[TrendingPost] = response["business_discovery"]["media"]["data"]
+                for post in posts:
+                    captions.append(post["caption"])        
+
+            except requests.exceptions.RequestException as e:  # This is the correct syntax
+                raise SystemExit(e)
+        
+        return captions
+
     # Method to get id of the hashtag specified in query. Returns the id as a string.
     def __get_hashtag_id__(self, query: str) -> str:
         PARAMS = {
