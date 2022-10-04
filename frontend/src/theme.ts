@@ -7,6 +7,7 @@ const theme = extendTheme({
 		forest: "#015249",
 		sleekgrey:"#A5A5AF",
 		hovergreen: "#4c917c",
+		itembackdrop: "#e4f5f3",
 	},
 	// fonts: {
 	// 	heading: "'Open Sans', 'sans-serif'",
