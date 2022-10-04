@@ -24,6 +24,23 @@ def only_roman_chars(unistr):
     return all(is_latin(uchr) for uchr in unistr if uchr.isalpha())
 
 
+# code snippet to find if hashtag is western
+latin_letters = {}
+
+
+def is_latin(uchr):
+    try:
+        return latin_letters[uchr]
+    except KeyError:
+        return latin_letters.setdefault(uchr, 'LATIN' in ud.name(uchr))
+
+
+def only_roman_chars(unistr):
+    return all(is_latin(uchr)
+               for uchr in unistr
+               if uchr.isalpha())
+
+
 class InstagramCollector(DataCollector):
     def __init__(self, access_token, user_id) -> None:
         self.base_url = "https://graph.facebook.com/v15.0"
@@ -102,7 +119,8 @@ class InstagramCollector(DataCollector):
         }
         endpoint = "/ig_hashtag_search"
         try:
-            response = requests.get(url=self.base_url + endpoint, params=PARAMS)
+            response = requests.get(
+                url=self.base_url + endpoint, params=PARAMS)
             return json.loads(response.text)["data"][0]["id"]
         except requests.exceptions.RequestException as e:  # This is the correct syntax
             raise SystemExit(e)
@@ -118,7 +136,8 @@ class InstagramCollector(DataCollector):
         }
         endpoint = "/" + id + "/top_media"
         try:
-            response = requests.get(url=self.base_url + endpoint, params=PARAMS)
+            response = requests.get(
+                url=self.base_url + endpoint, params=PARAMS)
 
             posts: List[TrendingPost] = json.loads(response.text)["data"]
             return posts
