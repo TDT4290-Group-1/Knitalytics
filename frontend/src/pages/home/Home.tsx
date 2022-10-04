@@ -4,7 +4,6 @@ import  API  from "api/api";
 import {TrendingWord} from "../../../models/trendingword";
 import { useState, useEffect } from "react";
 import theme from "../../theme";
-import SidebarWithHeader from "components/Sb";
 
 
 const HomePage = () => {
@@ -30,46 +29,40 @@ const HomePage = () => {
 
 	return (
 		<>
-			<SidebarWithHeader>
-				
-				<Center>
-					<Text fontSize={"6xl"} marginBottom={"6%"} color={theme.colors.forest}>Trending words</Text>
-				</Center>
-				<SimpleGrid minChildWidth='350px' spacingY='50px' spacingX="0px">
-					<Box>
-						<VStack >
-							<Center>
-								<Text marginBottom={"10%"} fontSize={"2xl"}  color={theme.colors.forest}>Google Trends</Text>
-							</Center>
-							{trendingGoogleWords ?
-								<ContentBox
-									category="Word"
-									statName="Growth"
-									items={trendingGoogleWords}
-								/> : <div>loading</div>}
-						</VStack>
+			<Center>
+				<Text fontSize={"6xl"} marginBottom={"6%"} color={theme.colors.forest}>Trending words</Text>
+			</Center>
+			<SimpleGrid minChildWidth='350px' spacingY='50px' spacingX="0px">
+				<Box>
+					<VStack >
+						<Center>
+							<Text marginBottom={"10%"} fontSize={"2xl"}  color={theme.colors.forest}>Google Trends</Text>
+						</Center>
+						{trendingGoogleWords ?
+							<ContentBox
+								category="Word"
+								statName="Growth"
+								items={trendingGoogleWords}
+							/> : <div>loading</div>}
+					</VStack>
 
-					</Box>
+				</Box>
 
-					<Box>
-						<VStack>
-							<Center>
-								<Text marginBottom={"10%"} fontSize={"2xl"} color={theme.colors.forest}>Instagram Hashtags</Text>
-							</Center>
-							{trendingHashtags ?
-								<ContentBox
-									category="Word"
-									statName="Growth"
-									items={trendingHashtags}
-								/> : <div>loading</div>}
-						</VStack>
+				<Box>
+					<VStack>
+						<Center>
+							<Text marginBottom={"10%"} fontSize={"2xl"} color={theme.colors.forest}>Instagram Hashtags</Text>
+						</Center>
+						{trendingHashtags ?
+							<ContentBox
+								category="Word"
+								statName="Growth"
+								items={trendingHashtags}
+							/> : <div>loading</div>}
+					</VStack>
 
-					</Box>
-
-				</SimpleGrid>
-
-				
-			</SidebarWithHeader>
+				</Box>
+			</SimpleGrid>
 
 		</>
 	);

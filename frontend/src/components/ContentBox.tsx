@@ -3,13 +3,14 @@ import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, IconButton } f
 import theme from "../theme";
 import { TrendingWord } from "../../models/trendingword";
 import { ArrowDownIcon } from "@chakra-ui/icons";
-
+import { useNavigate } from "react-router-dom";
 
 interface Props {
     category: string;
     statName: string;
     items: TrendingWord[];
 }
+
 
 const ContentBox: React.FC<Props> = ({ category, statName, items }: Props) => {
 
@@ -19,12 +20,14 @@ const ContentBox: React.FC<Props> = ({ category, statName, items }: Props) => {
 		setToggle(!toggle);
 	}
 
+	const navigate = useNavigate();
+
 
 	return (
 		<Center>
-			
 			<TableContainer maxHeight={"200px"} overflowY={"scroll"}>
 				<Table variant='simple' color={theme.colors.forest} size={"sm"}>
+
 					<Thead>
 					
 						<Tr borderBottom="2px" color={theme.colors.forest}>
@@ -42,18 +45,22 @@ const ContentBox: React.FC<Props> = ({ category, statName, items }: Props) => {
 								}
 							</Th>
 						</Tr>
-						
 					</Thead>
+
 					<Tbody >
 
 						{items.sort((o1, o2) => toggle ? (o1.frequency_growth<o2.frequency_growth ? 1 : -1) : ( o1.search_count<o2.search_count ? 1:-1)).map((item, index) => {
 							return (<Tr key={index}>
-								<Td fontSize="sm" >{`${index + 1}. ${item.word}`}</Td>
+								<Td fontSize="sm" onClick={()=>navigate("/context")}
+									_hover={{
+										color: "hovergreen",
+									}}
+								>{`${index + 1}. ${item.word}`}</Td>
 								<Td fontSize="sm"  isNumeric>{item.frequency_growth}</Td>
 								<Td fontSize="sm" isNumeric>{item.search_count}</Td> 
-								
 							</Tr>);})}
 					</Tbody>
+
 				</Table>
 			</TableContainer>
 		</Center>
