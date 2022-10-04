@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
  * DONE: set up dummy grid structure
  * TODO: fill inn actual stat components and 
  * edit grid as suitable 
+ * TODO: content of each gridItem could be made into component
  */
 
 const ContextPage = () => {
