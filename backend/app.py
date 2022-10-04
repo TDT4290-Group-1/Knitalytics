@@ -51,7 +51,7 @@ def create_app():
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
         )
 
-        return metaCollector.get_trending_words()
+        return metaCollector.get_trending_words("knitting")
 
     return app
 
