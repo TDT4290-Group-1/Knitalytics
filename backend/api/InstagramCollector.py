@@ -49,7 +49,7 @@ class InstagramCollector(DataCollector):
         endpoint = "/" + id + "/top_media"
         try:
             response = requests.get(url=self.base_url + endpoint, params=PARAMS)
-            
+
             posts: List[TrendingPost] = json.loads(response.text)["data"]
             captions: List[str] = []
             for post in posts:
@@ -62,7 +62,7 @@ class InstagramCollector(DataCollector):
     def __parse_hashtags_from_captions__(self, captions: List[str]) -> List[str]:
         hashtags = []
         for caption in captions:
-            hashtag_list = re.findall("#(\w+)", caption)
+            hashtag_list = re.findall(r"#(\w+)", caption)
             hashtags += hashtag_list
         return self.__remove_irrelevant_hashtags__(hashtags)
 
