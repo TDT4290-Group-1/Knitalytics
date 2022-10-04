@@ -49,14 +49,20 @@ class InstagramCollector(DataCollector):
         endpoint = "/" + id + "/top_media"
         try:
             response = requests.get(url=self.base_url + endpoint, params=PARAMS)
-            return self.__parse_hashtags_from_posts__(json.loads(response.text)["data"])
+            
+            posts: List[TrendingPost] = json.loads(response.text)["data"]
+            captions: List[str] = []
+            for post in posts:
+                captions.append(post["caption"])
+
+            return self.__parse_hashtags_from_captions__(captions)
         except requests.exceptions.RequestException as e:  # This is the correct syntax
             raise SystemExit(e)
 
-    def __parse_hashtags_from_posts__(self, posts: List[TrendingPost]) -> List[str]:
+    def __parse_hashtags_from_captions__(self, captions: List[str]) -> List[str]:
         hashtags = []
-        for post in posts:
-            hashtag_list = re.findall("#(\w+)", post["caption"])
+        for caption in captions:
+            hashtag_list = re.findall("#(\w+)", caption)
             hashtags += hashtag_list
         return self.__remove_irrelevant_hashtags__(hashtags)
 
