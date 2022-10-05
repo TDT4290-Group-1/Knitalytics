@@ -37,7 +37,7 @@ def create_app():
         googleCollector = GoogleTrendsDataCollector()
         add_dataframe_from_collector(trending_words_dataframes, googleCollector)
 
-        main_data_frame = pd.concat(trending_words_dataframes)
+        main_data_frame = pd.concat(trending_words_dataframes).reset_index(drop=True)
 
         return main_data_frame.to_json(orient="records")
 
