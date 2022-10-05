@@ -4,7 +4,7 @@ from api.DataCollectorInterface import DataCollector, COLUMN_NAMES
 from pytrends.request import TrendReq
 
 KNITTING_TOPIC = "/m/047fr" # google specific encoding of "Knitting" topic
-COLUMN_MAPPER = {"query": COLUMN_NAMES["word"], "value": None}
+COLUMN_MAPPER = {"query": COLUMN_NAMES["word"], "value": None} # mapper used to rename columns to standard values
 
 class GoogleTrendsDataCollector(DataCollector):
 
@@ -12,8 +12,21 @@ class GoogleTrendsDataCollector(DataCollector):
         self.pytrends_client = TrendReq(host_language, tz)
 
 
-    #Method use to collect raw data of trending words. Returns a pandas DataFrame of the raw data.
     def __collect_trending_word_data__(self, metric="frequency_growth", geo="NO", timeframe="now 1-d") -> pd.DataFrame:
+        '''
+            Collect top words on Google Trends according to a metric.
+
+            Args:
+                metric : str, default 'frequency_growth'
+                    Ranking metric of words. One of 'frequency_growth' or 'search_count'.
+                geo : str, default 'NO'
+                    Geographical region to return searches for.
+                timeframe: str, default 'now 1-d'
+                    Timeframe to return searches for. 'now #-d' represents last # days. Only supports 1 or 7 days.
+            
+            Returns:
+                pandas.DataFrame
+        '''
         kw_list = [KNITTING_TOPIC]
         self.pytrends_client.build_payload(kw_list, geo=geo, timeframe=timeframe)
         response = self.pytrends_client.related_queries()
