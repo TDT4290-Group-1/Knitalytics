@@ -11,10 +11,7 @@ const theme = extendTheme({
 		itembackdrop: "#e4f5f3",
 		almostwhite: "#f7fcfc",
 	},
-	// fonts: {
-	// 	heading: "'Open Sans', 'sans-serif'",
-	// 	body: "'Raleway', 'sans-serif'",
-	// }
+
 },
 );
 

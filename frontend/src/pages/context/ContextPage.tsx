@@ -10,6 +10,8 @@ import {
 	chakra
 } from "@chakra-ui/react";
 import { FrequencyStat } from "components/FrequencyStat";
+import WordCloud from "components/OccuringWith";
+// import WordCloud from "components/OccuringWith";
 import WordStats from "components/WordStats";
 import { useNavigate } from "react-router-dom";
 
@@ -89,8 +91,24 @@ const ContextPage = () => {
 							<FrequencyStat/>
 						</HStack>
 					</VStack>
+				</GridItem>
+				<GridItem colSpan={3} bg='itembackdrop' padding={"3%"} rounded={"lg"} >
+					<chakra.h1
+						textAlign={"center"}
+						fontSize={"4xl"}
+						py={10}
+						fontWeight={"bold"}
+						color={"forest"}>
+								Some other statistics about the word 
+					</chakra.h1>
 
 				</GridItem>
+				<GridItem colSpan={1} bg='hovergreen' padding={"3%"} rounded={"lg"} >
+					<WordCloud></WordCloud>
+				</GridItem>
+
+
+				
 			</Grid>
 		</>
 	);
