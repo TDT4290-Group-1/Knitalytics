@@ -13,14 +13,19 @@ class GoogleTrendsDataCollector(DataCollector):
 
 
     #Method use to collect raw data of trending words. Returns a pandas DataFrame of the raw data.
-    def __collect_trending_word_data__(self, geo="NO", timeframe="now 1-d") -> pd.DataFrame:
+    def __collect_trending_word_data__(self, metric="frequency_growth", geo="NO", timeframe="now 1-d") -> pd.DataFrame:
         kw_list = [KNITTING_TOPIC]
         self.pytrends_client.build_payload(kw_list, geo=geo, timeframe=timeframe)
         response = self.pytrends_client.related_queries()
 
-        rising = response[KNITTING_TOPIC]["rising"]
-        top = response[KNITTING_TOPIC]["top"]
-        return pd.concat((rising, top))
+        if metric == "frequency_growth":
+            response = response[KNITTING_TOPIC]["rising"]
+        elif metric == "search_count":
+            response = response[KNITTING_TOPIC]["top"]
+        
+        COLUMN_MAPPER["value"] = COLUMN_NAMES[metric]
+
+        return response.rename(COLUMN_MAPPER, axis=1)
 
     #Method used to process the raw data of trending words. Returns a list of TrendingWord objects from the given data frames.
     def __process_trending_word_data__(self, data_frame: pd.DataFrame) -> pd.DataFrame: 
