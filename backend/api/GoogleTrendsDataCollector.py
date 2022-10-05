@@ -3,11 +3,6 @@ from api.DataCollectorInterface import DataCollector
 
 from pytrends.request import TrendReq
 
-raw_data = """word;frequency_growth;search_count
-American dreams;5.4;1100
-New knit sweater;3.4;90
-Blabla;6.4;19"""
-
 KNITTING_TOPIC = "/m/047fr" # google specific encoding of "Knitting" topic
 
 class GoogleTrendsDataCollector(DataCollector):
