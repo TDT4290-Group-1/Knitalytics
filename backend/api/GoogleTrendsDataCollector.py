@@ -1,7 +1,4 @@
 import pandas as pd
-import io
-from typing import List
-from models.trending_word import TrendingWord
 from api.DataCollectorInterface import DataCollector
 
 from pytrends.request import TrendReq
@@ -30,9 +27,9 @@ class GoogleTrendsDataCollector(DataCollector):
         return pd.concat((rising, top))
 
     #Method used to process the raw data of trending words. Returns a list of TrendingWord objects from the given data frames.
-    def __process_trending_word_data__(self, data_frame: pd.DataFrame) -> pd.DataFrame:
-        trending_words = ["word1", "word2"]
-        return trending_words
+    def __process_trending_word_data__(self, data_frame: pd.DataFrame) -> pd.DataFrame: 
+        processed_data = data_frame.copy()
+        return processed_data
 
     # Method used by the endpoint to get the trending words. Returns a list of TrendingWord objects.
     def get_trending_words(self) -> pd.DataFrame:
