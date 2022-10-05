@@ -10,7 +10,7 @@ import {
 import { BiHash} from "react-icons/bi";
 
 
-export default function WordCloud() {
+export default function RelatedHashtags() {
 	
 	// DUMMY WORDS UNDER 
 	const words = [{

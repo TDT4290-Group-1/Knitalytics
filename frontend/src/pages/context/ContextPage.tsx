@@ -10,7 +10,8 @@ import {
 	chakra
 } from "@chakra-ui/react";
 import { FrequencyStat } from "components/FrequencyStat";
-import WordCloud from "components/OccuringWith";
+import InstagramPosts from "components/InstagramPost";
+import RelatedHashtags from "components/RelatedHashtags";
 // import WordCloud from "components/OccuringWith";
 import WordStats from "components/WordStats";
 import { useNavigate } from "react-router-dom";
@@ -66,6 +67,7 @@ const ContextPage = () => {
 						</VStack>
 					</Box>
 				</GridItem>
+
 				<GridItem colSpan={3} bg='itembackdrop' rounded={"lg"}>
 					<HStack >
 						<WordStats></WordStats>
@@ -73,25 +75,9 @@ const ContextPage = () => {
 				</GridItem>
 
 				<GridItem colSpan={4} bg='forest' padding={"3%"} rounded={"lg"} >
-					<VStack>
-						<chakra.h1
-							textAlign={"center"}
-							fontSize={"4xl"}
-							py={7}
-							fontWeight={"bold"}
-							color={"hovergreen"}>
-								Posts on this hashtag
-						</chakra.h1>
-						{/* INSERT INSTA WIDGETS IN HSTACK UNDER */}
-						<HStack >
-							<FrequencyStat/>
-							<FrequencyStat/>
-							<FrequencyStat/>
-							<FrequencyStat/>
-							<FrequencyStat/>
-						</HStack>
-					</VStack>
+					<InstagramPosts></InstagramPosts>
 				</GridItem>
+
 				<GridItem colSpan={3} bg='itembackdrop' padding={"3%"} rounded={"lg"} >
 					<chakra.h1
 						textAlign={"center"}
@@ -101,14 +87,12 @@ const ContextPage = () => {
 						color={"forest"}>
 								Some other statistics about the word 
 					</chakra.h1>
-
 				</GridItem>
-				<GridItem colSpan={1} bg='hovergreen' padding={"3%"} rounded={"lg"} >
-					<WordCloud></WordCloud>
-				</GridItem>
-
-
 				
+				<GridItem colSpan={1} bg='hovergreen' padding={"3%"} rounded={"lg"} >
+					<RelatedHashtags></RelatedHashtags>
+				</GridItem>
+
 			</Grid>
 		</>
 	);
