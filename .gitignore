@@ -2,10 +2,17 @@
 *.ipynb
 .DS_Store
 
+# VSCode
+
+*/.vscode
+
 ###FRONTEND
 
-# Node.js
-node_modules/
+# dependencies
+/node_modules
+*/node_modules
+*node_modules/*
+**node_modules/*
 /.pnp
 .pnp.js
 

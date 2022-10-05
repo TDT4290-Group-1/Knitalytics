@@ -6,11 +6,12 @@ const theme = extendTheme({
 		marine: "#57BC90",
 		forest: "#015249",
 		sleekgrey:"#A5A5AF",
+		hovergreen: "#4c917c",
 	},
-	fonts: {
-		heading: "'Nunito', 'sans-serif'",
-		body: "'Nunito', 'sans-serif'",
-	}
+	// fonts: {
+	// 	heading: "'Open Sans', 'sans-serif'",
+	// 	body: "'Raleway', 'sans-serif'",
+	// }
 },
 );
 
