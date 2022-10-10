@@ -28,21 +28,17 @@ export default function RelatedWords({ heading, type}: RelationProps) {
 	const [trendingHashtags, setTrendingHashtags] = useState<string[]>();
 
 	useEffect(() => {
-		
-		//TODO: change hardcoded "knitting" to a dynamic query
-		API.getAllRelatedHashtags("knitting").then((trendingHashtags) => {
-			setTrendingHashtags(trendingHashtags);
-			// const hashtags = trendingHashtags;
-			// const hashtagsMap = hashtags.map((hashtag): string => {
-			// 	return {
-			// 		word: hashtag,
-			// 	};
-			// });
-			// setTrendingHashtags(hashtagsMap);
-		}).catch(error => {
-			console.error("Failed to fetch hashtags: %o", error);
-		});
-		// setTrendingWords(API.getAllTrendingWords());
+		const word = sessionStorage.getItem("word");
+		if (type === "instagram"){	
+			word && API.getAllRelatedHashtags(word).then((trendingHashtags) => {
+				setTrendingHashtags(trendingHashtags);
+			}).catch(error => {
+				console.error("Failed to fetch hashtags: %o", error);
+			});
+		}
+		// else {
+		// TODO: fetch google related searches 
+		// }
 	},[]);
 	
 	

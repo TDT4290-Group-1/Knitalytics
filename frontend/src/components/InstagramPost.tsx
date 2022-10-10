@@ -1,11 +1,28 @@
 import {  chakra, Grid, GridItem, VStack } from "@chakra-ui/react";
 
 import { InstagramEmbed } from "react-social-media-embed";
+import { useState, useEffect } from "react";
+import API from "../api/api";
+
+
 
 export default function InstagramPosts(){
-	//DUMMY LINKS: REPLACE WITH LINKS FROM API
-	// word to query for posts is in sessionstorage
-	const urls: string[] = ["https://www.instagram.com/p/CjametXDZUr/","https://www.instagram.com/p/CUbHfhpswxt/","https://www.instagram.com/p/CUbHfhpswxt/","https://www.instagram.com/p/CUbHfhpswxt/","https://www.instagram.com/p/CUbHfhpswxt/","https://www.instagram.com/p/CUbHfhpswxt/"];
+	
+	const [popularPostUrls, setPopularPostUrls] = useState<string[]>();
+
+	useEffect(() => {
+		let word = sessionStorage.getItem("word");
+		if (word) {
+			word = word.replace(/\s/g, "");
+			API.getAllRelatedPostURLS(word).then((popularPost)=>{
+				setPopularPostUrls(popularPost);
+				console.log(popularPost);
+			}).catch(error => {
+				console.error("Failed to fetch instagram posts: %o", error);
+			});
+		}
+	},[]);
+	
 	return(
 		<VStack>
 			<chakra.h1
@@ -23,7 +40,7 @@ export default function InstagramPosts(){
 				gap={6}
 				padding={3}
 			>
-				{urls.map(u => <GridItem key={u} colSpan={1} rounded={"lg"} paddingLeft={"10px"}> 			
+				{popularPostUrls && popularPostUrls.map(u => <GridItem key={u} colSpan={1} rounded={"lg"} paddingLeft={"10px"}> 			
 					<InstagramEmbed url={u} width={328}/>
 				</GridItem>)}
 			
