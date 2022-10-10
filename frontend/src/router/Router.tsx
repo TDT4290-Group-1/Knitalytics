@@ -2,14 +2,16 @@ import { Routes, Route } from "react-router-dom";
 
 import HomePage from "pages/home";
 import NotFound from "pages/error";
-import Context from "pages/context";
+import InstagramContext from "pages/context";
+import GoogleContextPage from "pages/context/GoogleContextPage";
 
 const Router = () => {
 	return (
 		<Routes>
 			<Route path="/" element={<HomePage />} />
 			<Route path="*" element={<NotFound />} />
-			<Route path="/context" element={<Context/>}/>
+			<Route path="/InstagramContext" element={<InstagramContext/>}/>
+			<Route path="/GoogleContext" element={<GoogleContextPage/>}/>
 			{/* TODO fix path for context med params */}
 		</Routes>
 	);

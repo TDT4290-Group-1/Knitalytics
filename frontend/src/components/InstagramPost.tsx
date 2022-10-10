@@ -4,7 +4,8 @@ import { InstagramEmbed } from "react-social-media-embed";
 
 export default function InstagramPosts(){
 	//DUMMY LINKS: REPLACE WITH LINKS FROM API
-	const urls: string[] = ["https://www.instagram.com/p/CUbHfhpswxt/","https://www.instagram.com/p/CUbHfhpswxt/","https://www.instagram.com/p/CUbHfhpswxt/","https://www.instagram.com/p/CUbHfhpswxt/","https://www.instagram.com/p/CUbHfhpswxt/","https://www.instagram.com/p/CUbHfhpswxt/"];
+	// word to query for posts is in sessionstorage
+	const urls: string[] = ["https://www.instagram.com/p/CjametXDZUr/","https://www.instagram.com/p/CUbHfhpswxt/","https://www.instagram.com/p/CUbHfhpswxt/","https://www.instagram.com/p/CUbHfhpswxt/","https://www.instagram.com/p/CUbHfhpswxt/","https://www.instagram.com/p/CUbHfhpswxt/"];
 	return(
 		<VStack>
 			<chakra.h1
@@ -13,7 +14,7 @@ export default function InstagramPosts(){
 				py={7}
 				fontWeight={"bold"}
 				color={"hovergreen"}>
-								Posts with this hashtag
+								Most popular Instagram posts with this hashtag
 			</chakra.h1>
 			<Grid
 				h='auto'
@@ -23,7 +24,7 @@ export default function InstagramPosts(){
 				padding={3}
 			>
 				{urls.map(u => <GridItem key={u} colSpan={1} rounded={"lg"} paddingLeft={"10px"}> 			
-					<InstagramEmbed url={u} width={328} />
+					<InstagramEmbed url={u} width={328}/>
 				</GridItem>)}
 			
 			</Grid>

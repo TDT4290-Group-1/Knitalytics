@@ -42,6 +42,7 @@ const HomePage = () => {
 							<ContentBox
 								category="Word"
 								statName="Growth"
+								tabletype="google"
 								items={trendingGoogleWords}
 							/> : <div>loading</div>}
 					</VStack>
@@ -58,6 +59,7 @@ const HomePage = () => {
 								category="Word"
 								statName="Growth"
 								items={trendingHashtags}
+								tabletype={"instagram"}
 							/> : <div>loading</div>}
 					</VStack>
 

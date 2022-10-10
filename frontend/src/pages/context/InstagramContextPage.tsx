@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { FrequencyStat } from "components/FrequencyStat";
 import InstagramPosts from "components/InstagramPost";
-import RelatedHashtags from "components/RelatedHashtags";
+import RelatedWords from "components/RelatedWords";
 // import WordCloud from "components/OccuringWith";
 import WordStats from "components/WordStats";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +23,7 @@ import { useNavigate } from "react-router-dom";
  * TODO: content of each gridItem could be made into component
  */
 
-const ContextPage = () => {
+const InstagramContextPage = () => {
 	const navigate = useNavigate();
 
 	return (
@@ -63,7 +63,6 @@ const ContextPage = () => {
 								How is the word doing? 
 							</chakra.h1>
 							<FrequencyStat/>
-							<FrequencyStat/>
 						</VStack>
 					</Box>
 				</GridItem>
@@ -87,10 +86,11 @@ const ContextPage = () => {
 						color={"forest"}>
 								Some other statistics about the word 
 					</chakra.h1>
+					
 				</GridItem>
 				
 				<GridItem colSpan={1} bg='hovergreen' padding={"3%"} rounded={"lg"} >
-					<RelatedHashtags></RelatedHashtags>
+					<RelatedWords type="instagram" heading="Hashtags used together with this one"></RelatedWords>
 				</GridItem>
 
 			</Grid>
@@ -98,4 +98,4 @@ const ContextPage = () => {
 	);
 };
 
-export default ContextPage;
+export default InstagramContextPage;
