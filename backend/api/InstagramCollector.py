@@ -59,8 +59,7 @@ class InstagramCollector(DataCollector):
         }
         endpoint = "/ig_hashtag_search"
         try:
-            response = requests.get(
-                url=self.base_url + endpoint, params=PARAMS)
+            response = requests.get(url=self.base_url + endpoint, params=PARAMS)
             return json.loads(response.text)["data"][0]["id"]
         except requests.exceptions.RequestException as e:  # This is the correct syntax
             raise SystemExit(e)
@@ -75,8 +74,7 @@ class InstagramCollector(DataCollector):
         }
         endpoint = "/" + id + "/top_media"
         try:
-            response = requests.get(
-                url=self.base_url + endpoint, params=PARAMS)
+            response = requests.get(url=self.base_url + endpoint, params=PARAMS)
 
             posts: List[TrendingPost] = json.loads(response.text)["data"]
             return posts
