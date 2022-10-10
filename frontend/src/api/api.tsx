@@ -14,14 +14,21 @@ class API {
      */
 	async getAllTrendingWords():Promise<TrendingWord[]> {
 		const response = await client.get("/api/v1/trends");
+		
+		return response.data;
+	}
+
+	async getAllRelatedHashtags(query: string):Promise<string[]> {
+		const response = await client.get("/api/v1/relatedHashtags", { params: { query: query } });
+		return response.data;
+	}
+
+	async getAllRelatedPostURLS(query: string):Promise<string[]> {
+		const response = await client.get("/api/v1/relatedPostURLS", { params: { query: query } });
 		return response.data;
 	}
         
-
-        
 }
-
-  
 
 export default new API();
   
