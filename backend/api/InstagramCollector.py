@@ -35,8 +35,7 @@ class InstagramCollector(DataCollector):
         self.access_token = access_token
         self.user_id = user_id
 
-    # Method used by the endpoint to get the trending hashtags. Returns a list of hashtags.
-    def get_trending_words(self, query: str) -> List[str]:
+    def get_related_hashtags(self, query: str) -> List[str]:
         posts = self.__get_posts__(query, "like_count, caption")
         posts = self.__remove_unpopular_posts__(posts)
         captions = self.__get_captions__(posts)
@@ -44,6 +43,12 @@ class InstagramCollector(DataCollector):
         hashtags = self.__remove_irrelevant_hashtags__(hashtags)
         hashtags = self.__remove_foreign_languages__(hashtags)
         return hashtags
+
+    def get_related_posts(self, query: str) -> List[str]:
+        posts = self.__get_posts__(query, "like_count, caption, permalink")
+        posts = self.__remove_unpopular_posts__(posts)
+        post_url = self.__get_post_url__(posts)
+        return post_url
 
     # Method to get id of the hashtag specified in query. Returns the id as a string.
     def __get_hashtag_id__(self, query: str) -> str:
@@ -76,7 +81,7 @@ class InstagramCollector(DataCollector):
         except requests.exceptions.RequestException as e:  # This is the correct syntax
             raise SystemExit(e)
 
-    # remove posts that contains
+    # remove posts that has less than 200 likes
     def __remove_unpopular_posts__(
         self, posts: List[TrendingPost]
     ) -> List[TrendingPost]:
@@ -96,6 +101,12 @@ class InstagramCollector(DataCollector):
         for post in posts:
             captions.append(post["caption"])
         return captions
+
+    def __get_post_url__(self, posts: List[TrendingPost]) -> List[str]:
+        post_url = []
+        for post in posts:
+            post_url.append(post["permalink"])
+        return post_url
 
     def __parse_hashtags_from_captions__(self, captions: List[str]) -> List[str]:
         hashtags = []
@@ -121,3 +132,7 @@ class InstagramCollector(DataCollector):
             if only_roman_chars(hashtag):
                 roman_hashtags.append(hashtag)
         return roman_hashtags
+
+    # TODO
+    def __sort_popular_hashtags(self, hashtags: List[str]) -> List[str]:
+        print()

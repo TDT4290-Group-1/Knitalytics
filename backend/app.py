@@ -1,6 +1,6 @@
 from typing import List
 from models.trending_word import TrendingWord
-from flask import Flask
+from flask import Flask, request
 from api.DataCollectorInterface import DataCollector
 from api.GoogleTrendsDataCollector import GoogleTrendsDataCollector
 from api.InstagramCollector import InstagramCollector
@@ -45,6 +45,7 @@ def create_app():
 
         return main_data_frame.to_json(orient="records")
 
+    # fjerne denne?
     @app.route("/api/v1/hashtag")
     def getTrendingHashtag():
         metaCollector = InstagramCollector(
@@ -52,6 +53,25 @@ def create_app():
         )
 
         return metaCollector.get_trending_words("knitting")
+
+    @app.route("/api/v1/relatedHashtags")
+    def getRelatedHashtags():
+        metaCollector = InstagramCollector(
+            os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
+        )
+        args = request.args
+        query = args.get("query", default="", type=str)
+        return metaCollector.get_related_hashtags(query)
+
+    @app.route("/api/v1/relatedPostURLS")
+    def getRelatedPostURLS():
+        metaCollector = InstagramCollector(
+            os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
+        )
+        print("hei hei")
+        args = request.args
+        query = args.get("query", default="", type=str)
+        return metaCollector.get_related_posts(query)
 
     return app
 
