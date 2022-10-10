@@ -24,7 +24,7 @@ class API {
 	}
 
 	async getAllRelatedPostURLS(query: string):Promise<string[]> {
-		const response = await client.get("/api/v1/relatedPosts", { params: { query: query } });
+		const response = await client.get("/api/v1/relatedPostURLS", { params: { query: query } });
 		return response.data;
 	}
         
