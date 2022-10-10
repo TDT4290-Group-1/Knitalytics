@@ -16,13 +16,6 @@ interface RelationProps {
 	type: string;
 }
 
-// Top layer word for api-call is in sessionstorage
-// const word = sessionStorage.getItem("word");
-// interface words{
-// 	text: string,
-// 	value: number
-// }
-
 export default function RelatedWords({ heading, type}: RelationProps) {
 
 	const [trendingHashtags, setTrendingHashtags] = useState<string[]>();
@@ -50,7 +43,7 @@ export default function RelatedWords({ heading, type}: RelationProps) {
 		else {
 			//fetch google trends related searches into list
 			//TMP DUMMY:
-			return [];
+			return ["hei", "hallo", "dummy", "related search", "gucci"];
 		}
 	}
     
@@ -67,9 +60,9 @@ export default function RelatedWords({ heading, type}: RelationProps) {
 			</chakra.h1>
 			<Box textAlign={"center"} >
 
-				{trendingHashtags && getRelatedWords().map(word => 
+				{getRelatedWords().map(word => 
 					<Tag size={"lg"} key={word} variant='subtle' colorScheme={"green"} margin={"1%"}>
-						<TagLeftIcon boxSize='12px' as={BiHash} />
+						{type === "instagram" && <TagLeftIcon boxSize='12px' as={BiHash} />}
 						<TagLabel>{word}</TagLabel>
 					</Tag>)}
 			</Box>
