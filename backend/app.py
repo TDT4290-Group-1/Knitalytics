@@ -1,5 +1,4 @@
 from typing import List
-from models.trending_word import TrendingWord
 from flask import Flask, request
 from api.DataCollectorInterface import DataCollector
 from api.GoogleTrendsDataCollector import GoogleTrendsDataCollector
