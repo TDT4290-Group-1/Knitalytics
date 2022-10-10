@@ -20,7 +20,8 @@ const HomePage = () => {
 		}).catch(error => {
 			console.error("Failed to fetch hashtags: %o", error);
 		});
-		API.getAllTrendingHashtags().then((trendingHashtags) => {
+		//TODO: change hardcoded "knitting" to a dynamic query
+		API.getAllRelatedHashtags("knitting").then((trendingHashtags) => {
 			const hashtags = trendingHashtags;
 			const hashtagsMap = hashtags.map((hashtag): TrendingWord => {
 				return {
@@ -32,7 +33,6 @@ const HomePage = () => {
 			console.error("Failed to fetch hashtags: %o", error);
 		});
 		// setTrendingWords(API.getAllTrendingWords());
-
 	},[]);
 
 	console.log(trendingGoogleWords);
