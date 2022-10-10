@@ -23,23 +23,27 @@ def create_app():
     app.config["CORS_HEADERS"] = "Content-Type"
 
     def add_dataframe_from_collector(
-        trending_words_dataframes: List[DataFrame], data_collector: DataCollector
+        trending_words_dataframes: List[DataFrame], data_collector: DataCollector, filter: str
     ):
-        trending_words_dataframes.append(data_collector.get_trending_words())
+        trending_words_dataframes.append(
+            data_collector.get_trending_words(filter))
 
     @app.route("/")
     def hello_world():
         return "Hello, World!"
 
-    @app.route("/api/v1/trends")
-    def getTrendingWords():
+    @app.route("/api/v1/trends/<string:filter>")
+    def getTrendingWords(filter):
         trending_words_dataframes: List[DataFrame] = []
         googleCollector = GoogleTrendsDataCollector()
-        add_dataframe_from_collector(trending_words_dataframes, googleCollector)
+        add_dataframe_from_collector(
+            trending_words_dataframes, googleCollector, filter)
 
-        main_data_frame = pd.concat(trending_words_dataframes).reset_index(drop=True)
+        main_data_frame = pd.concat(
+            trending_words_dataframes).reset_index(drop=True)
+        print(main_data_frame)
 
-        return main_data_frame.to_json(force_ascii=False)
+        return main_data_frame.to_json(orient="records")
 
     return app
 
