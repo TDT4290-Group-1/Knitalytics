@@ -49,7 +49,7 @@ const ContentBox: React.FC<Props> = ({ category, statName, items }: Props) => {
 
 					<Tbody >
 
-						{items.sort((o1, o2) => toggle ? (o1.frequency_growth<o2.frequency_growth ? 1 : -1) : ( o1.search_count<o2.search_count ? 1:-1)).map((item, index) => {
+						{items.sort((o1, o2) => toggle ? ((o1.frequency_growth ?? 0) < (o2.frequency_growth ?? 0) ? 1 : -1) : ( (o1.search_count ?? 0)<(o2.search_count ?? 0) ? 1:-1)).map((item, index) => {
 							return (<Tr key={index}>
 								<Td fontSize="sm" onClick={()=>navigate("/context")}
 									_hover={{

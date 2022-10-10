@@ -16,10 +16,20 @@ const HomePage = () => {
 	// Awaiting backend implementation
 	useEffect(() => {
 		API.getAllTrendingWords().then((trendingWords) => {
-		
-			setTrendingGoogleWords(trendingWords as TrendingWord[],);
-			setTrendingHashtags(trendingWords as TrendingWord[],);
-
+			setTrendingGoogleWords(trendingWords as TrendingWord[]);
+		}).catch(error => {
+			console.error("Failed to fetch hashtags: %o", error);
+		});
+		API.getAllTrendingHashtags().then((trendingHashtags) => {
+			const hashtags = trendingHashtags;
+			const hashtagsMap = hashtags.map((hashtag): TrendingWord => {
+				return {
+					word: hashtag,
+				};
+			});
+			setTrendingHashtags(hashtagsMap);
+		}).catch(error => {
+			console.error("Failed to fetch hashtags: %o", error);
 		});
 		// setTrendingWords(API.getAllTrendingWords());
 
