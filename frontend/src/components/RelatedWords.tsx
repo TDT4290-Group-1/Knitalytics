@@ -8,6 +8,8 @@ import {
 
 } from "@chakra-ui/react";
 import { BiHash} from "react-icons/bi";
+import { useState, useEffect } from "react";
+import API from "../api/api";
 
 interface RelationProps {
 	heading: string;
@@ -16,53 +18,44 @@ interface RelationProps {
 
 // Top layer word for api-call is in sessionstorage
 // const word = sessionStorage.getItem("word");
-interface words{
-	text: string,
-	value: number
-}
+// interface words{
+// 	text: string,
+// 	value: number
+// }
 
 export default function RelatedWords({ heading, type}: RelationProps) {
+
+	const [trendingHashtags, setTrendingHashtags] = useState<string[]>();
+
+	useEffect(() => {
+		
+		//TODO: change hardcoded "knitting" to a dynamic query
+		API.getAllRelatedHashtags("knitting").then((trendingHashtags) => {
+			setTrendingHashtags(trendingHashtags);
+			// const hashtags = trendingHashtags;
+			// const hashtagsMap = hashtags.map((hashtag): string => {
+			// 	return {
+			// 		word: hashtag,
+			// 	};
+			// });
+			// setTrendingHashtags(hashtagsMap);
+		}).catch(error => {
+			console.error("Failed to fetch hashtags: %o", error);
+		});
+		// setTrendingWords(API.getAllTrendingWords());
+	},[]);
 	
-	// REPLACE WORDS WITH API DATA  
-	const dummywords = [{
-		text: "Marine",
-		value: 24
-	},
-	{
-		text: "Purple Heart",
-		value: 23
-	},
-	{
-		text: "Honor",
-		value: 16
-	},
-	{
-		text: "Brave",
-		value: 17
-	},
-	{
-		text: "Wise",
-		value: 34
-	},
-	{
-		text: "Hero",
-		value: 21
-	},];
+	
 
 	function getRelatedWords(){
-		let relatedWords: words[];
-		if (type==="instagram"){
-			//fetch instagram hastags into list
-			//TMP DUMMY:
-			relatedWords = dummywords;
+		if (type==="instagram" && trendingHashtags){
+			return trendingHashtags;
 		}
 		else {
 			//fetch google trends related searches into list
 			//TMP DUMMY:
-			relatedWords = dummywords;
+			return [];
 		}
-		return relatedWords;
-
 	}
     
 	return (
@@ -78,10 +71,10 @@ export default function RelatedWords({ heading, type}: RelationProps) {
 			</chakra.h1>
 			<Box textAlign={"center"} >
 
-				{getRelatedWords().map(word => 
-					<Tag size={"lg"} key={word.text} variant='subtle' colorScheme={"green"} margin={"1%"}>
+				{trendingHashtags && getRelatedWords().map(word => 
+					<Tag size={"lg"} key={word} variant='subtle' colorScheme={"green"} margin={"1%"}>
 						<TagLeftIcon boxSize='12px' as={BiHash} />
-						<TagLabel>{word.text}</TagLabel>
+						<TagLabel>{word}</TagLabel>
 					</Tag>)}
 			</Box>
 		</VStack>

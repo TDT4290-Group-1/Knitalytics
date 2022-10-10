@@ -45,14 +45,6 @@ def create_app():
 
         return main_data_frame.to_json(orient="records")
 
-    # fjerne denne?
-    @app.route("/api/v1/hashtag")
-    def getTrendingHashtag():
-        metaCollector = InstagramCollector(
-            os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
-        )
-
-        return metaCollector.get_trending_words("knitting")
 
     @app.route("/api/v1/relatedHashtags")
     def getRelatedHashtags():

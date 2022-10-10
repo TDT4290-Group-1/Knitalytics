@@ -36,6 +36,7 @@ class InstagramCollector(DataCollector):
         self.user_id = user_id
 
     def get_related_hashtags(self, query: str) -> List[str]:
+        query = query.replace(" ", "")
         posts = self.__get_posts__(query, "like_count, caption")
         posts = self.__remove_unpopular_posts__(posts)
         captions = self.__get_captions__(posts)
