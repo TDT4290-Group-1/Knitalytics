@@ -1,6 +1,7 @@
 
 import {TrendingWord} from "../../models/trendingword";
 import axios from "axios";
+import { TredningWordsFilter } from "utils/trendingWordsFilter";
 
 const client = axios.create({ baseURL: "http://127.0.0.1:5000/" });
 /**
@@ -12,23 +13,24 @@ class API {
 	/**
      * @returns All existing ads
      */
-	async getAllTrendingWords():Promise<TrendingWord[]> {
-		const response = await client.get("/api/v1/trends");
-		console.log("response data", response);
+	async getAllTrendingWords(filter:TredningWordsFilter):Promise<TrendingWord[]> {
+		const response = await client.get(`/api/v1/trends/${filter}`);
+	
 		
 		return response.data;
 	}
-	
-	async getAllTrendingHashtags():Promise<string[]> {
-		const response = await client.get("/api/v1/hashtag");
+
+	async getAllRelatedHashtags(query: string):Promise<string[]> {
+		const response = await client.get("/api/v1/relatedHashtags", { params: { query: query } });
+		return response.data;
+	}
+
+	async getAllRelatedPostURLS(query: string):Promise<string[]> {
+		const response = await client.get("/api/v1/relatedPostURLS", { params: { query: query } });
 		return response.data;
 	}
         
-
-        
 }
-
-  
 
 export default new API();
   

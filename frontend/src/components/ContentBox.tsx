@@ -1,18 +1,19 @@
 import React, { useState } from "react";
-import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, Switch, HStack } from "@chakra-ui/react";
-import { TiSortNumerically } from "react-icons/ti";
-import { BsPercent } from "react-icons/bs";
+import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, IconButton } from "@chakra-ui/react";
 import theme from "../theme";
 import { TrendingWord } from "../../models/trendingword";
-
+import { ArrowDownIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
     category: string;
     statName: string;
     items: TrendingWord[];
+	tabletype: string;
 }
 
-const ContentBox: React.FC<Props> = ({ category, statName, items }: Props) => {
+
+const ContentBox: React.FC<Props> = ({ category, statName, items, tabletype }: Props) => {
 
 	const [toggle, setToggle] = useState(true);
 
@@ -20,37 +21,58 @@ const ContentBox: React.FC<Props> = ({ category, statName, items }: Props) => {
 		setToggle(!toggle);
 	}
 
+	const navigate = useNavigate();
+
+	function nav(word: string){
+		if (tabletype==="instagram"){
+			sessionStorage.setItem("word", word);
+			navigate("/InstagramContext");
+		}
+		else {
+			sessionStorage.setItem("word", word);
+			navigate("/GoogleContext");
+		}
+	}
+
 
 	return (
 		<Center>
-			
-			<TableContainer w="35vw" >
-				<Table variant='simple' color={theme.colors.forest}>
+			<TableContainer maxHeight={"200px"} overflowY={"scroll"}>
+				<Table variant='simple' color={theme.colors.forest} size={"sm"}>
+
 					<Thead>
 					
 						<Tr borderBottom="2px" color={theme.colors.forest}>
-							<Th  fontSize="xl">{category}</Th>
-							<Th fontSize="xl" isNumeric>{statName}
-								<HStack justifyContent="flex-end" marginTop={"4%"}>
-									<BsPercent size="18px" color={theme.colors.forest}/>
-									<Switch size='md' onChange={toggleSwitch} colorScheme={theme.colors.forest}/>
-									<TiSortNumerically size="20px" color={theme.colors.forest}/>
-								</HStack>
+							<Th  fontSize="sm">{category}</Th>
+							<Th fontSize="sm" isNumeric paddingRight={0}>{statName}
+								{!toggle&&
+								<IconButton colorScheme={"white"} size={"xs"} padding={0} icon={<ArrowDownIcon color={"forest"}/>} aria-label={"sort"} onClick={toggleSwitch}></IconButton>
+								}
+								
 							</Th>
+							
+							{/* <Th fontSize="sm" isNumeric paddingRight={0}>count
+								{toggle && 
+								<IconButton colorScheme={"white"} size={"xs"} padding={0} icon={<ArrowDownIcon color={"forest"}/>} aria-label={"sort"} onClick={toggleSwitch}></IconButton>
+								}
+							</Th> */}
 						</Tr>
-						
 					</Thead>
-					<Tbody>
+
+					<Tbody >
 
 						{items.sort((o1, o2) => toggle ? ((o1.frequency_growth ?? 0) < (o2.frequency_growth ?? 0) ? 1 : -1) : ( (o1.search_count ?? 0)<(o2.search_count ?? 0) ? 1:-1)).map((item, index) => {
 							return (<Tr key={index}>
-								<Td fontSize="xl" >{`${index + 1}. ${item.word}`}</Td>
-								{ toggle ? 
-									<Td fontSize="xl"  isNumeric>{item.frequency_growth}</Td>:
-									<Td fontSize="xl" isNumeric>{item.search_count}</Td> 
-								}
+								<Td fontSize="sm" onClick={()=>nav(item.word)}
+									_hover={{
+										color: "hovergreen",
+									}}
+								>{`${index + 1}. ${item.word}`}</Td>
+								<Td fontSize="sm"  isNumeric>{item.frequency_growth}</Td>
+								{/* <Td fontSize="sm" isNumeric>{item.search_count}</Td>  */}
 							</Tr>);})}
 					</Tbody>
+
 				</Table>
 			</TableContainer>
 		</Center>
