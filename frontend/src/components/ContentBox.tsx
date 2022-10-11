@@ -4,21 +4,16 @@ import theme from "../theme";
 import { TrendingWord } from "../../models/trendingword";
 import { ArrowDownIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
+import { TredningWordsFilter } from "utils/trendingWordsFilter";
 
 interface Props {
-    category: string;
-    statName: string;
-    items: TrendingWord[];
+    displayMetric: string;
+    items: TrendingWord[] | undefined;
+	setDisplayMetric: (displayMetric: TredningWordsFilter) => void;
 }
 
 
-const ContentBox: React.FC<Props> = ({ category, statName, items }: Props) => {
-
-	const [toggle, setToggle] = useState(true);
-
-	function toggleSwitch() {
-		setToggle(!toggle);
-	}
+const ContentBox: React.FC<Props> = ({ items, displayMetric, setDisplayMetric }: Props) => {
 
 	const navigate = useNavigate();
 
