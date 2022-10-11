@@ -30,8 +30,7 @@ def create_app():
         data_collector: DataCollector,
         filter: str,
     ):
-        trending_words_dataframes.append(
-            data_collector.get_trending_words(filter))
+        trending_words_dataframes.append(data_collector.get_trending_words(filter))
 
     @app.route("/")
     def hello_world():

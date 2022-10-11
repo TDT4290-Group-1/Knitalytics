@@ -30,8 +30,7 @@ class GoogleTrendsDataCollector(DataCollector):
             pandas.DataFrame
         """
         kw_list = [KNITTING_TOPIC]
-        self.pytrends_client.build_payload(
-            kw_list, geo=geo, timeframe=timeframe)
+        self.pytrends_client.build_payload(kw_list, geo=geo, timeframe=timeframe)
         response = self.pytrends_client.related_queries()
 
         if metric == "frequency_growth":
