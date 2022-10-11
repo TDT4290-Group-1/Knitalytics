@@ -98,7 +98,7 @@ const GoogleContextPage = () => {
 				</GridItem>
 
 				<GridItem colSpan={4} bg='forest' padding={"3%"} rounded={"lg"} >
-					{popularPostUrls && <InstagramPosts URLs={popularPostUrls}></InstagramPosts>}
+					{popularPostUrls && <InstagramPosts URLs={popularPostUrls} heading={"Most popular Instagram posts with this hashtag"}></InstagramPosts>}
 				</GridItem>
 
 				<GridItem colSpan={3} bg='itembackdrop' padding={"3%"} rounded={"lg"} >

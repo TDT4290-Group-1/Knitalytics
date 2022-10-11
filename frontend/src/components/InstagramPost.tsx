@@ -4,9 +4,10 @@ import { InstagramEmbed } from "react-social-media-embed";
 
 interface Props{
 	URLs: string[];
+	heading: string;
 }
 
-export default function InstagramPosts({URLs}:Props){
+export default function InstagramPosts({URLs, heading}:Props){
 	
 	return(
 		<VStack>
@@ -16,7 +17,7 @@ export default function InstagramPosts({URLs}:Props){
 				py={7}
 				fontWeight={"bold"}
 				color={"hovergreen"}>
-								Most popular Instagram posts with this hashtag
+				{heading}
 			</chakra.h1>
 			<Grid
 				h='auto'
