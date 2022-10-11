@@ -2,6 +2,8 @@ from typing import List
 
 from models.trending_word import TrendingWord
 
+# TODO: choose single column name for popularity metric, e.g. 'metric'
+
 COLUMN_NAMES = {
     "word": "word",
     "frequency_growth": "frequency_growth",

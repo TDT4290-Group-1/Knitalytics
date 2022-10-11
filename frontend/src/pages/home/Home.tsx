@@ -9,6 +9,9 @@ import { TredningWordsFilter } from "utils/trendingWordsFilter";
 
 const HomePage = () => {
 
+	/**
+	 * TODO: implement seperate components for Google Trends and Instagram, with associated state
+	 */
 
 	const [wordsFreqGrowth, setWordsFreqGrowth] = useState<TrendingWord[] | undefined>(undefined); // use undefined as check whether loaded or not
 	const [wordsSearchCount, setWordsSearchCount] = useState<TrendingWord[] | undefined>(undefined); // use undefined as check whether loaded or not
@@ -24,6 +27,7 @@ const HomePage = () => {
 	
 
 	// check whether words ranked according to frequnecy growth have been retrieved
+	// TODO: move into separate Google Trends component
 	if (typeof wordsFreqGrowth === "undefined") {
 		// fetch the words
 		API.getAllTrendingWords(TredningWordsFilter.FrequencyGrowth).then((trendingWords) => {

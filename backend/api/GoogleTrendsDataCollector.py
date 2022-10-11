@@ -40,6 +40,7 @@ class GoogleTrendsDataCollector(DataCollector):
         elif metric == "search_count":
             response = response[KNITTING_TOPIC]["top"]
 
+        # TODO: rename column to 'metric'
         COLUMN_MAPPER["value"] = COLUMN_NAMES[metric]
 
         return response.rename(COLUMN_MAPPER, axis=1)
