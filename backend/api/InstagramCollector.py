@@ -50,7 +50,7 @@ class InstagramCollector(DataCollector):
         posts = self.__get_posts__(query, "like_count, permalink")
         posts = self.__remove_unpopular_posts__(posts)
         post_url = self.__get_post_url__(posts)
-        return post_url
+        return post_url[0:9]
 
     # returns id of the hashtag specified in query.
     def __get_hashtag_id__(self, query: str) -> str:
