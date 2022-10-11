@@ -16,6 +16,7 @@ const HomePage = () => {
 	const [wordsFreqGrowthError, setWordsFreqGrowthError] = useState(false);
 	const [wordsSearchCountError, setWordsSearchCountError] = useState(false);
 
+	const [displayMetric, setDisplayMetric] = useState(TredningWordsFilter.FrequencyGrowth);
 
 	const [trendingHashtags, setTrendingHashtags] = useState<TrendingWord[]>();
 
