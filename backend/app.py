@@ -41,13 +41,12 @@ def create_app():
     def getTrendingWords(filter):
         trending_words_dataframes: List[DataFrame] = []
         googleCollector = GoogleTrendsDataCollector()
-        add_dataframe_from_collector(
-            trending_words_dataframes, googleCollector, filter)
+        add_dataframe_from_collector(trending_words_dataframes, googleCollector, filter)
 
-        main_data_frame = pd.concat(
-            trending_words_dataframes).reset_index(drop=True)
+        main_data_frame = pd.concat(trending_words_dataframes).reset_index(drop=True)
+        print(main_data_frame)
 
-        return main_data_frame.to_json(force_ascii=False)
+        return main_data_frame.to_json(orient="records")
 
     @app.route("/api/v1/relatedHashtags")
     def getRelatedHashtags():
