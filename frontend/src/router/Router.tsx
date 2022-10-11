@@ -4,6 +4,7 @@ import HomePage from "pages/home";
 import NotFound from "pages/error";
 import InstagramContext from "pages/context";
 import GoogleContextPage from "pages/context/GoogleContextPage";
+import InstagramWatchPage from "pages/instagramWatch";
 
 const Router = () => {
 	return (
@@ -12,7 +13,7 @@ const Router = () => {
 			<Route path="*" element={<NotFound />} />
 			<Route path="/InstagramContext" element={<InstagramContext/>}/>
 			<Route path="/GoogleContext" element={<GoogleContextPage/>}/>
-			{/* TODO fix path for context med params */}
+			<Route path="/InstagramPosts" element={<InstagramWatchPage/>}/>
 		</Routes>
 	);
 };
