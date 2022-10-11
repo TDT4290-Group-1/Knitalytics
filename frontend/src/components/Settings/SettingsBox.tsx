@@ -1,10 +1,10 @@
-import { Text, SimpleGrid, Center, VStack, Input, HStack, Button } from "@chakra-ui/react";
+import { Text, Center, VStack, Input, HStack, Button, Box } from "@chakra-ui/react";
 import { getListLocalStorage, setLocalStorageList } from "api/localStorage";
 import HashtagBox from "./HashtagBox";
 import {
 	AiOutlineSend,
 } from "react-icons/ai";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 interface SettingsBoxProps {
     title: string,
@@ -13,39 +13,37 @@ interface SettingsBoxProps {
 const SettingsBox = ({title, storagePath} : SettingsBoxProps) => {
 
 	const [input, setInput] = useState("");
-	const [buttonPress, setButtonPress] = useState(false);
-	const [listFromStorage, setListFromStorage] = useState(getListLocalStorage(storagePath).split(","));
+	const [listFromStorage, setListFromStorage] = useState(getListLocalStorage(storagePath).split(",").filter(element => {
+		return element !== "";}));
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => setInput(event.target.value);
-	//const handleButtonPress = (event: React.MouseEventHandler<HTMLButtonElement, MouseEvent>) => setButtonPress(event.target.checked);
-	const handleButtonPress: React.MouseEventHandler = () => {setButtonPress(buttonPress => !buttonPress);};
-	const initialRender = useRef(true);
+	
+	const handleButtonPress: React.MouseEventHandler = () => {
+		const tempList = [...listFromStorage];
+		tempList.push(input);
+		setListFromStorage(tempList);
+		setLocalStorageList(tempList.toString(), storagePath);
+		setInput("");
+	};
 
-	useEffect(() => {
-		console.log("hellooo from useeffect");
-		if (initialRender.current) {
-			initialRender.current = false;
-		} else {
-			const tempList = listFromStorage;
-			tempList.push(input);
-			setListFromStorage(tempList);
-			setLocalStorageList(listFromStorage.toString(), storagePath);
-		}
-	},[buttonPress]);
-
-	console.log("lsit from storage");
-	console.log(listFromStorage);
+	const handleDeleteItem = (itemName: string) => {
+		const tempList = [...listFromStorage];
+		const index = tempList.indexOf(itemName);
+		tempList.splice(index, 1);
+		setListFromStorage(tempList);
+		setLocalStorageList(tempList.toString(), storagePath);
+	};
 
 	return (
-		<VStack>
+		<VStack borderStyle="solid" borderWidth="2px" borderColor="sleekGrey" borderRadius="10%" m={5} p={5}>
 			<Center borderBottom="black">
 				<Text marginBottom={"10%"} fontSize={"2xl"}  color="forest">{title}</Text>
 			</Center>
-			<SimpleGrid minChildWidth="100px" spacing={10} w="100%">
+			<Box>
 				{listFromStorage && listFromStorage.map((word: string, index: number) => (
-					<HashtagBox key={index} name={word}></HashtagBox>
+					<HashtagBox key={index} name={word} deleteCallback={() => handleDeleteItem(word)}></HashtagBox>
 				))}
-			</SimpleGrid>
+			</Box>
 			<HStack maxWidth="300px">
 				<Input placeholder='Add new word...' size='sm' value={input} onChange={handleInputChange}/>
 				<Button variant='ghost' onClick={handleButtonPress}>

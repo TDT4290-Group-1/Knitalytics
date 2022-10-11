@@ -1,23 +1,24 @@
-import { HStack, Text, Button, Center} from "@chakra-ui/react";
+import { Tag, TagLabel, TagCloseButton} from "@chakra-ui/react";
 
 interface HashtagBoxProps {
     name: string,
+	deleteCallback: () => void,
 }
 
-const HashtagBox = ({ name }: HashtagBoxProps) => {
-
-	const deleteHashtag = () => { 
-		// TODO: replace with inline clickons with navigate
-		console.log("clicked");
-	};
+const HashtagBox = ({ name, deleteCallback }: HashtagBoxProps) => {
 
 	return (
-		<Center bg="sleekgrey" color="white" p="5px" borderRadius={10}>
-			<HStack spacing={5}>
-				<Text>{"#" + name}</Text>
-				<Button color="white" variant='link' onClick={deleteHashtag}>x</Button>
-			</HStack>
-		</Center>
+		<Tag
+			size="lg"
+			key="md"
+			borderRadius='full'
+			variant='solid'
+			colorScheme="green"
+			m={3}
+		>
+			<TagLabel>{name}</TagLabel>
+			<TagCloseButton onClick={() => deleteCallback()}/>
+		</Tag>
 	);
 };
 
