@@ -3,6 +3,7 @@ from api.DataCollectorInterface import DataCollector, COLUMN_NAMES
 
 from pytrends.request import TrendReq
 
+# KNITTING_TOPIC = "/m/047fr"  # google specific encoding of "Knitting" topic
 KNITTING_TOPIC = "/m/047fr"  # google specific encoding of "Knitting" topic
 COLUMN_MAPPER = {
     "query": COLUMN_NAMES["word"],
@@ -15,7 +16,11 @@ class GoogleTrendsDataCollector(DataCollector):
         self.pytrends_client = TrendReq(host_language, tz)
 
     def __collect_trending_word_data__(
-        self, metric="frequency_growth", geo="NO", timeframe="now 1-d"
+        self,
+        metric="frequency_growth",
+        geo="NO",
+        timeframe="now 1-d",
+        search_term=KNITTING_TOPIC,
     ) -> pd.DataFrame:
         """
         Collect top words on Google Trends according to a metric.
@@ -29,14 +34,14 @@ class GoogleTrendsDataCollector(DataCollector):
         Returns:
             pandas.DataFrame
         """
-        kw_list = [KNITTING_TOPIC]
+        kw_list = [search_term]
         self.pytrends_client.build_payload(kw_list, geo=geo, timeframe=timeframe)
         response = self.pytrends_client.related_queries()
 
         if metric == "frequency_growth":
-            response = response[KNITTING_TOPIC]["rising"]
+            response = response[search_term]["rising"]
         elif metric == "search_count":
-            response = response[KNITTING_TOPIC]["top"]
+            response = response[search_term]["top"]
 
         COLUMN_MAPPER["value"] = COLUMN_NAMES[metric]
 
@@ -48,8 +53,14 @@ class GoogleTrendsDataCollector(DataCollector):
         return processed_data
 
     # Method used by the endpoint to get the trending words. Returns a list of TrendingWord objects.
-    def get_trending_words(self, filter: str) -> pd.DataFrame:
-
-        return self.__process_trending_word_data__(
-            self.__collect_trending_word_data__(metric=filter)
-        )
+    def get_trending_words(self, metric: str, search_term: str) -> pd.DataFrame:
+        if search_term == "":
+            return self.__process_trending_word_data__(
+                self.__collect_trending_word_data__(metric=metric)
+            )
+        else:
+            return self.__process_trending_word_data__(
+                self.__collect_trending_word_data__(
+                    metric=metric, search_term=search_term
+                )
+            )
