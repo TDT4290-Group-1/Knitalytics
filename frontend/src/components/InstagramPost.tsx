@@ -1,13 +1,18 @@
-import {  chakra, Grid, GridItem, VStack } from "@chakra-ui/react";
+import {  chakra, SimpleGrid, GridItem, VStack } from "@chakra-ui/react";
 import { InstagramEmbed } from "react-social-media-embed";
 
 
 interface Props{
 	URLs: string[];
+	heading: string;
 }
 
-export default function InstagramPosts({URLs}:Props){
+export default function InstagramPosts({URLs, heading}:Props){
 	
+	/**
+	 * TODO: query api for relevant urls  
+	 */
+
 	return(
 		<VStack>
 			<chakra.h1
@@ -16,20 +21,16 @@ export default function InstagramPosts({URLs}:Props){
 				py={7}
 				fontWeight={"bold"}
 				color={"hovergreen"}>
-								Most popular Instagram posts with this hashtag
+				{heading}
 			</chakra.h1>
-			<Grid
-				h='auto'
-				templateRows='auto'
-				templateColumns='repeat(3, 1fr)'
-				gap={6}
-				padding={3}
+			<SimpleGrid
+				columns={{ base: 1, sm: 1, md:1, lg:3}} 
+				spacing={{ base: 3, lg: 5 }}
 			>
-				{URLs.map(u => <GridItem key={u} colSpan={1} rounded={"lg"} paddingLeft={"10px"}> 			
+				{URLs.map(u => <GridItem key={u}> 			
 					<InstagramEmbed url={u} width={328}/>
 				</GridItem>)}
-			
-			</Grid>
+			</SimpleGrid>
 		</VStack>
 
 
