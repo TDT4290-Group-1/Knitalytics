@@ -20,15 +20,35 @@ const HomePage = () => {
 	const [trendingHashtags, setTrendingHashtags] = useState<TrendingWord[]>();
 
 
+	
+
+	// check whether words ranked according to frequnecy growth have been retrieved
+	if (typeof wordsFreqGrowth === "undefined") {
+		// fetch the words
+		API.getAllTrendingWords(TredningWordsFilter.FrequencyGrowth).then((trendingWords) => {
+			setWordsFreqGrowth(trendingWords as TrendingWord[]);
+		}).catch(() => {
+			setWordsFreqGrowth([]);
+			setWordsFreqGrowthError(!wordsFreqGrowthError);
+		});
+	}
+
+	// check whether words ranked according to search count have been retrieved
+	if (typeof wordsSearchCount === "undefined") {
+		// fetch the words
+		API.getAllTrendingWords(TredningWordsFilter.SearchCount).then((trendingWords) => {
+			setWordsSearchCount(trendingWords);
+		}).catch(() => {
+			setWordsSearchCount([]);
+			setWordsSearchCountError(!wordsSearchCountError);
+		});
+	}
+
+
+
 	// This function needs to differantiate between fetching instagram data or google data.
 	// Awaiting backend implementation
 	useEffect(() => {
-
-		API.getAllTrendingWords(TredningWordsFilter.FrequencyGrowth).then((trendingWords) => {
-			setTrendingGoogleWords(trendingWords as TrendingWord[]);
-		}).catch(error => {
-			console.error("Failed to fetch hashtags: %o", error);
-		});
 		//TODO: change hardcoded "knitting" to a dynamic query
 		API.getAllRelatedHashtags("knitting").then((trendingHashtags) => {
 			const hashtags = trendingHashtags;
@@ -44,8 +64,6 @@ const HomePage = () => {
 		// setTrendingWords(API.getAllTrendingWords());
 	},[]);
 
-	console.log(trendingGoogleWords);
-
 	return (
 		<>
 			<Center>
@@ -57,11 +75,11 @@ const HomePage = () => {
 						<Center>
 							<Text marginBottom={"10%"} fontSize={"2xl"}  color={theme.colors.forest}>Google Trends</Text>
 						</Center>
-						{trendingGoogleWords ?
+						{wordsFreqGrowth ?
 							<ContentBox
 								category="Word"
 								statName="Growth"
-								items={trendingGoogleWords}
+								items={wordsFreqGrowth}
 							/> : <div>loading</div>}
 					</VStack>
 
