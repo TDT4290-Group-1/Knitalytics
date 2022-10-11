@@ -47,15 +47,6 @@ def create_app():
 
         return main_data_frame.to_json(orient="records")
 
-    # fjerne denne?
-    @app.route("/api/v1/hashtag")
-    def getTrendingHashtag():
-        metaCollector = InstagramCollector(
-            os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
-        )
-
-        return metaCollector.get_trending_words("knitting")
-
     @app.route("/api/v1/relatedHashtags")
     def getRelatedHashtags():
         metaCollector = InstagramCollector(
@@ -63,6 +54,7 @@ def create_app():
         )
         args = request.args
         query = args.get("query", default="", type=str)
+        # to test backend you can change 'query' to hardcoded keyword
         return metaCollector.get_related_hashtags(query)
 
     @app.route("/api/v1/relatedPostURLS")
@@ -70,7 +62,6 @@ def create_app():
         metaCollector = InstagramCollector(
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
         )
-        print("hei hei")
         args = request.args
         query = args.get("query", default="", type=str)
         return metaCollector.get_related_posts(query)
