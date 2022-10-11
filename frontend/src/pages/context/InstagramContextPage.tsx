@@ -10,17 +10,14 @@ import {
 	chakra
 } from "@chakra-ui/react";
 import { FrequencyStat } from "components/FrequencyStat";
-import InstagramPosts from "components/InstagramPost";
+// import InstagramPosts from "components/InstagramPost";
 // import RelatedWords from "components/RelatedWords";
 // import WordCloud from "components/OccuringWith";
 import WordStats from "components/WordStats";
 import { useNavigate } from "react-router-dom";
 
 /**
- * DONE: set up dummy grid structure
- * TODO: fill inn actual stat components and 
- * edit grid as suitable 
- * TODO: content of each gridItem could be made into component
+ * OUT OF COMMISION FOR NOW
  */
 
 const InstagramContextPage = () => {
@@ -74,7 +71,7 @@ const InstagramContextPage = () => {
 				</GridItem>
 
 				<GridItem colSpan={4} bg='forest' padding={"3%"} rounded={"lg"} >
-					<InstagramPosts></InstagramPosts>
+					{/* <InstagramPosts></InstagramPosts> */}
 				</GridItem>
 
 				<GridItem colSpan={3} bg='itembackdrop' padding={"3%"} rounded={"lg"} >

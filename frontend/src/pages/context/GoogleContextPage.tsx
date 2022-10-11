@@ -18,14 +18,14 @@ import { useState, useEffect } from "react";
 import API from "../../api/api";
 
 
-
-
 const GoogleContextPage = () => {
 	const navigate = useNavigate();
 	const word = sessionStorage.getItem("word");
 
 	const [trendingGoogleSearch, setTrendingGoogleSearch] = useState<string[]>();
 	const [trendingHashtags, setTrendingHashtags] = useState<string[]>();
+	const [popularPostUrls, setPopularPostUrls] = useState<string[]>();
+
 
 
 	useEffect(() => {
@@ -37,9 +37,19 @@ const GoogleContextPage = () => {
 			console.error("Failed to fetch hashtags: %o", error);
 		});
 		/**
-		 * TODO: FETCHE RELATED GOOGLE SEARCHES HER 
+		 * TODO: FETCH RELATED GOOGLE SEARCHES HERE
+		 * REPLACE DUMMYDATA 
 		 */
 		setTrendingGoogleSearch(["dummyord1", "relatert søk", "tester"]);
+
+		if (word) {
+			const strippedWord = word.replace(/\s/g, "");
+			API.getAllRelatedPostURLS(strippedWord).then((popularPost)=>{
+				setPopularPostUrls(popularPost);
+			}).catch(error => {
+				console.error("Failed to fetch instagram posts: %o", error);
+			});
+		}
 	},[]);
 
 
@@ -54,15 +64,12 @@ const GoogleContextPage = () => {
 				gap={6}
 				padding={3}
 			>
-				<GridItem colSpan={1} rounded={"lg"} paddingLeft={"10px"} 
-				> 			
-					{/* DUMMY TEXT HERE */}
+				<GridItem colSpan={1} rounded={"lg"} paddingLeft={"10px"} > 			
 					<Heading color={"forest"} fontSize={"3xl"} as={"u"}>SEARCH</Heading>
 					<Heading color={"teal"} fontSize={"3xl"} marginBottom={"6%"}> {word?.toUpperCase()}</Heading>
-
 				</GridItem>
-				<GridItem colSpan={3} rounded={"lg"} textAlign={"right"} paddingRight={"10px"}
-				>
+
+				<GridItem colSpan={3} rounded={"lg"} textAlign={"right"} paddingRight={"10px"}>
 					{/* DUMMY TEXT HERE */}
 					<Heading color={"forest"} fontSize={"5xl"}  as={"u"} >TOPIC </Heading>
 					<Heading color={"teal"} fontSize={"5xl"}>KNITTING PATTERN</Heading> 		
@@ -91,8 +98,7 @@ const GoogleContextPage = () => {
 				</GridItem>
 
 				<GridItem colSpan={4} bg='forest' padding={"3%"} rounded={"lg"} >
-					<InstagramPosts></InstagramPosts>
-
+					{popularPostUrls && <InstagramPosts URLs={popularPostUrls}></InstagramPosts>}
 				</GridItem>
 
 				<GridItem colSpan={3} bg='itembackdrop' padding={"3%"} rounded={"lg"} >
@@ -105,9 +111,9 @@ const GoogleContextPage = () => {
 				
 				<GridItem colSpan={1} bg='hovergreen' padding={"3%"} rounded={"lg"} >
 					{trendingGoogleSearch &&
-				<RelatedWords relatedWords={trendingGoogleSearch} 
-					type="google" 
-					heading="Related Google searches"></RelatedWords>}
+					<RelatedWords relatedWords={trendingGoogleSearch} 
+						type="google" 
+						heading="Related Google searches"></RelatedWords>}
 				</GridItem>
 
 			</Grid>
