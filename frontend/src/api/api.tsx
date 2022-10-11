@@ -1,7 +1,7 @@
 
 import {TrendingWord} from "../../models/trendingword";
 import axios from "axios";
-import { TredningWordsFilter } from "utils/trendingWordsFilter";
+import { TredningWordsMetric } from "utils/trendingWordsMetric";
 
 const client = axios.create({ baseURL: "http://127.0.0.1:5000/" });
 /**
@@ -9,11 +9,13 @@ const client = axios.create({ baseURL: "http://127.0.0.1:5000/" });
  */
 class API {
 
-
+ 
 	/**
+	 * @param metric 'frequency_growth' or 'search_count'. Used to show the most searched words or the fastest growing words.
+	 * @param searchTerm Optional search term to search for. If empty, the default search term is used.
      * @returns All existing ads
      */
-	async getAllTrendingWords(metric:TredningWordsFilter, searchTerm?:string):Promise<TrendingWord[]> {
+	async getAllTrendingWords(metric:TredningWordsMetric, searchTerm?:string):Promise<TrendingWord[]> {
 		const response = await client.get(`/api/v1/trends/?metric=${metric}${searchTerm ? "&searchTerm=" + searchTerm : ""}`);
 	
 		

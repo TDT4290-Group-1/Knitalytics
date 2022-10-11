@@ -35,13 +35,20 @@ def create_app():
     def hello_world():
         return "Hello, World!"
 
-    @app.route("/api/v1/trends/", methods = ["GET"])
+    @app.route("/api/v1/trends/", methods=["GET"])
     def getTrendingWords():
-        metric = request.args.get('metric')
-        search_term = request.args.get('search_term', '')
+        metric = request.args.get(
+            "metric"
+        )  # 'frequency_growth' or 'search_count'. Used to show the most searched words or the fastest growing words.
+        search_term = request.args.get(
+            "search_term", ""
+        )  # search term to search for. If empty, the default search term is used.
         trending_words_dataframes: List[DataFrame] = []
         googleCollector = GoogleTrendsDataCollector()
-        add_dataframe_from_collector(trending_words_dataframes, googleCollector.get_trending_words( metric, search_term))
+        add_dataframe_from_collector(
+            trending_words_dataframes,
+            googleCollector.get_trending_words(metric, search_term),
+        )
 
         main_data_frame = pd.concat(trending_words_dataframes).reset_index(drop=True)
         print(main_data_frame)

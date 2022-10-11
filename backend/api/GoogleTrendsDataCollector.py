@@ -16,7 +16,11 @@ class GoogleTrendsDataCollector(DataCollector):
         self.pytrends_client = TrendReq(host_language, tz)
 
     def __collect_trending_word_data__(
-        self, metric="frequency_growth", geo="NO", timeframe="now 1-d", search_term = KNITTING_TOPIC
+        self,
+        metric="frequency_growth",
+        geo="NO",
+        timeframe="now 1-d",
+        search_term=KNITTING_TOPIC,
     ) -> pd.DataFrame:
         """
         Collect top words on Google Trends according to a metric.
@@ -49,12 +53,14 @@ class GoogleTrendsDataCollector(DataCollector):
         return processed_data
 
     # Method used by the endpoint to get the trending words. Returns a list of TrendingWord objects.
-    def get_trending_words(self, metric: str, search_term:str) -> pd.DataFrame:
+    def get_trending_words(self, metric: str, search_term: str) -> pd.DataFrame:
         if search_term == "":
             return self.__process_trending_word_data__(
                 self.__collect_trending_word_data__(metric=metric)
-        ) 
+            )
         else:
             return self.__process_trending_word_data__(
-                self.__collect_trending_word_data__(metric=metric, search_term= search_term)
+                self.__collect_trending_word_data__(
+                    metric=metric, search_term=search_term
+                )
             )
