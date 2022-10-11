@@ -13,8 +13,8 @@ class API {
 	/**
      * @returns All existing ads
      */
-	async getAllTrendingWords(filter:TredningWordsFilter):Promise<TrendingWord[]> {
-		const response = await client.get(`/api/v1/trends/${filter}`);
+	async getAllTrendingWords(metric:TredningWordsFilter, searchTerm?:string):Promise<TrendingWord[]> {
+		const response = await client.get(`/api/v1/trends/?metric=${metric}${searchTerm ? "&searchTerm=" + searchTerm : ""}`);
 	
 		
 		return response.data;
