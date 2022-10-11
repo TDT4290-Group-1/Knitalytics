@@ -55,6 +55,7 @@ const HomePage = () => {
 			const hashtagsMap = hashtags.map((hashtag): TrendingWord => {
 				return {
 					word: hashtag,
+					metric: -1 // default value
 				};
 			});
 			setTrendingHashtags(hashtagsMap);
