@@ -1,4 +1,4 @@
-import {  chakra, Grid, GridItem, VStack } from "@chakra-ui/react";
+import {  chakra, SimpleGrid, GridItem, VStack } from "@chakra-ui/react";
 import { InstagramEmbed } from "react-social-media-embed";
 
 
@@ -8,6 +8,7 @@ interface Props{
 }
 
 export default function InstagramPosts({URLs, heading}:Props){
+	
 	
 	return(
 		<VStack>
@@ -19,18 +20,16 @@ export default function InstagramPosts({URLs, heading}:Props){
 				color={"hovergreen"}>
 				{heading}
 			</chakra.h1>
-			<Grid
-				h='auto'
-				templateRows='auto'
-				templateColumns='repeat(3, 1fr)'
-				gap={6}
-				padding={3}
+			<SimpleGrid
+				columns={{ base: 1, sm: 1, md:1, lg:3}} 
+				spacing={{ base: 3, lg: 5 }}
+				// minChildWidth='328px' spacing='0px' 
 			>
-				{URLs.map(u => <GridItem key={u} colSpan={1} rounded={"lg"} paddingLeft={"10px"}> 			
+				{URLs.map(u => <GridItem key={u}> 			
 					<InstagramEmbed url={u} width={328}/>
 				</GridItem>)}
 			
-			</Grid>
+			</SimpleGrid>
 		</VStack>
 
 
