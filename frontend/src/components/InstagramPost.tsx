@@ -9,7 +9,10 @@ interface Props{
 
 export default function InstagramPosts({URLs, heading}:Props){
 	
-	
+	/**
+	 * TODO: query api for relevant urls  
+	 */
+
 	return(
 		<VStack>
 			<chakra.h1
@@ -23,12 +26,10 @@ export default function InstagramPosts({URLs, heading}:Props){
 			<SimpleGrid
 				columns={{ base: 1, sm: 1, md:1, lg:3}} 
 				spacing={{ base: 3, lg: 5 }}
-				// minChildWidth='328px' spacing='0px' 
 			>
 				{URLs.map(u => <GridItem key={u}> 			
 					<InstagramEmbed url={u} width={328}/>
 				</GridItem>)}
-			
 			</SimpleGrid>
 		</VStack>
 
