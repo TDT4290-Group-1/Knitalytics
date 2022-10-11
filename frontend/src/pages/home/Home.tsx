@@ -9,7 +9,14 @@ import { TredningWordsFilter } from "utils/trendingWordsFilter";
 
 const HomePage = () => {
 
-	const [trendingGoogleWords, setTrendingGoogleWords] = useState<TrendingWord[]>();
+
+	const [wordsFreqGrowth, setWordsFreqGrowth] = useState<TrendingWord[] | undefined>(undefined); // use undefined as check whether loaded or not
+	const [wordsSearchCount, setWordsSearchCount] = useState<TrendingWord[] | undefined>(undefined); // use undefined as check whether loaded or not
+
+	const [wordsFreqGrowthError, setWordsFreqGrowthError] = useState(false);
+	const [wordsSearchCountError, setWordsSearchCountError] = useState(false);
+
+
 	const [trendingHashtags, setTrendingHashtags] = useState<TrendingWord[]>();
 
 
