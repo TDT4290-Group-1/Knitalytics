@@ -28,7 +28,7 @@ const LinkItems: Array<LinkItemProps> = [
 	{ name: "Trending words", icon: BiSortZA, path: "/" },
 	{ name: "Fashion trends", icon: BiCloset, path: "/" },
 	{ name: "Trending users", icon: BiGroup, path: "/" },
-	{ name: "Watch list", icon: BiBookmark, path: "/" },
+	{ name: "Watch list", icon: BiBookmark, path: "/InstagramPosts" },
 	{ name: "Settings", icon: FiSettings, path: "/settings" },
 ];
   
