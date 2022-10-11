@@ -19,7 +19,6 @@ class GoogleTrendsDataCollector(DataCollector):
     ) -> pd.DataFrame:
         """
         Collect top words on Google Trends according to a metric.
-
         Args:
             metric : str, default 'frequency_growth'
                 Ranking metric of words. One of 'frequency_growth' or 'search_count'.
@@ -27,7 +26,6 @@ class GoogleTrendsDataCollector(DataCollector):
                 Geographical region to return searches for.
             timeframe: str, default 'now 1-d'
                 Timeframe to return searches for. 'now #-d' represents last # days. Only supports 1 or 7 days.
-
         Returns:
             pandas.DataFrame
         """

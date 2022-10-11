@@ -1,1 +1,2 @@
-export { default } from "./ContextPage";
+export { default } from "./InstagramContextPage";
+

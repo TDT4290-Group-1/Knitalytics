@@ -10,7 +10,6 @@ import { TredningWordsFilter } from "utils/trendingWordsFilter";
 const HomePage = () => {
 
 	const [trendingGoogleWords, setTrendingGoogleWords] = useState<TrendingWord[]>();
-	const [trendingHashtags, setTrendingHashtags] = useState<TrendingWord[]>();
 
 
 	// This function needs to differantiate between fetching instagram data or google data.
@@ -23,17 +22,7 @@ const HomePage = () => {
 			console.error("Failed to fetch hashtags: %o", error);
 		});
 		//TODO: change hardcoded "knitting" to a dynamic query
-		API.getAllRelatedHashtags("knitting").then((trendingHashtags) => {
-			const hashtags = trendingHashtags;
-			const hashtagsMap = hashtags.map((hashtag): TrendingWord => {
-				return {
-					word: hashtag,
-				};
-			});
-			setTrendingHashtags(hashtagsMap);
-		}).catch(error => {
-			console.error("Failed to fetch hashtags: %o", error);
-		});
+		
 		// setTrendingWords(API.getAllTrendingWords());
 	},[]);
 
@@ -54,6 +43,7 @@ const HomePage = () => {
 							<ContentBox
 								category="Word"
 								statName="Growth"
+								tabletype="google"
 								items={trendingGoogleWords}
 							/> : <div>loading</div>}
 					</VStack>
@@ -65,12 +55,13 @@ const HomePage = () => {
 						<Center>
 							<Text marginBottom={"10%"} fontSize={"2xl"} color={theme.colors.forest}>Instagram Hashtags</Text>
 						</Center>
-						{trendingHashtags ?
+						{/* {trendingHashtags ?
 							<ContentBox
 								category="Word"
 								statName="Growth"
 								items={trendingHashtags}
-							/> : <div>loading</div>}
+								tabletype={"instagram"}
+							/> : <div>loading</div>} */}
 					</VStack>
 
 				</Box>

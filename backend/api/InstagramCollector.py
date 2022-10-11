@@ -33,6 +33,7 @@ class InstagramCollector(DataCollector):
 
     # returns a list of 20 most popular hashtags co-appearing with 'query'
     def get_related_hashtags(self, query: str) -> List[str]:
+        query = query.replace(" ", "")
         self.query = query
         posts = self.__get_posts__(query, "like_count, caption")
         captions = self.__get_captions__(posts)
