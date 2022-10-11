@@ -4,6 +4,7 @@ import  API  from "api/api";
 import {TrendingWord} from "../../../models/trendingword";
 import { useState, useEffect } from "react";
 import theme from "../../theme";
+import { TredningWordsFilter } from "utils/trendingWordsFilter";
 
 
 const HomePage = () => {
@@ -14,7 +15,8 @@ const HomePage = () => {
 	// This function needs to differantiate between fetching instagram data or google data.
 	// Awaiting backend implementation
 	useEffect(() => {
-		API.getAllTrendingWords().then((trendingWords) => {
+
+		API.getAllTrendingWords(TredningWordsFilter.FrequencyGrowth).then((trendingWords) => {
 			setTrendingGoogleWords(trendingWords as TrendingWord[]);
 		}).catch(error => {
 			console.error("Failed to fetch hashtags: %o", error);

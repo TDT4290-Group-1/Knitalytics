@@ -51,11 +51,11 @@ const ContentBox: React.FC<Props> = ({ category, statName, items, tabletype }: P
 								
 							</Th>
 							
-							<Th fontSize="sm" isNumeric paddingRight={0}>count
+							{/* <Th fontSize="sm" isNumeric paddingRight={0}>count
 								{toggle && 
 								<IconButton colorScheme={"white"} size={"xs"} padding={0} icon={<ArrowDownIcon color={"forest"}/>} aria-label={"sort"} onClick={toggleSwitch}></IconButton>
 								}
-							</Th>
+							</Th> */}
 						</Tr>
 					</Thead>
 
@@ -69,7 +69,7 @@ const ContentBox: React.FC<Props> = ({ category, statName, items, tabletype }: P
 									}}
 								>{`${index + 1}. ${item.word}`}</Td>
 								<Td fontSize="sm"  isNumeric>{item.frequency_growth}</Td>
-								<Td fontSize="sm" isNumeric>{item.search_count}</Td> 
+								{/* <Td fontSize="sm" isNumeric>{item.search_count}</Td>  */}
 							</Tr>);})}
 					</Tbody>
 
