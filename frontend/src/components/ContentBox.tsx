@@ -54,14 +54,15 @@ const ContentBox: React.FC<Props> = ({ items, displayMetric, setDisplayMetric }:
 
 					<Tbody >
 
-						{items.sort((o1, o2) => toggle ? ((o1.frequency_growth ?? 0) < (o2.frequency_growth ?? 0) ? 1 : -1) : ( (o1.search_count ?? 0)<(o2.search_count ?? 0) ? 1:-1)).map((item, index) => {
+						{items?.sort((word1, word2) => word1.metric < word2.metric ? 1 : -1)
+							.map((item: TrendingWord, index: number) => {
 							return (<Tr key={index}>
 								<Td fontSize="sm" onClick={()=>navigate("/context")}
 									_hover={{
 										color: "hovergreen",
 									}}
 								>{`${index + 1}. ${item.word}`}</Td>
-								<Td fontSize="sm"  isNumeric>{item.frequency_growth}</Td>
+								<Td fontSize="sm"  isNumeric>{item.metric}</Td>
 								{/* <Td fontSize="sm" isNumeric>{item.search_count}</Td>  */}
 							</Tr>);})}
 					</Tbody>
