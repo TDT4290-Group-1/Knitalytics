@@ -9,11 +9,6 @@ from typing import List
 import re
 import unicodedata as ud
 
-raw_data = """word;frequency_growth;search_count
-Australian dreams;1.4;1000
-Old knit sweater;3.4;100
-asdsad;9.4;10"""
-
 # code snippet to find if hashtag is western
 latin_letters = {}
 
@@ -34,24 +29,30 @@ class InstagramCollector(DataCollector):
         self.base_url = "https://graph.facebook.com/v15.0"
         self.access_token = access_token
         self.user_id = user_id
+        self.query = ""
 
+    # returns a list of 20 most popular hashtags co-appearing with 'query'
     def get_related_hashtags(self, query: str) -> List[str]:
         query = query.replace(" ", "")
+        self.query = query
         posts = self.__get_posts__(query, "like_count, caption")
-        posts = self.__remove_unpopular_posts__(posts)
         captions = self.__get_captions__(posts)
         hashtags = self.__parse_hashtags_from_captions__(captions)
         hashtags = self.__remove_irrelevant_hashtags__(hashtags)
         hashtags = self.__remove_foreign_languages__(hashtags)
-        return hashtags
+        hashtags = self.__sort_popular_hashtags(hashtags)
+        # return 20 most popular hashtags
+        return hashtags[0:20]
 
+    # returns link to popular posts related to 'query
     def get_related_posts(self, query: str) -> List[str]:
-        posts = self.__get_posts__(query, "like_count, caption, permalink")
+        self.query = query
+        posts = self.__get_posts__(query, "like_count, permalink")
         posts = self.__remove_unpopular_posts__(posts)
         post_url = self.__get_post_url__(posts)
         return post_url
 
-    # Method to get id of the hashtag specified in query. Returns the id as a string.
+    # returns id of the hashtag specified in query.
     def __get_hashtag_id__(self, query: str) -> str:
         PARAMS = {
             "access_token": self.access_token,
@@ -65,12 +66,13 @@ class InstagramCollector(DataCollector):
         except requests.exceptions.RequestException as e:  # This is the correct syntax
             raise SystemExit(e)
 
-    # get all posts
+    # get popular posts from 'query'
     def __get_posts__(self, query: str, fields: str) -> str:
         id = self.__get_hashtag_id__(query)
         PARAMS = {
             "access_token": self.access_token,
             "user_id": self.user_id,
+            "limit": 50,
             "fields": fields,
         }
         endpoint = "/" + id + "/top_media"
@@ -96,19 +98,21 @@ class InstagramCollector(DataCollector):
                 pass
         return popular_posts
 
-    # Parse all captions from posts
+    # returns all captions from 'posts'
     def __get_captions__(self, posts: List[TrendingPost]) -> List[str]:
         captions: List[str] = []
         for post in posts:
             captions.append(post["caption"])
         return captions
 
+    # returns url to all 'posts'
     def __get_post_url__(self, posts: List[TrendingPost]) -> List[str]:
         post_url = []
         for post in posts:
             post_url.append(post["permalink"])
         return post_url
 
+    # parse all captions from 'posts'
     def __parse_hashtags_from_captions__(self, captions: List[str]) -> List[str]:
         hashtags = []
         for caption in captions:
@@ -116,17 +120,20 @@ class InstagramCollector(DataCollector):
             hashtags += hashtag_list
         return hashtags
 
+    # removes hashtags that contains certain words
     def __remove_irrelevant_hashtags__(self, hashtags: List[str]) -> List[str]:
         relevant_hashtags = []
         for hashtag in hashtags:
             match = re.search(
-                "knit|strik|love|insp|addict|insta|Knit|Insta|Strick|strick|gram|desig|fash",
+                "knit|strik|Strik|love|insp|addict|insta|Knit|Insta|Strick|strick|gram|desig|fash|"
+                + self.query,
                 hashtag,
             )
             if match == None:
                 relevant_hashtags.append(hashtag)
         return relevant_hashtags
 
+    # removes all hashtags with non-latin/germanic letters
     def __remove_foreign_languages__(self, hashtags: List[str]) -> List[str]:
         roman_hashtags = []
         for hashtag in hashtags:
@@ -134,6 +141,17 @@ class InstagramCollector(DataCollector):
                 roman_hashtags.append(hashtag)
         return roman_hashtags
 
-    # TODO
+    # sorts the hashtags after popularity, most popular first
     def __sort_popular_hashtags(self, hashtags: List[str]) -> List[str]:
-        print()
+        popular_hashtags_count = {}
+        popular_hashtags = []
+        for hashtag in hashtags:
+            if hashtag not in popular_hashtags:
+                popular_hashtags.append(hashtag)
+                popular_hashtags_count[hashtag] = 1
+            else:
+                popular_hashtags_count[hashtag] += 1
+        popular_hashtags_count = sorted(
+            popular_hashtags_count, key=popular_hashtags_count.get, reverse=True
+        )
+        return popular_hashtags_count
