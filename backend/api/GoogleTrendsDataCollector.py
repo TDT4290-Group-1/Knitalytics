@@ -50,8 +50,8 @@ class GoogleTrendsDataCollector(DataCollector):
         return processed_data
 
     # Method used by the endpoint to get the trending words. Returns a list of TrendingWord objects.
-    def get_trending_words(self) -> pd.DataFrame:
+    def get_trending_words(self, filter: str) -> pd.DataFrame:
 
         return self.__process_trending_word_data__(
-            self.__collect_trending_word_data__()
+            self.__collect_trending_word_data__(metric=filter)
         )
