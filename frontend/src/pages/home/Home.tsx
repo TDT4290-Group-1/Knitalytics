@@ -73,18 +73,19 @@ const HomePage = () => {
 			</Center>
 			<SimpleGrid minChildWidth='350px' spacingY='50px' spacingX="0px">
 				<Box>
+					{/**
+					 * TODO: separate instagram and google ContentBox to separate components, and move state down
+					 */}
 					<VStack >
 						<Center>
 							<Text marginBottom={"10%"} fontSize={"2xl"}  color={theme.colors.forest}>Google Trends</Text>
-						</Center>
-						{wordsFreqGrowth ?
-							<ContentBox
-								category="Word"
-								statName="Growth"
-								items={wordsFreqGrowth}
-							/> : <div>loading</div>}
+						</Center> 
+						<ContentBox
+							displayMetric={displayMetric} 
+							items={displayMetric === TredningWordsFilter.FrequencyGrowth ? wordsFreqGrowth : wordsSearchCount} 
+							setDisplayMetric={setDisplayMetric}
+						/>
 					</VStack>
-
 				</Box>
 
 				<Box>
@@ -94,9 +95,9 @@ const HomePage = () => {
 						</Center>
 						{trendingHashtags ?
 							<ContentBox
-								category="Word"
-								statName="Growth"
+								displayMetric="Growth"
 								items={trendingHashtags}
+								setDisplayMetric={setDisplayMetric}
 							/> : <div>loading</div>}
 					</VStack>
 
