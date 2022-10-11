@@ -51,9 +51,24 @@ def create_app():
         )
 
         main_data_frame = pd.concat(trending_words_dataframes).reset_index(drop=True)
-        print(main_data_frame)
+        
+        print(googleCollector.get_interest_over_time("bil"))
 
         return main_data_frame.to_json(orient="records")
+
+    @app.route("/api/v1/interest_over_time/", methods=["GET"])
+    def getInterestOverTime():
+        search_term = request.args.get(
+            "search_term", ""
+        )  # search term to search for. If empty, the default search term is used.
+
+        googleCollector = GoogleTrendsDataCollector()
+        df = googleCollector.get_interest_over_time(search_term)
+        print(df)
+        main_data_frame = df.reset_index(drop=True)
+        return main_data_frame.to_json(orient="records")
+
+        
 
     @app.route("/api/v1/relatedHashtags")
     def getRelatedHashtags():
