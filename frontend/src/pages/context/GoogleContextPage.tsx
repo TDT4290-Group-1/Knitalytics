@@ -14,11 +14,33 @@ import InstagramPosts from "components/InstagramPost";
 import RelatedWords from "components/RelatedWords";
 import WordStats from "components/WordStats";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import API from "../../api/api";
+
+
 
 
 const GoogleContextPage = () => {
 	const navigate = useNavigate();
 	const word = sessionStorage.getItem("word");
+
+	const [trendingGoogleSearch, setTrendingGoogleSearch] = useState<string[]>();
+	const [trendingHashtags, setTrendingHashtags] = useState<string[]>();
+
+
+	useEffect(() => {
+		const word = sessionStorage.getItem("word");
+
+		word && API.getAllRelatedHashtags(word).then((trendingHashtags) => {
+			setTrendingHashtags(trendingHashtags);
+		}).catch(error => {
+			console.error("Failed to fetch hashtags: %o", error);
+		});
+		/**
+		 * TODO: FETCHE RELATED GOOGLE SEARCHES HER 
+		 */
+		setTrendingGoogleSearch(["dummyord1", "relatert søk", "tester"]);
+	},[]);
 
 
 	return (
@@ -74,13 +96,18 @@ const GoogleContextPage = () => {
 				</GridItem>
 
 				<GridItem colSpan={3} bg='itembackdrop' padding={"3%"} rounded={"lg"} >
-					
-					<RelatedWords type="instagram" heading="Hashtags occurring in Instagram posts with this word"></RelatedWords>
+					{trendingHashtags &&
+					<RelatedWords relatedWords={trendingHashtags} 
+						type="instagram" 
+						heading="Hashtags occurring in Instagram posts with this word"></RelatedWords>}
 
 				</GridItem>
 				
 				<GridItem colSpan={1} bg='hovergreen' padding={"3%"} rounded={"lg"} >
-					<RelatedWords heading="Related Google searches" type={"google"}></RelatedWords>
+					{trendingGoogleSearch &&
+				<RelatedWords relatedWords={trendingGoogleSearch} 
+					type="google" 
+					heading="Related Google searches"></RelatedWords>}
 				</GridItem>
 
 			</Grid>

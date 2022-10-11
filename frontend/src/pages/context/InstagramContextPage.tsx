@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { FrequencyStat } from "components/FrequencyStat";
 import InstagramPosts from "components/InstagramPost";
-import RelatedWords from "components/RelatedWords";
+// import RelatedWords from "components/RelatedWords";
 // import WordCloud from "components/OccuringWith";
 import WordStats from "components/WordStats";
 import { useNavigate } from "react-router-dom";
@@ -90,7 +90,7 @@ const InstagramContextPage = () => {
 				</GridItem>
 				
 				<GridItem colSpan={1} bg='hovergreen' padding={"3%"} rounded={"lg"} >
-					<RelatedWords type="instagram" heading="Hashtags used together with this one"></RelatedWords>
+					{/* <RelatedWords type="instagram" heading="Hashtags used together with this one"></RelatedWords> */}
 				</GridItem>
 
 			</Grid>
