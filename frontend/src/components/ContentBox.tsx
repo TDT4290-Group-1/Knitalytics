@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, IconButton } from "@chakra-ui/react";
+import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, Button, Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import theme from "../theme";
 import { TrendingWord } from "../../models/trendingword";
 import { ArrowDownIcon } from "@chakra-ui/icons";
@@ -20,18 +20,28 @@ const ContentBox: React.FC<Props> = ({ items, displayMetric, setDisplayMetric }:
 
 	return (
 		<Center>
-			<TableContainer maxHeight={"200px"} overflowY={"scroll"}>
+			<TableContainer maxHeight={"500px"} overflowY={"scroll"}>
 				<Table variant='simple' color={theme.colors.forest} size={"sm"}>
 
-					<Thead>
+					<Thead position="sticky" >
 					
 						<Tr borderBottom="2px" color={theme.colors.forest}>
-							<Th  fontSize="sm">{category}</Th>
-							<Th fontSize="sm" isNumeric paddingRight={0}>{statName}
-								{!toggle&&
-								<IconButton colorScheme={"white"} size={"xs"} padding={0} icon={<ArrowDownIcon color={"forest"}/>} aria-label={"sort"} onClick={toggleSwitch}></IconButton>
-								}
-								
+							<Th  fontSize="sm">Word</Th> {/** The table always display words */}
+							<Th fontSize="sm" isNumeric paddingRight={0}>
+								<Menu> 
+									<MenuButton as={Button} rightIcon={<ArrowDownIcon />}>
+										{displayMetric} {/**TODO: display human readable format */}
+									</MenuButton>
+									<MenuList>
+										<MenuItem onClick={() => setDisplayMetric(TredningWordsFilter.FrequencyGrowth)}>
+											Frequency growth
+										</MenuItem>
+										<MenuItem onClick={() => setDisplayMetric(TredningWordsFilter.SearchCount)}>
+											Search count
+										</MenuItem>
+									</MenuList>
+
+								</Menu>	
 							</Th>
 							
 							{/* <Th fontSize="sm" isNumeric paddingRight={0}>count
