@@ -16,7 +16,7 @@ class API {
      * @returns a JSON list of trening words with the gived metric value
      */
 	async getAllTrendingWords(metric:TredningWordsMetric, searchTerm?:string):Promise<TrendingWord[]> {
-		const response = await client.get(`/api/v1/trends/?metric=${metric}${searchTerm ? "&searchTerm=" + searchTerm : ""}`);
+		const response = await client.get(`/api/v1/trends/?metric=${metric}${searchTerm ? "&search_term=" + searchTerm : ""}`);
 		return response.data;
 	}
 
