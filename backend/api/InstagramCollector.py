@@ -24,6 +24,21 @@ def only_roman_chars(unistr):
     return all(is_latin(uchr) for uchr in unistr if uchr.isalpha())
 
 
+# code snippet to find if hashtag is western
+latin_letters = {}
+
+
+def is_latin(uchr):
+    try:
+        return latin_letters[uchr]
+    except KeyError:
+        return latin_letters.setdefault(uchr, "LATIN" in ud.name(uchr))
+
+
+def only_roman_chars(unistr):
+    return all(is_latin(uchr) for uchr in unistr if uchr.isalpha())
+
+
 class InstagramCollector(DataCollector):
     def __init__(self, access_token, user_id) -> None:
         self.base_url = "https://graph.facebook.com/v15.0"
