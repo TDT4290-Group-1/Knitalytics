@@ -10,6 +10,7 @@ import {
 	Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import theme from "../theme";
 
   
 ChartJS.register(
@@ -50,8 +51,8 @@ export const TrendChart = () => {
 			{
 				label: "Searches",
 				data: counts,
-				borderColor: "rgb(76,145,124)",
-				backgroundColor: "rgba(76,145,124, 0.5)",
+				borderColor: theme.colors.chartgraphgreen,
+				backgroundColor: theme.colors.lightchartgraphgreen,
 			},
 
 		],

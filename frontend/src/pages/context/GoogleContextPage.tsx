@@ -3,7 +3,6 @@ import {
 	IconButton,
 	VStack,
 	Box,
-	// HStack,
 	Grid,
 	GridItem,
 	Heading,
@@ -97,7 +96,7 @@ const GoogleContextPage = () => {
 					
 				</GridItem>
 
-				<GridItem colSpan={4} bg="rgba(65,145,121, 0.4)" padding={"3%"} rounded={"lg"} >
+				<GridItem colSpan={4} bg="lightgreen" padding={"3%"} rounded={"lg"} >
 					{popularPostUrls && <InstagramPosts URLs={popularPostUrls} heading={"Most popular Instagram posts with this hashtag"}></InstagramPosts>}
 				</GridItem>
 
