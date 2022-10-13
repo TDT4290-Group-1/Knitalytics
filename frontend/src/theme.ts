@@ -10,6 +10,10 @@ const theme = extendTheme({
 		lighthovergreen: "#cfe6df",
 		itembackdrop: "#e4f5f3",
 		almostwhite: "#f7fcfc",
+		lightgreen: "rgba(65,145,121, 0.4)",
+		chartgraphgreen: "rgb(76,145,124)",
+		lightchartgraphgreen: "rgba(76,145,124, 0.5)",
+
 	},
 
 },

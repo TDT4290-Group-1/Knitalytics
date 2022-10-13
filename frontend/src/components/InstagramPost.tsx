@@ -20,7 +20,7 @@ export default function InstagramPosts({URLs, heading}:Props){
 				fontSize={"4xl"}
 				py={7}
 				fontWeight={"bold"}
-				color={"hovergreen"}>
+				color={"forest"}>
 				{heading}
 			</chakra.h1>
 			<SimpleGrid

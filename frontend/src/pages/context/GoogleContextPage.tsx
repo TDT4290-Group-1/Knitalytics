@@ -3,7 +3,6 @@ import {
 	IconButton,
 	VStack,
 	Box,
-	HStack,
 	Grid,
 	GridItem,
 	Heading,
@@ -12,10 +11,10 @@ import {
 import { FrequencyStat } from "components/FrequencyStat";
 import InstagramPosts from "components/InstagramPost";
 import RelatedWords from "components/RelatedWords";
-import WordStats from "components/WordStats";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import API from "../../api/api";
+import { TrendChart } from "components/TrendChart";
 
 
 const GoogleContextPage = () => {
@@ -89,12 +88,12 @@ const GoogleContextPage = () => {
 				</GridItem>
 
 				<GridItem colSpan={3} bg='itembackdrop' rounded={"lg"}>
-					<HStack >
-						<WordStats></WordStats>
-					</HStack>
+					
+					<TrendChart></TrendChart>
+					
 				</GridItem>
 
-				<GridItem colSpan={4} bg='forest' padding={"3%"} rounded={"lg"} >
+				<GridItem colSpan={4} bg="lightgreen" padding={"3%"} rounded={"lg"} >
 					{popularPostUrls && <InstagramPosts URLs={popularPostUrls} heading={"Most popular Instagram posts with this hashtag"}></InstagramPosts>}
 				</GridItem>
 
