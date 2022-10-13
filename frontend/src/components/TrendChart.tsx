@@ -31,7 +31,7 @@ export const TrendChart = () => {
 	const counts = [3,1,6,7,8,4,6];
 
 	const options = {
-		responsive: true,
+		responsive: true,    
 		plugins: {
 			legend: {
 				position: "top" as const,
@@ -40,9 +40,9 @@ export const TrendChart = () => {
 				display: true,
 				text: "Number of searches over time",
 			},
+			
 		},
 	};
-  
   
 	const data = {
 		labels,
@@ -56,6 +56,11 @@ export const TrendChart = () => {
 
 		],
 	};
+
+	const chartStyle = {
+		padding: "25px",
+	};
+
 	return (
 		<><chakra.h1
 			textAlign={"center"}
@@ -66,6 +71,6 @@ export const TrendChart = () => {
 			padding={0}
 			marginTop={5}>
             How is the word doing?
-		</chakra.h1><Line options={options} data={data} /></>
+		</chakra.h1><Line options={options} data={data} style={chartStyle}/></>
 	);
 };
