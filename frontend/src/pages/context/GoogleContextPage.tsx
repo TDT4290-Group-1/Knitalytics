@@ -42,14 +42,11 @@ const GoogleContextPage = () => {
 		 */
 		setTrendingGoogleSearch(["dummyord1", "relatert søk", "tester"]);
 
-		if (word) {
-			const strippedWord = word.replace(/\s/g, "");
-			API.getAllRelatedPostURLS(strippedWord).then((popularPost)=>{
-				setPopularPostUrls(popularPost);
-			}).catch(error => {
-				console.error("Failed to fetch instagram posts: %o", error);
-			});
-		}
+		word && API.getAllRelatedPostURLS(word).then((popularPost)=>{
+			setPopularPostUrls(popularPost);
+		}).catch(error => {
+			console.error("Failed to fetch instagram posts: %o", error);
+		});
 	},[]);
 
 

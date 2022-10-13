@@ -62,8 +62,9 @@ def create_app():
         )
         args = request.args
         query = args.get("query", default="", type=str)
+        filteredOutWords = args.get("filteredOutWords", default="", type=str)
         # to test backend you can change 'query' to hardcoded keyword
-        return metaCollector.get_related_hashtags(query)
+        return metaCollector.get_related_hashtags(query, filteredOutWords)
 
     @app.route("/api/v1/relatedPostURLS")
     def getRelatedPostURLS():

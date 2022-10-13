@@ -13,7 +13,7 @@ const HashtagBox = ({ name, deleteCallback }: HashtagBoxProps) => {
 			key="md"
 			borderRadius='full'
 			variant='solid'
-			colorScheme="green"
+			colorScheme="teal"
 			m={3}
 		>
 			<TagLabel>{name}</TagLabel>
