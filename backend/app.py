@@ -50,7 +50,8 @@ def create_app():
             googleCollector.get_trending_words(metric, search_term),
         )
 
-        main_data_frame = pd.concat(trending_words_dataframes).reset_index(drop=True)
+        main_data_frame = pd.concat(
+            trending_words_dataframes).reset_index(drop=True)
         print(main_data_frame)
 
         return main_data_frame.to_json(orient="records")
@@ -62,8 +63,9 @@ def create_app():
         )
         args = request.args
         query = args.get("query", default="", type=str)
+        filteredOutWords = args.get("filteredOutWords", default="", type=str)
         # to test backend you can change 'query' to hardcoded keyword
-        return metaCollector.get_related_hashtags(query)
+        return metaCollector.get_related_hashtags(query, filteredOutWords)
 
     @app.route("/api/v1/relatedPostURLS")
     def getRelatedPostURLS():

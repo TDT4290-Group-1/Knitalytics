@@ -2,6 +2,7 @@
 import {TrendingWord} from "../../models/trendingword";
 import axios from "axios";
 import { TredningWordsMetric } from "utils/trendingWordsMetric";
+import { getListLocalStorage } from "api/localStorage";
 
 const client = axios.create({ baseURL: "http://127.0.0.1:5000/" });
 /**
@@ -23,7 +24,9 @@ class API {
 	}
 
 	async getAllRelatedHashtags(query: string):Promise<string[]> {
-		const response = await client.get("/api/v1/relatedHashtags", { params: { query: query } });
+		const filteredOutWords = getListLocalStorage("filteredOutWords");
+		//filteredOutWords format: "word, word1, word2". String with comma between each word
+		const response = await client.get("/api/v1/relatedHashtags", { params: { query: query, filteredOutWords: filteredOutWords } });
 		return response.data;
 	}
 
