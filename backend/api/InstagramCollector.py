@@ -53,8 +53,7 @@ class InstagramCollector(DataCollector):
         posts = self.__get_posts__(query, "like_count, caption")
         captions = self.__get_captions__(posts)
         hashtags = self.__parse_hashtags_from_captions__(captions)
-        hashtags = self.__remove_irrelevant_hashtags__(
-            hashtags, filteredOutWords)
+        hashtags = self.__remove_irrelevant_hashtags__(hashtags, filteredOutWords)
         hashtags = self.__remove_foreign_languages__(hashtags)
         hashtags = self.__sort_popular_hashtags(hashtags)
         # return 20 most popular hashtags
@@ -100,9 +99,9 @@ class InstagramCollector(DataCollector):
 
         return captions
 
-    # Method to get id of the hashtag specified in query. Returns the id as a string.
     # returns link to popular posts related to 'query
     def get_related_posts(self, query: str) -> List[str]:
+        query = query.replace(" ", "")
         self.query = query
         posts = self.__get_posts__(query, "like_count, permalink")
         posts = self.__remove_unpopular_posts__(posts)
@@ -118,8 +117,7 @@ class InstagramCollector(DataCollector):
         }
         endpoint = "/ig_hashtag_search"
         try:
-            response = requests.get(
-                url=self.base_url + endpoint, params=PARAMS)
+            response = requests.get(url=self.base_url + endpoint, params=PARAMS)
             return json.loads(response.text)["data"][0]["id"]
         except requests.exceptions.RequestException as e:  # This is the correct syntax
             raise SystemExit(e)
@@ -135,8 +133,7 @@ class InstagramCollector(DataCollector):
         }
         endpoint = "/" + id + "/top_media"
         try:
-            response = requests.get(
-                url=self.base_url + endpoint, params=PARAMS)
+            response = requests.get(url=self.base_url + endpoint, params=PARAMS)
 
             posts: List[TrendingPost] = json.loads(response.text)["data"]
             return posts
@@ -180,14 +177,15 @@ class InstagramCollector(DataCollector):
         return hashtags
 
     # removes hashtags that contains certain words
-    def __remove_irrelevant_hashtags__(self, hashtags: List[str], filteredOutWords: str) -> List[str]:
+    def __remove_irrelevant_hashtags__(
+        self, hashtags: List[str], filteredOutWords: str
+    ) -> List[str]:
         relevant_hashtags = []
         filteredOutWords = filteredOutWords.replace(",", "|")
         filteredOutWords = filteredOutWords.replace(" ", "")
         for hashtag in hashtags:
             match = re.search(
-                filteredOutWords
-                + self.query,
+                filteredOutWords + self.query,
                 hashtag,
             )
             if match == None:

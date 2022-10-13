@@ -50,8 +50,7 @@ def create_app():
             googleCollector.get_trending_words(metric, search_term),
         )
 
-        main_data_frame = pd.concat(
-            trending_words_dataframes).reset_index(drop=True)
+        main_data_frame = pd.concat(trending_words_dataframes).reset_index(drop=True)
         print(main_data_frame)
 
         return main_data_frame.to_json(orient="records")
