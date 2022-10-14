@@ -11,19 +11,13 @@ const HomePage = () => {
 
 	const [trendingGoogleWords, setTrendingGoogleWords] = useState<TrendingWord[]>();
 
-
-	// This function needs to differantiate between fetching instagram data or google data.
-	// Awaiting backend implementation
 	useEffect(() => {
 
 		API.getAllTrendingWords(TredningWordsMetric.FrequencyGrowth).then((trendingWords) => {
 			setTrendingGoogleWords(trendingWords as TrendingWord[]);
 		}).catch(error => {
 			console.error("Failed to fetch hashtags: %o", error);
-		});
-		//TODO: change hardcoded "knitting" to a dynamic query
-		
-		// setTrendingWords(API.getAllTrendingWords());
+		});		
 	},[]);
 
 	console.log(trendingGoogleWords);
