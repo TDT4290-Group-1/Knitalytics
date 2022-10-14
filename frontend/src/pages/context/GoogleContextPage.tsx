@@ -15,15 +15,16 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import API from "../../api/api";
 import { TrendChart } from "components/TrendChart";
+import { TredningWordsMetric } from "utils/trendingWordsMetric";
 
 
 const GoogleContextPage = () => {
 	const navigate = useNavigate();
 	const word = sessionStorage.getItem("word");
 
-	const [trendingGoogleSearch, setTrendingGoogleSearch] = useState<string[]>();
 	const [trendingHashtags, setTrendingHashtags] = useState<string[]>();
 	const [popularPostUrls, setPopularPostUrls] = useState<string[]>();
+	const [relatedSearches, setRelatedSearches] = useState<string[]>();
 
 
 
@@ -35,11 +36,15 @@ const GoogleContextPage = () => {
 		}).catch(error => {
 			console.error("Failed to fetch hashtags: %o", error);
 		});
-		/**
-		 * TODO: FETCH RELATED GOOGLE SEARCHES HERE
-		 * REPLACE DUMMYDATA 
-		 */
-		setTrendingGoogleSearch(["dummyord1", "relatert søk", "tester"]);
+
+		const tmp: string[] = [];
+		word && API.getAllTrendingWords(TredningWordsMetric.FrequencyGrowth, word).then((trendingWords) => {
+			trendingWords.map(trend => tmp.push(trend.word));
+			setRelatedSearches(tmp.slice(0, 10));
+		}).catch(error => {
+			console.error("Failed to fetch rekated searches: %o", error);
+		});
+
 
 		word && API.getAllRelatedPostURLS(word).then((popularPost)=>{
 			setPopularPostUrls(popularPost);
@@ -106,8 +111,8 @@ const GoogleContextPage = () => {
 				</GridItem>
 				
 				<GridItem colSpan={1} bg='hovergreen' padding={"3%"} rounded={"lg"} >
-					{trendingGoogleSearch &&
-					<RelatedWords relatedWords={trendingGoogleSearch} 
+					{relatedSearches &&
+					<RelatedWords relatedWords={relatedSearches} 
 						type="google" 
 						heading="Related Google searches"></RelatedWords>}
 				</GridItem>
