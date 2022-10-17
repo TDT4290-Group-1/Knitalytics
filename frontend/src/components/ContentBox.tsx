@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, IconButton } from "@chakra-ui/react";
 import theme from "../theme";
 import { TrendingWord } from "../../models/trendingword";
 import { ArrowDownIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
+import { SelectedWordContext } from "context/selectedWordContext";
 
 interface Props {
     category: string;
@@ -16,6 +17,7 @@ interface Props {
 const ContentBox: React.FC<Props> = ({ category, statName, items, tabletype }: Props) => {
 
 	const [toggle, setToggle] = useState(true);
+	const {setWord} = useContext(SelectedWordContext);
 
 	function toggleSwitch() {
 		setToggle(!toggle);
@@ -25,11 +27,13 @@ const ContentBox: React.FC<Props> = ({ category, statName, items, tabletype }: P
 
 	function nav(word: string){
 		if (tabletype==="instagram"){
-			sessionStorage.setItem("word", word);
+			// sessionStorage.setItem("word", word);
+			setWord(word);
 			navigate("/InstagramContext");
 		}
 		else {
-			sessionStorage.setItem("word", word);
+			setWord(word);
+			// sessionStorage.setItem("word", word);
 			navigate("/GoogleContext");
 		}
 	}

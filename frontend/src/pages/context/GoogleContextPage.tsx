@@ -12,15 +12,16 @@ import { FrequencyStat } from "components/FrequencyStat";
 import InstagramPosts from "components/InstagramPost";
 import RelatedWords from "components/RelatedWords";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import API from "../../api/api";
 import { TrendChart } from "components/TrendChart";
 import { TredningWordsMetric } from "utils/trendingWordsMetric";
+import { SelectedWordContext } from "context/selectedWordContext";
 
 
 const GoogleContextPage = () => {
 	const navigate = useNavigate();
-	const word = sessionStorage.getItem("word");
+	const {word} = useContext(SelectedWordContext);
 
 	const [trendingHashtags, setTrendingHashtags] = useState<string[]>();
 	const [popularPostUrls, setPopularPostUrls] = useState<string[]>();
