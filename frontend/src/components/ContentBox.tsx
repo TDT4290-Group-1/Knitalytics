@@ -22,15 +22,14 @@ const ContentBox: React.FC<Props> = ({ items }: Props) => {
 		<Center>
 			<TableContainer maxHeight={"500px"} overflowY={"scroll"}>
 				<Table variant='simple' color={theme.colors.forest} size={"sm"}>
-
-					<Thead position="sticky" >
-					
+					<Thead>
 						<Tr borderBottom="2px" color={theme.colors.forest}>
 							<Th  fontSize="sm">Word</Th> {/** The table always display words */}
 							<Th fontSize="sm" isNumeric paddingRight={0}>
 								<Menu> 
-									<MenuButton as={Button} rightIcon={<ArrowDownIcon />}>
-										{displayMetric} {/**TODO: display human readable format */}
+									<MenuButton as={Button} rightIcon={<ArrowDownIcon />} 
+												onClick={() => setDisplayFrequencyGrowth(!displayFrequencyGrowth)}>
+										{displayFrequencyGrowth ? "Frequency growth" : "Search count"}
 									</MenuButton>
 									<MenuList>
 										<MenuItem onClick={() => setDisplayMetric(TredningWordsFilter.FrequencyGrowth)}>
