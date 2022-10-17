@@ -73,12 +73,13 @@ const HomePage = () => {
 					<VStack >
 						<Center>
 							<Text marginBottom={"10%"} fontSize={"2xl"}  color={theme.colors.forest}>Google Trends</Text>
-						</Center> 
-						<ContentBox
-							displayMetric={displayMetric} 
-							items={displayMetric === TredningWordsFilter.FrequencyGrowth ? wordsFreqGrowth : wordsSearchCount} 
-							setDisplayMetric={setDisplayMetric}
-						/>
+						</Center>
+						{trendingWords ? 
+							<ContentBox
+							items={trendingWords} 
+							/> : <div>loading</div>
+						}
+						
 					</VStack>
 				</Box>
 
@@ -89,9 +90,7 @@ const HomePage = () => {
 						</Center>
 						{trendingHashtags ?
 							<ContentBox
-								displayMetric="Growth"
 								items={trendingHashtags}
-								setDisplayMetric={setDisplayMetric}
 							/> : <div>loading</div>}
 					</VStack>
 
