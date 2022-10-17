@@ -4,7 +4,6 @@ import  API  from "api/api";
 import {TrendingWord} from "../../../models/trendingword";
 import { useState, useEffect } from "react";
 import theme from "../../theme";
-import { TredningWordsFilter } from "utils/trendingWordsFilter";
 
 
 const HomePage = () => {
@@ -13,13 +12,9 @@ const HomePage = () => {
 	 * TODO: implement seperate components for Google Trends and Instagram, with associated state
 	 */
 
-	const [wordsFreqGrowth, setWordsFreqGrowth] = useState<TrendingWord[] | undefined>(undefined); // use undefined as check whether loaded or not
-	const [wordsSearchCount, setWordsSearchCount] = useState<TrendingWord[] | undefined>(undefined); // use undefined as check whether loaded or not
+	const [trendingWords, setTrendingWords] = useState<TrendingWord[] | undefined>(undefined); // use undefined as check whether loaded or not
 
-	const [wordsFreqGrowthError, setWordsFreqGrowthError] = useState(false);
-	const [wordsSearchCountError, setWordsSearchCountError] = useState(false);
-
-	const [displayMetric, setDisplayMetric] = useState(TredningWordsFilter.FrequencyGrowth);
+	const [trendingWordsError, setTrendingWordsError] = useState(false);
 
 	const [trendingHashtags, setTrendingHashtags] = useState<TrendingWord[]>();
 
