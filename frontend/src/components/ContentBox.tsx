@@ -31,37 +31,27 @@ const ContentBox: React.FC<Props> = ({ items }: Props) => {
 												onClick={() => setDisplayFrequencyGrowth(!displayFrequencyGrowth)}>
 										{displayFrequencyGrowth ? "Frequency growth" : "Search count"}
 									</MenuButton>
-									<MenuList>
-										<MenuItem onClick={() => setDisplayMetric(TredningWordsFilter.FrequencyGrowth)}>
-											Frequency growth
-										</MenuItem>
-										<MenuItem onClick={() => setDisplayMetric(TredningWordsFilter.SearchCount)}>
-											Search count
-										</MenuItem>
-									</MenuList>
-
 								</Menu>	
 							</Th>
-							
-							{/* <Th fontSize="sm" isNumeric paddingRight={0}>count
-								{toggle && 
-								<IconButton colorScheme={"white"} size={"xs"} padding={0} icon={<ArrowDownIcon color={"forest"}/>} aria-label={"sort"} onClick={toggleSwitch}></IconButton>
-								}
-							</Th> */}
 						</Tr>
 					</Thead>
 
 					<Tbody >
 
-						{items?.sort((word1, word2) => word1.metric < word2.metric ? 1 : -1)
+						{items?.sort((word1, word2) => 
+							(displayFrequencyGrowth ? // if we are displaying frequency growth
+								(word1.frequency_growth < word2.frequency_growth) : // sort on that
+								(word1.search_count < word2.search_count)) // else sort on search count
+									? 1 : -1) // larger
 							.map((item: TrendingWord, index: number) => {
 							return (<Tr key={index}>
 								<Td fontSize="sm" onClick={()=>navigate("/context")}
 									_hover={{
 										color: "hovergreen",
+										cursor: "pointer"
 									}}
 								>{`${index + 1}. ${item.word}`}</Td>
-								<Td fontSize="sm"  isNumeric>{item.metric}</Td>
+								<Td fontSize="sm"  isNumeric>{displayFrequencyGrowth ? item.frequency_growth : item.search_count}</Td>
 								{/* <Td fontSize="sm" isNumeric>{item.search_count}</Td>  */}
 							</Tr>);})}
 					</Tbody>
