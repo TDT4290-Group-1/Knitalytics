@@ -69,7 +69,8 @@ const HomePage = () => {
 						</Center>
 						{trendingWords ? 
 							<ContentBox
-							items={trendingWords} 
+							items={trendingWords}
+							tabletype="google" 
 							/> : <div>loading</div>
 						}
 						
@@ -81,10 +82,11 @@ const HomePage = () => {
 						<Center>
 							<Text marginBottom={"10%"} fontSize={"2xl"} color={theme.colors.forest}>Instagram Hashtags</Text>
 						</Center>
-						{trendingHashtags ?
+						{/* {trendingHashtags ?
 							<ContentBox
 								items={trendingHashtags}
-							/> : <div>loading</div>}
+								tabletype={"instagram"}
+							/> : <div>loading</div>} */}
 					</VStack>
 
 				</Box>

@@ -22,13 +22,14 @@ interface SidebarProps extends BoxProps {
   interface LinkItemProps {
     name: string;
     icon: IconType;
+	path: string;
   }
 const LinkItems: Array<LinkItemProps> = [
-	{ name: "Trending words", icon: BiSortZA },
-	{ name: "Fashion trends", icon: BiCloset },
-	{ name: "Trending users", icon: BiGroup },
-	{ name: "Watch list", icon: BiBookmark },
-	{ name: "Settings", icon: FiSettings },
+	{ name: "Trending words", icon: BiSortZA, path: "/" },
+	{ name: "Fashion trends", icon: BiCloset, path: "/" },
+	{ name: "Trending users", icon: BiGroup, path: "/" },
+	{ name: "Watch list", icon: BiBookmark, path: "/InstagramPosts" },
+	{ name: "Settings", icon: FiSettings, path: "/settings" },
 ];
   
 export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
@@ -48,7 +49,7 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 				<CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} color={"white"}/>
 			</Flex>
 			{LinkItems.map((link) => (
-				<NavItem key={link.name} icon={link.icon} color={"white"}>
+				<NavItem key={link.name} icon={link.icon} color={"white"} path={link.path}>
 					{link.name}
 				</NavItem>
 			))}

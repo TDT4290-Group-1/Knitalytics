@@ -7,15 +7,27 @@ import { useState } from "react";
 
 interface Props {
     items: TrendingWord[] | undefined;
+	tabletype: string;
 }
 
 
-const ContentBox: React.FC<Props> = ({ items }: Props) => {
+const ContentBox: React.FC<Props> = ({ items, tabletype }: Props) => {
 
 	const navigate = useNavigate();
 
 	// are we displaying frequency growth? If not, we are displaying search count
 	const [displayFrequencyGrowth, setDisplayFrequencyGrowth] = useState(false);
+
+	function nav(word: string){
+		if (tabletype==="instagram"){
+			sessionStorage.setItem("word", word);
+			navigate("/InstagramContext");
+		}
+		else {
+			sessionStorage.setItem("word", word);
+			navigate("/GoogleContext");
+		}
+	}
 
 	function sortWords(word1: TrendingWord, word2: TrendingWord) {
 		if (displayFrequencyGrowth) {
@@ -60,7 +72,7 @@ const ContentBox: React.FC<Props> = ({ items }: Props) => {
 						{items?.sort((word1, word2) => sortWords(word1, word2))
 							.map((item: TrendingWord, index: number) => {
 							return (<Tr key={index}>
-								<Td fontSize="sm" onClick={()=>navigate("/context")}
+								<Td fontSize="sm" onClick={()=>nav(item.word)}
 									_hover={{
 										color: "hovergreen",
 										cursor: "pointer"

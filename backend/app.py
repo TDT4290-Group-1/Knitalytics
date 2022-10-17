@@ -27,25 +27,43 @@ def create_app():
 
     def add_dataframe_from_collector(
         trending_words_dataframes: List[DataFrame],
-        data_collector: DataCollector,
-        filter: str,
+        dataframe_to_add: pd.DataFrame,
     ):
-        trending_words_dataframes.append(data_collector.get_trending_words(filter))
+        trending_words_dataframes.append(dataframe_to_add)
 
     @app.route("/")
     def hello_world():
         return "Hello, World!"
 
-    @app.route("/api/v1/trends/<string:filter>")
-    def getTrendingWords(filter):
+    @app.route("/api/v1/trends/", methods=["GET"])
+    def getTrendingWords():
+        metric = request.args.get(
+            "metric"
+        )  # 'frequency_growth' or 'search_count'. Used to show the most searched words or the fastest growing words.
+        search_term = request.args.get(
+            "search_term", ""
+        )  # search term to search for. If empty, the default search term is used.
         trending_words_dataframes: List[DataFrame] = []
         googleCollector = GoogleTrendsDataCollector()
-        add_dataframe_from_collector(trending_words_dataframes, googleCollector, filter)
+        add_dataframe_from_collector(
+            trending_words_dataframes,
+            googleCollector.get_trending_words(metric, search_term),
+        )
 
         main_data_frame = pd.concat(trending_words_dataframes).reset_index(drop=True)
-        print(main_data_frame)
 
         return main_data_frame.to_json(orient="records")
+
+    @app.route("/api/v1/interest_over_time/", methods=["GET"])
+    def getInterestOverTime():
+        search_term = request.args.get(
+            "search_term", ""
+        )  # search term to search for. If empty, the default search term is used.
+
+        googleCollector = GoogleTrendsDataCollector()
+        df = googleCollector.get_interest_over_time(search_term)
+
+        return df.to_json(orient="records")
 
     @app.route("/api/v1/relatedHashtags")
     def getRelatedHashtags():
@@ -54,8 +72,9 @@ def create_app():
         )
         args = request.args
         query = args.get("query", default="", type=str)
+        filteredOutWords = args.get("filteredOutWords", default="", type=str)
         # to test backend you can change 'query' to hardcoded keyword
-        return metaCollector.get_related_hashtags(query)
+        return metaCollector.get_related_hashtags(query, filteredOutWords)
 
     @app.route("/api/v1/relatedPostURLS")
     def getRelatedPostURLS():
@@ -65,6 +84,17 @@ def create_app():
         args = request.args
         query = args.get("query", default="", type=str)
         return metaCollector.get_related_posts(query)
+
+    @app.route("/api/v1/business_hashtags")
+    def getBusinessHashtags():
+        try:
+            metaCollector = InstagramCollector(
+                os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
+            )
+
+            return metaCollector.get_hashtags_business_users()
+        except ValueError as e:
+            return str(e)
 
     return app
 

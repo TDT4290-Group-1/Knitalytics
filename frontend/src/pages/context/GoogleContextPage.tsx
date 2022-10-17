@@ -1,0 +1,126 @@
+import { ChevronLeftIcon } from "@chakra-ui/icons";
+import {
+	IconButton,
+	VStack,
+	Box,
+	Grid,
+	GridItem,
+	Heading,
+	chakra
+} from "@chakra-ui/react";
+import { FrequencyStat } from "components/FrequencyStat";
+import InstagramPosts from "components/InstagramPost";
+import RelatedWords from "components/RelatedWords";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import API from "../../api/api";
+import { TrendChart } from "components/TrendChart";
+import { TredningWordsMetric } from "utils/trendingWordsMetric";
+
+
+const GoogleContextPage = () => {
+	const navigate = useNavigate();
+	const word = sessionStorage.getItem("word");
+
+	const [trendingHashtags, setTrendingHashtags] = useState<string[]>();
+	const [popularPostUrls, setPopularPostUrls] = useState<string[]>();
+	const [relatedSearches, setRelatedSearches] = useState<string[]>();
+
+
+
+	useEffect(() => {
+		const word = sessionStorage.getItem("word");
+
+		word && API.getAllRelatedHashtags(word).then((trendingHashtags) => {
+			setTrendingHashtags(trendingHashtags);
+		}).catch(error => {
+			console.error("Failed to fetch hashtags: %o", error);
+		});
+
+		const tmp: string[] = [];
+		word && API.getAllTrendingWords(TredningWordsMetric.FrequencyGrowth, word).then((trendingWords) => {
+			trendingWords.map(trend => tmp.push(trend.word));
+			setRelatedSearches(tmp.slice(0, 10));
+		}).catch(error => {
+			console.error("Failed to fetch rekated searches: %o", error);
+		});
+
+
+		word && API.getAllRelatedPostURLS(word).then((popularPost)=>{
+			setPopularPostUrls(popularPost);
+		}).catch(error => {
+			console.error("Failed to fetch instagram posts: %o", error);
+		});
+	},[]);
+
+
+	return (
+		<>
+			<IconButton aria-label={"Back"} icon={<ChevronLeftIcon />} onClick={()=>navigate("/")}>
+			</IconButton>
+			<Grid
+				h='auto'
+				templateRows='auto'
+				templateColumns='repeat(4, 1fr)'
+				gap={6}
+				padding={3}
+			>
+				<GridItem colSpan={1} rounded={"lg"} paddingLeft={"10px"} > 			
+					<Heading color={"forest"} fontSize={"3xl"} as={"u"}>SEARCH</Heading>
+					<Heading color={"teal"} fontSize={"3xl"} marginBottom={"6%"}> {word?.toUpperCase()}</Heading>
+				</GridItem>
+
+				<GridItem colSpan={3} rounded={"lg"} textAlign={"right"} paddingRight={"10px"}>
+					{/* DUMMY TEXT HERE */}
+					<Heading color={"forest"} fontSize={"5xl"}  as={"u"} >TOPIC </Heading>
+					<Heading color={"teal"} fontSize={"5xl"}>KNITTING PATTERN</Heading> 		
+				</GridItem>
+
+				<GridItem colSpan={1} bg='hovergreen' padding={"10px"} rounded={"lg"} paddingBottom={"30px"}>
+					<Box >
+						<VStack>
+							<chakra.h1
+								textAlign={"center"}
+								fontSize={"4xl"}
+								py={10}
+								fontWeight={"bold"}
+								color={"forest"}>
+								How is the word doing? 
+							</chakra.h1>
+							<FrequencyStat/>
+						</VStack>
+					</Box>
+				</GridItem>
+
+				<GridItem colSpan={3} bg='itembackdrop' rounded={"lg"}>
+					
+					<TrendChart></TrendChart>
+					
+				</GridItem>
+
+				<GridItem colSpan={4} bg="lightgreen" padding={"3%"} rounded={"lg"} >
+					{popularPostUrls && <InstagramPosts URLs={popularPostUrls} heading={"Most popular Instagram posts with this hashtag"}></InstagramPosts>}
+				</GridItem>
+
+				<GridItem colSpan={3} bg='itembackdrop' padding={"3%"} rounded={"lg"} >
+					{trendingHashtags &&
+					<RelatedWords relatedWords={trendingHashtags} 
+						type="instagram" 
+						heading="Hashtags occurring in Instagram posts with this word"></RelatedWords>}
+
+				</GridItem>
+				
+				<GridItem colSpan={1} bg='hovergreen' padding={"3%"} rounded={"lg"} >
+					{relatedSearches &&
+					<RelatedWords relatedWords={relatedSearches} 
+						type="google" 
+						heading="Related Google searches"></RelatedWords>}
+				</GridItem>
+
+			</Grid>
+		</>
+	);
+
+};
+
+export default GoogleContextPage;
