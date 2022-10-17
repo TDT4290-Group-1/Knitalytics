@@ -30,7 +30,7 @@ const GoogleContextPage = () => {
 
 
 	useEffect(() => {
-		const word = sessionStorage.getItem("word");
+		const word = localStorage.getItem("word");
 
 		word && API.getAllRelatedHashtags(word).then((trendingHashtags) => {
 			setTrendingHashtags(trendingHashtags);
@@ -66,15 +66,14 @@ const GoogleContextPage = () => {
 				gap={6}
 				padding={3}
 			>
-				<GridItem colSpan={1} rounded={"lg"} paddingLeft={"10px"} > 			
-					<Heading color={"forest"} fontSize={"3xl"} as={"u"}>SEARCH</Heading>
-					<Heading color={"teal"} fontSize={"3xl"} marginBottom={"6%"}> {word?.toUpperCase()}</Heading>
-				</GridItem>
+				{/* <GridItem colSpan={1} rounded={"lg"} paddingLeft={"10px"} > 			
+					<Heading color={"forest"} fontSize={"3xl"}>Lets view some details about the search</Heading>
+				</GridItem> */}
 
-				<GridItem colSpan={3} rounded={"lg"} textAlign={"right"} paddingRight={"10px"}>
+				<GridItem colSpan={4} rounded={"lg"} textAlign={"right"} paddingRight={"10px"}>
 					{/* DUMMY TEXT HERE */}
-					<Heading color={"forest"} fontSize={"5xl"}  as={"u"} >TOPIC </Heading>
-					<Heading color={"teal"} fontSize={"5xl"}>KNITTING PATTERN</Heading> 		
+					<Heading color={"forest"} fontSize={"4xl"}  as={"u"} >SEARCH </Heading>
+					<Heading color={"teal"} fontSize={"4xl"}>{word?.toUpperCase()}</Heading> 		
 				</GridItem>
 
 				<GridItem colSpan={1} bg='hovergreen' padding={"10px"} rounded={"lg"} paddingBottom={"30px"}>

@@ -1,5 +1,5 @@
 
-import {TrendingWord} from "../../models/trendingword";
+import {GraphData, TrendingWord} from "../../models/trendingword";
 import axios from "axios";
 import { TredningWordsMetric } from "utils/trendingWordsMetric";
 import { getListLocalStorage } from "api/localStorage";
@@ -25,7 +25,7 @@ class API {
 	 * @param searchTerm The given search term to get interest over time for.
      * @returns a JSON list of with date and relative interest value.
      */
-	async getInteresOvertimeForSearchTerm(searchTerm:string):Promise<TrendingWord[]> {
+	async getInteresOvertimeForSearchTerm(searchTerm:string):Promise<GraphData[]> {
 		const response = await client.get(`/api/v1/interest_over_time/?search_term=${searchTerm}`);
 		return response.data;
 	}
