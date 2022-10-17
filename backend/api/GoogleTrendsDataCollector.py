@@ -3,7 +3,6 @@ from api.DataCollectorInterface import DataCollector, COLUMN_NAMES
 
 from pytrends.request import TrendReq
 
-# KNITTING_TOPIC = "/m/047fr"  # google specific encoding of "Knitting" topic
 KNITTING_TOPIC = "/m/047fr"  # google specific encoding of "Knitting" topic
 COLUMN_MAPPER = {
     "query": COLUMN_NAMES["word"],
