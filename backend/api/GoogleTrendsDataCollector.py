@@ -19,7 +19,7 @@ class GoogleTrendsDataCollector(DataCollector):
         self,
         metric="frequency_growth",
         geo="NO",
-        timeframe="now 1-d",
+        timeframe="today 3-m",
         search_term=KNITTING_TOPIC,
     ) -> pd.DataFrame:
         """
@@ -44,6 +44,7 @@ class GoogleTrendsDataCollector(DataCollector):
             response = response[search_term]["top"]
 
         COLUMN_MAPPER["value"] = COLUMN_NAMES[metric]
+        print(response)
 
         return response.rename(COLUMN_MAPPER, axis=1)
 
@@ -64,3 +65,21 @@ class GoogleTrendsDataCollector(DataCollector):
                     metric=metric, search_term=search_term
                 )
             )
+
+    # Method used to get the interest over time for a given keyword. Returns a dataframe of the interest over time in relative numbers.
+    def get_interest_over_time(
+        self,
+        search_term=KNITTING_TOPIC,
+        geo="NO",
+        timeframe="today 12-m",
+    ) -> pd.DataFrame:
+        kw_list = [search_term]
+        self.pytrends_client.build_payload(kw_list, geo=geo, timeframe=timeframe)
+        response_dateframe = self.pytrends_client.interest_over_time()
+        date_frame = response_dateframe
+        date_frame["date"] = response_dateframe.index
+        date_frame = response_dateframe.reset_index(drop=True)
+        date_frame = date_frame[["date", search_term]]
+        date_frame = date_frame.rename(columns={search_term: "relative_search_value"})
+
+        return date_frame

@@ -14,12 +14,19 @@ class API {
 	/**
 	 * @param metric 'frequency_growth' or 'search_count'. Used to show the most searched words or the fastest growing words.
 	 * @param searchTerm Optional search term to search for. If empty, the default search term is used.
-     * @returns All existing ads
+     * @returns a JSON list of trening words with the gived metric value
      */
 	async getAllTrendingWords(metric:TredningWordsMetric, searchTerm?:string):Promise<TrendingWord[]> {
-		const response = await client.get(`/api/v1/trends/?metric=${metric}${searchTerm ? "&searchTerm=" + searchTerm : ""}`);
-	
-		
+		const response = await client.get(`/api/v1/trends/?metric=${metric}${searchTerm ? "&search_term=" + searchTerm : ""}`);
+		return response.data;
+	}
+
+	/**
+	 * @param searchTerm The given search term to get interest over time for.
+     * @returns a JSON list of with date and relative interest value.
+     */
+	async getInteresOvertimeForSearchTerm(searchTerm:string):Promise<TrendingWord[]> {
+		const response = await client.get(`/api/v1/interest_over_time/?search_term=${searchTerm}`);
 		return response.data;
 	}
 
