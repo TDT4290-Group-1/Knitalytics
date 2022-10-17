@@ -1,4 +1,5 @@
 export interface TrendingWord {
     word: string;
-    metric: number;
+    search_count: number;
+    frequency_growth: number;
   }
