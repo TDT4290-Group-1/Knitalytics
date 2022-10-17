@@ -20,16 +20,16 @@ class InstagramCollector(DataCollector):
     ) -> List[str]:
         query = query.replace(" ", "")
         self.query = query
-        id = self.APIAgent.get_hashtag_id("knitting")
+        id = self.APIAgent.get_hashtag_id(query)
         posts = self.APIAgent.get_posts_from_hashtag(id, "like_count, caption")
         return self.hlp.parse_hashtag_from_posts(posts, filteredOutWords)[:amount]
 
-    def get_hashtags_business_users(self, ig_users=["knittingforolive"]) -> List[str]:
+    def get_hashtags_business_users(self, ig_users, filteredOutWords) -> List[str]:
         captions: List[str] = []
         for ig_user in ig_users:
             posts = self.APIAgent.get_posts_from_ig_user(ig_user)
-            captions.append(self.hlp.get_captions)
-        return self.hlp.parse_hashtag_from_captions(captions)
+            captions += self.hlp.get_captions(posts)
+        return self.hlp.parse_hashtag_from_captions(captions, filteredOutWords)
 
         # returns links to popular posts related to 'query
 

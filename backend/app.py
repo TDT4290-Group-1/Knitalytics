@@ -67,7 +67,7 @@ def create_app():
 
         return df.to_json(orient="records")
 
-    @app.route("/api/v1/relatedHashtags")
+    @app.route("/api/v1/related_hashtags")
     def getRelatedHashtags():
         metaCollector = InstagramCollector(
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
@@ -75,10 +75,9 @@ def create_app():
         args = request.args
         query = args.get("query", default="", type=str)
         filteredOutWords = args.get("filteredOutWords", default="", type=str)
-        # to test backend you can change 'query' to hardcoded keyword
         return metaCollector.get_related_hashtags(query, filteredOutWords)
 
-    @app.route("/api/v1/relatedPostURLS")
+    @app.route("/api/v1/related_post_URLS")
     def getRelatedPostURLS():
         metaCollector = InstagramCollector(
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
@@ -93,8 +92,11 @@ def create_app():
             metaCollector = InstagramCollector(
                 os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
             )
-
-            return metaCollector.get_hashtags_business_users()
+            args = request.args
+            followedUsers = args.get("followedUsers", default="[]", type=str)
+            filteredOutWords = args.get("filteredOutWords", default="", type=str)
+            users = json.loads(followedUsers)
+            return metaCollector.get_hashtags_business_users(users, filteredOutWords)
         except ValueError as e:
             return str(e)
 

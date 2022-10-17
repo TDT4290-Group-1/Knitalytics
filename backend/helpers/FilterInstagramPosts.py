@@ -1,5 +1,3 @@
-from models.trending_post import TrendingPost
-
 from typing import List
 import unicodedata as ud
 import re
@@ -31,10 +29,8 @@ class FilterInstagramPosts:
 
     # remove posts that has less than threshold amount of likes, default 200
 
-    def remove_unpopular_posts(
-        self, posts: List[TrendingPost], threshold=200
-    ) -> List[TrendingPost]:
-        popular_posts: List[TrendingPost] = []
+    def remove_unpopular_posts(self, posts: List[str], threshold=200) -> List[str]:
+        popular_posts: List[str] = []
         for post in posts:
             # try to pass all posts that does not contain a like_count
             try:
@@ -46,7 +42,7 @@ class FilterInstagramPosts:
 
     # returns url to all 'posts'
 
-    def get_post_url(self, posts: List[TrendingPost]) -> List[str]:
+    def get_post_url(self, posts: List[str]) -> List[str]:
         post_url = []
         for post in posts:
             post_url.append(post["permalink"])

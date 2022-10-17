@@ -33,12 +33,12 @@ class API {
 	async getAllRelatedHashtags(query: string):Promise<string[]> {
 		const filteredOutWords = getListLocalStorage("filteredOutWords");
 		//filteredOutWords format: "word, word1, word2". String with comma between each word
-		const response = await client.get("/api/v1/relatedHashtags", { params: { query, filteredOutWords } });
+		const response = await client.get("/api/v1/related_hashtags", { params: { query, filteredOutWords } });
 		return response.data;
 	}
 
 	async getAllRelatedPostURLS(query: string):Promise<string[]> {
-		const response = await client.get("/api/v1/relatedPostURLS", { params: {  query } });
+		const response = await client.get("/api/v1/related_post_URLS", { params: {  query } });
 		return response.data;
 	}
 
