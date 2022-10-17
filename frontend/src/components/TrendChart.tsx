@@ -16,8 +16,6 @@ import  API  from "api/api";
 import { GraphData } from "../../models/trendingword";
 import {nb} from "date-fns/locale";
 
-
-
   
 ChartJS.register(
 	CategoryScale,
