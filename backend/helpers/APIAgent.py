@@ -5,7 +5,7 @@ import requests
 import json
 
 
-class APIAgent():
+class APIAgent:
     def __init__(self, access_token, user_id) -> None:
         self.base_url = "https://graph.facebook.com/v15.0"
         self.access_token = access_token
@@ -20,27 +20,21 @@ class APIAgent():
             "fields": fields,
         }
         endpoint = "/" + id + "/top_media"
-        response = requests.get(
-            url=self.base_url + endpoint, params=PARAMS)
-        if response.status_code > 399 and response.status_code < 511:
-            print("hei fra exception hashtag")
-            return json.loads(response.text)["error"]
+        response = requests.get(url=self.base_url + endpoint, params=PARAMS)
         posts: List[str] = json.loads(response.text)["data"]
         return posts
 
-    def get_caption_from_ig_user(self, ig_user) -> str:
+    def get_posts_from_ig_user(self, ig_user) -> str:
         PARAMS = {
             "access_token": self.access_token,
             "user_id": self.user_id,
-            "fields": "business_discovery.username(" + ig_user + "){media{caption}}",
+            "fields": "business_discovery.username("
+            + ig_user
+            + "){media{caption, permalink}}",
         }
         endpoint = "/" + self.user_id
-        response = requests.get(
-            url=self.base_url + endpoint, params=PARAMS)
-        if response.status_code > 399 and response.status_code < 511:
-            print("hei fra exception business")
-            return json.loads(response.text)["error"]
-        return response["business_discovery"]["media"]["data"]["caption"]
+        response = requests.get(url=self.base_url + endpoint, params=PARAMS)
+        return json.loads(response.text)["business_discovery"]["media"]["data"]
 
     # returns id of the hashtag specified in query.
     def get_hashtag_id(self, query: str) -> str or dict:
@@ -50,9 +44,5 @@ class APIAgent():
             "q": query,
         }
         endpoint = "/ig_hashtag_search"
-        response = requests.get(
-            url=self.base_url + endpoint, params=PARAMS)
-        if response.status_code > 399 and response.status_code < 511:
-            print("hei fra exception id")
-            return json.loads(response.text)["error"]
+        response = requests.get(url=self.base_url + endpoint, params=PARAMS)
         return json.loads(response.text)["data"][0]["id"]

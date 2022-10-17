@@ -5,17 +5,14 @@ import unicodedata as ud
 import re
 
 
-class FilterInstagramPosts():
-
-    def parse_hashtag_from_posts(self,
-                                 posts: List[str], filteredOutWords: str
-                                 ) -> List[str]:
-        captions = self.__get_captions__(posts)
+class FilterInstagramPosts:
+    def parse_hashtag_from_posts(
+        self, posts: List[str], filteredOutWords: str
+    ) -> List[str]:
+        captions = self.get_captions(posts)
         return self.parse_hashtag_from_captions(captions, filteredOutWords)
 
-    def parse_hashtag_from_captions(self,
-                                    captions, filteredOutWords: str
-                                    ) -> List[str]:
+    def parse_hashtag_from_captions(self, captions, filteredOutWords: str) -> List[str]:
         hashtags = self.parse_hashtags_from_captions(captions)
         hashtags = self.__remove_spamhashtags__(hashtags, filteredOutWords)
         hashtags = self.__remove_foreign_languages__(hashtags)
@@ -34,9 +31,9 @@ class FilterInstagramPosts():
 
     # remove posts that has less than threshold amount of likes, default 200
 
-    def remove_unpopular_posts(self,
-                               posts: List[TrendingPost], threshold=200
-                               ) -> List[TrendingPost]:
+    def remove_unpopular_posts(
+        self, posts: List[TrendingPost], threshold=200
+    ) -> List[TrendingPost]:
         popular_posts: List[TrendingPost] = []
         for post in posts:
             # try to pass all posts that does not contain a like_count
@@ -57,7 +54,9 @@ class FilterInstagramPosts():
 
     # removes hashtags that contains certain words
 
-    def __remove_spamhashtags__(self, hashtags: List[str], filteredOutWords: str) -> List[str]:
+    def __remove_spamhashtags__(
+        self, hashtags: List[str], filteredOutWords: str
+    ) -> List[str]:
         filteredOutWords = filteredOutWords.replace(",", "|")
         filteredOutWords = filteredOutWords.replace(" ", "")
         relevant_hashtags = []
@@ -94,7 +93,7 @@ class FilterInstagramPosts():
 
     # returns all captions from 'posts'
 
-    def __get_captions__(self, posts: List[str]) -> List[str]:
+    def get_captions(self, posts: List[str]) -> List[str]:
         captions: List[str] = []
         for post in posts:
             captions.append(post["caption"])

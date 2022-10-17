@@ -1,3 +1,4 @@
+from array import array
 from typing import List
 from flask import Flask, request
 from api.DataCollectorInterface import DataCollector
@@ -8,6 +9,7 @@ import pandas as pd
 from pandas import DataFrame
 import os
 from dotenv import load_dotenv
+import json
 
 load_dotenv()
 
@@ -93,6 +95,19 @@ def create_app():
             )
 
             return metaCollector.get_hashtags_business_users()
+        except ValueError as e:
+            return str(e)
+
+    @app.route("/api/v1/business_posts_urls")
+    def getBusinessPostURLS():
+        try:
+            metaCollector = InstagramCollector(
+                os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
+            )
+            args = request.args
+            followedUsers = args.get("followedUsers", default="[]", type=str)
+            users = json.loads(followedUsers)
+            return metaCollector.get_business_post_urls(users)
         except ValueError as e:
             return str(e)
 
