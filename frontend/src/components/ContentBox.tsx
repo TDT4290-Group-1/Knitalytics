@@ -1,4 +1,4 @@
-import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, Button, Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
+import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, Button, Menu, MenuButton } from "@chakra-ui/react";
 import theme from "../theme";
 import { TrendingWord } from "../../models/trendingword";
 import { ArrowDownIcon } from "@chakra-ui/icons";
