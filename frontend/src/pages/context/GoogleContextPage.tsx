@@ -29,7 +29,7 @@ const GoogleContextPage = () => {
 
 
 	useEffect(() => {
-		const word = sessionStorage.getItem("word");
+		const word = localStorage.getItem("word");
 
 		word && API.getAllRelatedHashtags(word).then((trendingHashtags) => {
 			setTrendingHashtags(trendingHashtags);

@@ -14,6 +14,8 @@ import { Line } from "react-chartjs-2";
 import theme from "../theme";
 import  API  from "api/api";
 import { GraphData } from "../../models/trendingword";
+import {nb} from "date-fns/locale";
+
 
 
   
@@ -28,11 +30,6 @@ ChartJS.register(
 );
 export const TrendChart = () => {
 
-	/**
-     * REPLACE DUMMY DATA WITH API DATA 
-     * IMPLEMENT SOME MORE CONTEXT TO THE TIME PERIOD: maybe a select time period functionality
-     */
-
 	const [graphData, setGraphData] = useState<GraphData[]>();
 
 	useEffect(() => {
@@ -41,26 +38,53 @@ export const TrendChart = () => {
 		word && API.getInteresOvertimeForSearchTerm(word).then((stats) => {
 			setGraphData(stats);
 			console.log("YOLOSWAGGGGGG");
-			console.log(graphData);
+			console.log(stats);
 		}).catch(error => {
 			console.error("Failed to fetch graph data: %o", error);
 		});		
 	},[]);
 
-	const labels = ["January", "February", "March", "April", "May", "June", "July"];
-	const counts = [3,1,6,7,8,4,6];
+	const labels: string[] = [];
+	const counts: number[] = [];
+	if(graphData){
+		graphData.forEach(elem => labels.push((new Date(elem.date)).toLocaleDateString()));
+		console.log("LABELS (dates): ");
+		console.log(labels);
+		
+	}
+	if(graphData){
+		graphData.forEach(element=>counts.push(element.relative_search_value));
+		console.log("COUNTS : ");
+		console.log(counts);
+	}
 
 	const options = {
 		responsive: true,    
 		plugins: {
 			legend: {
-				position: "top" as const,
+				position: "top" as const, 
 			},
 			title: {
 				display: true,
 				text: "Number of searches over time",
 			},
-			
+		},
+		scales: {
+			x: {
+				adapters: {
+					date: {locale: nb},
+					type: "time",
+					distribution: "linear",
+					time: { 
+						parser: "yyyy-MM-dd",
+						unit: "month"
+					},
+					title: {
+						display: true,
+						text: "Date"
+					}
+				}
+			}
 		},
 	};
   
@@ -90,7 +114,7 @@ export const TrendChart = () => {
 			color={"forest"}
 			padding={0}
 			marginTop={5}>
-            How is the word doing?
+            Relative popularity over time
 		</chakra.h1><Line options={options} data={data} style={chartStyle}/></>
 	);
 };
