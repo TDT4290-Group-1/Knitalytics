@@ -114,7 +114,7 @@ export const TrendChart = () => {
 			color={"forest"}
 			padding={0}
 			marginTop={5}>
-            Relative popularity over time
+            Weekley relative popularity the last year
 		</chakra.h1><Line options={options} data={data} style={chartStyle}/></>
 	);
 };
