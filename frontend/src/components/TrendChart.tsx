@@ -76,7 +76,7 @@ export const TrendChart = () => {
 					type: "time",
 					distribution: "linear",
 					time: { 
-						parser: "yyyy-MM-dd",
+						parser: "yyyy-MM-dd", 
 						unit: "month"
 					},
 					title: {
@@ -92,7 +92,7 @@ export const TrendChart = () => {
 		labels,
 		datasets: [
 			{
-				label: "Searches",
+				label: "Relative popularity",
 				data: counts,
 				borderColor: theme.colors.chartgraphgreen,
 				backgroundColor: theme.colors.lightchartgraphgreen,
