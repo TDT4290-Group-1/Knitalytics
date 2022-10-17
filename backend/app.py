@@ -49,7 +49,7 @@ def create_app():
 
         main_data_frame = pd.concat(trending_words_dataframes).reset_index(drop=True)
 
-        return main_data_frame.to_json(orient="records")
+        return main_data_frame.to_json(orient="records", force_ascii=False)
 
     @app.route("/api/v1/interest_over_time/", methods=["GET"])
     def getInterestOverTime():
