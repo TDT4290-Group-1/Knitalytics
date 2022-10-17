@@ -23,27 +23,21 @@ const HomePage = () => {
 
 	// check whether words ranked according to frequnecy growth have been retrieved
 	// TODO: move into separate Google Trends component
-	if (typeof wordsFreqGrowth === "undefined") {
+	if (typeof trendingWords === "undefined") {
+		setTrendingWords([{word: "word1", frequency_growth: 250, search_count: 75},
+						  {word: "word2", frequency_growth: 100, search_count: 100},
+						  {word: "word3", frequency_growth: 300, search_count: 25}])
+			
+		/** TODO: awawaiting backend implementation
 		// fetch the words
-		API.getAllTrendingWords(TredningWordsFilter.FrequencyGrowth).then((trendingWords) => {
-			setWordsFreqGrowth(trendingWords as TrendingWord[]);
+		API.getAllTrendingWords().then((trendingWords) => {
+			setTrendingWords(trendingWords as TrendingWord[]);
 		}).catch(() => {
-			setWordsFreqGrowth([]);
-			setWordsFreqGrowthError(!wordsFreqGrowthError);
+			setTrendingWords([]); // set to something defined so we avoid infinite API calls
+			setTrendingWordsError(!trendingWordsError);
 		});
+		*/
 	}
-
-	// check whether words ranked according to search count have been retrieved
-	if (typeof wordsSearchCount === "undefined") {
-		// fetch the words
-		API.getAllTrendingWords(TredningWordsFilter.SearchCount).then((trendingWords) => {
-			setWordsSearchCount(trendingWords);
-		}).catch(() => {
-			setWordsSearchCount([]);
-			setWordsSearchCountError(!wordsSearchCountError);
-		});
-	}
-
 
 
 	// This function needs to differantiate between fetching instagram data or google data.
