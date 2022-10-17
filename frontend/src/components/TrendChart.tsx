@@ -9,8 +9,12 @@ import {
 	Tooltip,
 	Legend,
 } from "chart.js";
+import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import theme from "../theme";
+import  API  from "api/api";
+import { GraphData } from "../../models/trendingword";
+
 
   
 ChartJS.register(
@@ -28,6 +32,21 @@ export const TrendChart = () => {
      * REPLACE DUMMY DATA WITH API DATA 
      * IMPLEMENT SOME MORE CONTEXT TO THE TIME PERIOD: maybe a select time period functionality
      */
+
+	const [graphData, setGraphData] = useState<GraphData[]>();
+
+	useEffect(() => {
+		const word = localStorage.getItem("word");
+ 
+		word && API.getInteresOvertimeForSearchTerm(word).then((stats) => {
+			setGraphData(stats);
+			console.log("YOLOSWAGGGGGG");
+			console.log(graphData);
+		}).catch(error => {
+			console.error("Failed to fetch graph data: %o", error);
+		});		
+	},[]);
+
 	const labels = ["January", "February", "March", "April", "May", "June", "July"];
 	const counts = [3,1,6,7,8,4,6];
 
