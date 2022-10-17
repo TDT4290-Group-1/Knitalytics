@@ -8,10 +8,6 @@ import theme from "../../theme";
 
 const HomePage = () => {
 
-	/**
-	 * TODO: implement seperate components for Google Trends and Instagram, with associated state
-	 */
-
 	const [trendingWords, setTrendingWords] = useState<TrendingWord[] | undefined>(undefined); // use undefined as check whether loaded or not
 
 	const [trendingWordsError, setTrendingWordsError] = useState(false);
@@ -21,9 +17,9 @@ const HomePage = () => {
 
 	
 
-	// check whether words ranked according to frequnecy growth have been retrieved
-	// TODO: move into separate Google Trends component
+	// check whether trending words have been retrieved
 	if (typeof trendingWords === "undefined") {
+		// dummy data while waiting for backend implementation
 		setTrendingWords([{word: "word1", frequency_growth: 250, search_count: 75},
 						  {word: "word2", frequency_growth: 100, search_count: 100},
 						  {word: "word3", frequency_growth: 300, search_count: 25}])
@@ -57,7 +53,6 @@ const HomePage = () => {
 		}).catch(error => {
 			console.error("Failed to fetch hashtags: %o", error);
 		});
-		// setTrendingWords(API.getAllTrendingWords());
 	},[]);
 
 	return (
@@ -67,9 +62,6 @@ const HomePage = () => {
 			</Center>
 			<SimpleGrid minChildWidth='350px' spacingY='50px' spacingX="0px">
 				<Box>
-					{/**
-					 * TODO: separate instagram and google ContentBox to separate components, and move state down
-					 */}
 					<VStack >
 						<Center>
 							<Text marginBottom={"10%"} fontSize={"2xl"}  color={theme.colors.forest}>Google Trends</Text>

@@ -14,6 +14,7 @@ const ContentBox: React.FC<Props> = ({ items }: Props) => {
 
 	const navigate = useNavigate();
 
+	// are we displaying frequency growth? If not, we are displaying search count
 	const [displayFrequencyGrowth, setDisplayFrequencyGrowth] = useState(false);
 
 	// helper variable to determine display and sorting value
