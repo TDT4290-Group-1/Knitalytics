@@ -1,22 +1,22 @@
-import React, { useState } from "react";
 import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, Button, Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import theme from "../theme";
 import { TrendingWord } from "../../models/trendingword";
 import { ArrowDownIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
-import { TredningWordsFilter } from "utils/trendingWordsFilter";
+import { useState } from "react";
 
 interface Props {
-    displayMetric: string;
     items: TrendingWord[] | undefined;
-	setDisplayMetric: (displayMetric: TredningWordsFilter) => void;
 }
 
 
-const ContentBox: React.FC<Props> = ({ items, displayMetric, setDisplayMetric }: Props) => {
+const ContentBox: React.FC<Props> = ({ items }: Props) => {
 
 	const navigate = useNavigate();
 
+	const [displayFrequencyGrowth, setDisplayFrequencyGrowth] = useState(false);
+
+	// helper variable to determine display and sorting value
 
 	return (
 		<Center>
