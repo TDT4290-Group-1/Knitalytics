@@ -17,6 +17,24 @@ const ContentBox: React.FC<Props> = ({ items }: Props) => {
 	// are we displaying frequency growth? If not, we are displaying search count
 	const [displayFrequencyGrowth, setDisplayFrequencyGrowth] = useState(false);
 
+	function sortWords(word1: TrendingWord, word2: TrendingWord) {
+		if (displayFrequencyGrowth) {
+			if (typeof word1.frequency_growth === "undefined") {
+				return 1;
+			} else if (typeof word2.frequency_growth === "undefined") {
+				return -1;
+			}
+			return word2.frequency_growth - word1.frequency_growth;
+		} else {
+			if (typeof word1.search_count === "undefined") {
+				return 1;
+			} else if (typeof word2.search_count === "undefined") {
+				return -1;
+			}
+			return word2.search_count - word1.search_count;
+		}
+	}
+
 	// helper variable to determine display and sorting value
 
 	return (
@@ -39,11 +57,7 @@ const ContentBox: React.FC<Props> = ({ items }: Props) => {
 
 					<Tbody >
 
-						{items?.sort((word1, word2) => 
-							(displayFrequencyGrowth ? // if we are displaying frequency growth
-								(word1.frequency_growth < word2.frequency_growth) : // sort on that
-								(word1.search_count < word2.search_count)) // else sort on search count
-									? 1 : -1) // larger
+						{items?.sort((word1, word2) => sortWords(word1, word2))
 							.map((item: TrendingWord, index: number) => {
 							return (<Tr key={index}>
 								<Td fontSize="sm" onClick={()=>navigate("/context")}
