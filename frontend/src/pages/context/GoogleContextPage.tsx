@@ -1,12 +1,9 @@
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import {
 	IconButton,
-	VStack,
-	Box,
 	Grid,
 	GridItem,
 	Heading,
-	chakra
 } from "@chakra-ui/react";
 import { FrequencyStat } from "components/FrequencyStat";
 import InstagramPosts from "components/InstagramPost";
@@ -29,7 +26,6 @@ const GoogleContextPage = () => {
 
 
 	useEffect(() => {
-
 		trendingWord && API.getAllRelatedHashtags(trendingWord.word).then((trendingHashtags) => {
 			setTrendingHashtags(trendingHashtags);
 		}).catch(error => {
@@ -64,30 +60,14 @@ const GoogleContextPage = () => {
 				gap={6}
 				padding={3}
 			>
-				{/* <GridItem colSpan={1} rounded={"lg"} paddingLeft={"10px"} > 			
-					<Heading color={"forest"} fontSize={"3xl"}>Lets view some details about the search</Heading>
-				</GridItem> */}
 
 				<GridItem colSpan={4} rounded={"lg"} textAlign={"right"} paddingRight={"10px"}>
-					{/* DUMMY TEXT HERE */}
 					<Heading color={"forest"} fontSize={"4xl"}  as={"u"} >SEARCH </Heading>
 					<Heading color={"teal"} fontSize={"4xl"}>{trendingWord.word?.toUpperCase()}</Heading> 		
 				</GridItem>
 
 				<GridItem colSpan={1} bg='hovergreen' padding={"10px"} rounded={"lg"} paddingBottom={"30px"}>
-					<Box >
-						<VStack>
-							<chakra.h1
-								textAlign={"center"}
-								fontSize={"4xl"}
-								py={10}
-								fontWeight={"bold"}
-								color={"forest"}>
-								How is the word doing? 
-							</chakra.h1>
-							<FrequencyStat/>
-						</VStack>
-					</Box>
+					<FrequencyStat details={trendingWord}/>
 				</GridItem>
 
 				<GridItem colSpan={3} bg='itembackdrop' rounded={"lg"}>

@@ -33,10 +33,8 @@ export const TrendChart = () => {
 	const {trendingWord} = useContext(SelectedWordContext);
 
 	useEffect(() => {
- 
 		trendingWord && API.getInteresOvertimeForSearchTerm(trendingWord.word).then((stats) => {
 			setGraphData(stats);
-			console.log(stats);
 		}).catch(error => {
 			console.error("Failed to fetch graph data: %o", error);
 		});		
@@ -46,14 +44,10 @@ export const TrendChart = () => {
 	const counts: number[] = [];
 	if(graphData){
 		graphData.forEach(elem => labels.push((new Date(elem.date)).toLocaleDateString()));
-		console.log("LABELS (dates): ");
-		console.log(labels);
 		
 	}
 	if(graphData){
 		graphData.forEach(element=>counts.push(element.relative_search_value));
-		console.log("COUNTS : ");
-		console.log(counts);
 	}
 
 	const options = {
