@@ -6,6 +6,7 @@ import InstagramContext from "pages/context";
 import GoogleContextPage from "pages/context/GoogleContextPage";
 import InstagramWatchPage from "pages/instagramWatch";
 import Settings from "pages/settings";
+import HashtagsPage from "pages/hashtags/HashtagsPage";
 
 const Router = () => {
 	return (
@@ -16,6 +17,8 @@ const Router = () => {
 			<Route path="/InstagramContext" element={<InstagramContext/>}/>
 			<Route path="/GoogleContext" element={<GoogleContextPage/>}/>
 			<Route path="/InstagramPosts" element={<InstagramWatchPage/>}/>
+			<Route path="/Hashtags" element={<HashtagsPage/>}/>
+			{/* TODO fix path for context med params */}
 		</Routes>
 	);
 };

@@ -25,11 +25,11 @@ const ContentBox: React.FC<Props> = ({ category, statName, items, tabletype }: P
 
 	function nav(word: string){
 		if (tabletype==="instagram"){
-			sessionStorage.setItem("word", word);
+			localStorage.setItem("word", word);
 			navigate("/InstagramContext");
 		}
 		else {
-			sessionStorage.setItem("word", word);
+			localStorage.setItem("word", word);
 			navigate("/GoogleContext");
 		}
 	}

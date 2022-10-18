@@ -1,3 +1,4 @@
+from array import array
 from typing import List
 from flask import Flask, request
 from api.GoogleTrendsDataCollector import GoogleTrendsDataCollector
@@ -7,6 +8,7 @@ import pandas as pd
 from pandas import DataFrame
 import os
 from dotenv import load_dotenv
+import json
 
 load_dotenv()
 
@@ -61,7 +63,7 @@ def create_app():
 
         return df.to_json(orient="records")
 
-    @app.route("/api/v1/relatedHashtags")
+    @app.route("/api/v1/related_hashtags")
     def getRelatedHashtags():
         metaCollector = InstagramCollector(
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
@@ -69,10 +71,9 @@ def create_app():
         args = request.args
         query = args.get("query", default="", type=str)
         filteredOutWords = args.get("filteredOutWords", default="", type=str)
-        # to test backend you can change 'query' to hardcoded keyword
         return metaCollector.get_related_hashtags(query, filteredOutWords)
 
-    @app.route("/api/v1/relatedPostURLS")
+    @app.route("/api/v1/related_post_URLS")
     def getRelatedPostURLS():
         metaCollector = InstagramCollector(
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
@@ -87,8 +88,24 @@ def create_app():
             metaCollector = InstagramCollector(
                 os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
             )
+            args = request.args
+            followedUsers = args.get("followedUsers", default="[]", type=str)
+            filteredOutWords = args.get("filteredOutWords", default="", type=str)
+            users = json.loads(followedUsers)
+            return metaCollector.get_hashtags_business_users(users, filteredOutWords)
+        except ValueError as e:
+            return str(e)
 
-            return metaCollector.get_hashtags_business_users()
+    @app.route("/api/v1/business_posts_urls")
+    def getBusinessPostURLS():
+        try:
+            metaCollector = InstagramCollector(
+                os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
+            )
+            args = request.args
+            followedUsers = args.get("followedUsers", default="[]", type=str)
+            users = json.loads(followedUsers)
+            return metaCollector.get_business_post_urls(users)
         except ValueError as e:
             return str(e)
 
