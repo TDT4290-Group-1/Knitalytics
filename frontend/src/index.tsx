@@ -7,12 +7,16 @@ import SidebarWithHeader from "../src/components/Sb";
 
 
 import { root } from "config/ReactConstants";
+import SelectedWordContextProvider from "context/selectedWordProvider";
 
 root.render(
 	<React.StrictMode>
+
 		<PackagesProviders>
 			<SidebarWithHeader>
-				<Router />
+				<SelectedWordContextProvider>
+					<Router />
+				</SelectedWordContextProvider>
 			</SidebarWithHeader>
 		</PackagesProviders>
 	</React.StrictMode>
