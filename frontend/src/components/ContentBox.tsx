@@ -59,7 +59,7 @@ const ContentBox: React.FC<Props> = ({ items, tabletype }: Props) => {
 							<Th fontSize="sm" isNumeric paddingRight={0}>
 								<Menu> 
 									<MenuButton as={Button} rightIcon={<ArrowDownIcon />} 
-												onClick={() => setDisplayFrequencyGrowth(!displayFrequencyGrowth)}>
+										onClick={() => setDisplayFrequencyGrowth(!displayFrequencyGrowth)}>
 										{displayFrequencyGrowth ? "Frequency growth" : "Search count"}
 									</MenuButton>
 								</Menu>	
@@ -71,16 +71,16 @@ const ContentBox: React.FC<Props> = ({ items, tabletype }: Props) => {
 
 						{items?.sort((word1, word2) => sortWords(word1, word2))
 							.map((item: TrendingWord, index: number) => {
-							return (<Tr key={index}>
-								<Td fontSize="sm" onClick={()=>nav(item.word)}
-									_hover={{
-										color: "hovergreen",
-										cursor: "pointer"
-									}}
-								>{`${index + 1}. ${item.word}`}</Td>
-								<Td fontSize="sm"  isNumeric>{displayFrequencyGrowth ? item.frequency_growth : item.search_count}</Td>
-								{/* <Td fontSize="sm" isNumeric>{item.search_count}</Td>  */}
-							</Tr>);})}
+								return (<Tr key={index}>
+									<Td fontSize="sm" onClick={()=>nav(item.word)}
+										_hover={{
+											color: "hovergreen",
+											cursor: "pointer"
+										}}
+									>{`${index + 1}. ${item.word}`}</Td>
+									<Td fontSize="sm"  isNumeric>{displayFrequencyGrowth ? item.frequency_growth : item.search_count}</Td>
+									{/* <Td fontSize="sm" isNumeric>{item.search_count}</Td>  */}
+								</Tr>);})}
 					</Tbody>
 
 				</Table>

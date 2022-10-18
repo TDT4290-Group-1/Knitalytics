@@ -21,9 +21,9 @@ const HomePage = () => {
 	if (typeof trendingWords === "undefined") {
 		// dummy data while waiting for backend implementation
 		setTrendingWords([{word: "word1", frequency_growth: 250, search_count: 75},
-						  {word: "word2", frequency_growth: 100, search_count: 100},
-						  {word: "word3", frequency_growth: 300, search_count: 25},
-						  {word: "word4", frequency_growth: undefined, search_count: undefined}])
+			{word: "word2", frequency_growth: 100, search_count: 100},
+			{word: "word3", frequency_growth: 300, search_count: 25},
+			{word: "word4", frequency_growth: undefined, search_count: undefined}]);
 			
 		/** TODO: awawaiting backend implementation
 		// fetch the words
@@ -69,8 +69,8 @@ const HomePage = () => {
 						</Center>
 						{trendingWords ? 
 							<ContentBox
-							items={trendingWords}
-							tabletype="google" 
+								items={trendingWords}
+								tabletype="google" 
 							/> : <div>loading</div>
 						}
 						
