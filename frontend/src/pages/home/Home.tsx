@@ -2,7 +2,7 @@ import { Center, VStack, Text, SimpleGrid, Box } from "@chakra-ui/react";
 import ContentBox from "components/ContentBox";
 import  API  from "api/api";
 import {TrendingWord} from "../../../models/trendingword";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import theme from "../../theme";
 
 
@@ -12,20 +12,8 @@ const HomePage = () => {
 
 	const [trendingWordsError, setTrendingWordsError] = useState(false);
 
-	const [trendingHashtags, setTrendingHashtags] = useState<TrendingWord[]>();
-
-
-	
-
 	// check whether trending words have been retrieved
 	if (typeof trendingWords === "undefined") {
-		// dummy data while waiting for backend implementation
-		setTrendingWords([{word: "word1", frequency_growth: 250, search_count: 75},
-			{word: "word2", frequency_growth: 100, search_count: 100},
-			{word: "word3", frequency_growth: 300, search_count: 25},
-			{word: "word4", frequency_growth: undefined, search_count: undefined}]);
-			
-		/** TODO: awawaiting backend implementation
 		// fetch the words
 		API.getAllTrendingWords().then((trendingWords) => {
 			setTrendingWords(trendingWords as TrendingWord[]);
@@ -33,7 +21,6 @@ const HomePage = () => {
 			setTrendingWords([]); // set to something defined so we avoid infinite API calls
 			setTrendingWordsError(!trendingWordsError);
 		});
-		*/
 	}
 
 	return (
