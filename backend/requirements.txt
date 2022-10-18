@@ -1,34 +1,26 @@
-attrs
-black
-click
-coverage
-flake8
-Flask
-Flask-Cors
-importlib-metadata
-iniconfig
-itsdangerous
-Jinja2
-MarkupSafe
-mypy-extensions
-numpy
-packaging
-pandas
-pathspec
-platformdirs
-pluggy
-py
-pyparsing
-pytest
-python-dateutil
-pytz
-six
-tomli
-typing_extensions
-Werkzeug
-zipp
-requests
-load_dotenv
-jupyter
-jupytext
-pytrends
+# packaging
+wheel
+setuptools
+
+# Formatting and linting
+black 
+flake8 
+
+# testing
+pytest 
+
+# backend server
+flask 
+flask-cors 
+
+# environment variables
+load_dotenv 
+
+# data transfer
+pandas 
+pytrends 
+requests 
+
+# Jupyter notebooks
+jupyter 
+jupytext 
