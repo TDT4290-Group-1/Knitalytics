@@ -1,6 +1,5 @@
 from typing import List
 from flask import Flask, request
-from api.DataCollectorInterface import DataCollector
 from api.GoogleTrendsDataCollector import GoogleTrendsDataCollector
 from api.InstagramCollector import InstagramCollector
 from flask_cors import CORS
