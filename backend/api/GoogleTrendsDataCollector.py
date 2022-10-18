@@ -32,33 +32,44 @@ class GoogleTrendsDataCollector(DataCollector):
         Returns:
             pandas.DataFrame
         """
-        kw_list = [search_term] 
+        kw_list = [search_term]
         self.pytrends_client.build_payload(kw_list, geo=geo, timeframe=timeframe)
         response = self.pytrends_client.related_queries()
 
-
         # we have to account for no related queries in either category
         # we create a default empty DataFrame and only set its value of the metric actually has values
-        
+
         # retrieve frequency growth values
         COLUMN_MAPPER["value"] = COLUMN_NAMES["frequency_growth"]
-        frequency_growth_df = pd.DataFrame({"query": [], "value": []}) # default response is empty dataframe
-        if response[search_term]["rising"] is not None: 
-            frequency_growth_df = response[search_term]["rising"] # the search term have "rising" related queries 
-        frequency_growth_df = frequency_growth_df.rename(columns=COLUMN_MAPPER) # rename columns appropriately
-        
+        frequency_growth_df = pd.DataFrame(
+            {"query": [], "value": []}
+        )  # default response is empty dataframe
+        if response[search_term]["rising"] is not None:
+            frequency_growth_df = response[search_term][
+                "rising"
+            ]  # the search term have "rising" related queries
+        frequency_growth_df = frequency_growth_df.rename(
+            columns=COLUMN_MAPPER
+        )  # rename columns appropriately
+
         # retrive search count values
         COLUMN_MAPPER["value"] = COLUMN_NAMES["search_count"]
         search_count_df = pd.DataFrame({"query": [], "value": []})
-        if response[search_term]["top"] is not None:   
-            search_count_df = response[search_term]["top"] # the search term have "top" related queries
+        if response[search_term]["top"] is not None:
+            search_count_df = response[search_term][
+                "top"
+            ]  # the search term have "top" related queries
         search_count_df = search_count_df.rename(columns=COLUMN_MAPPER)
 
         # We perform outer join on the frequency growth and search count DFs
         # This matches values that exist in both and adds null values where there was no match in the other
-        response = frequency_growth_df.set_index(COLUMN_NAMES["word"]).join(search_count_df.set_index(COLUMN_NAMES["word"]), how="outer")
+        response = frequency_growth_df.set_index(COLUMN_NAMES["word"]).join(
+            search_count_df.set_index(COLUMN_NAMES["word"]), how="outer"
+        )
 
-        return response.reset_index(drop=False) # reset the index to get the "word" column again
+        return response.reset_index(
+            drop=False
+        )  # reset the index to get the "word" column again
 
     # Method used to process the raw data of trending words. Returns a list of TrendingWord objects from the given data frames.
     def __process_trending_word_data__(self, data_frame: pd.DataFrame) -> pd.DataFrame:
@@ -73,9 +84,7 @@ class GoogleTrendsDataCollector(DataCollector):
             )
         else:
             return self.__process_trending_word_data__(
-                self.__collect_trending_word_data__(
-                    search_term=search_term
-                )
+                self.__collect_trending_word_data__(search_term=search_term)
             )
 
     # Method used to get the interest over time for a given keyword. Returns a dataframe of the interest over time in relative numbers.
