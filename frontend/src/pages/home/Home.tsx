@@ -2,24 +2,26 @@ import { Center, VStack, Text, SimpleGrid, Box } from "@chakra-ui/react";
 import ContentBox from "components/ContentBox";
 import  API  from "api/api";
 import {TrendingWord} from "../../../models/trendingword";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import theme from "../../theme";
 
 
 const HomePage = () => {
 
-	const [trendingGoogleWords, setTrendingGoogleWords] = useState<TrendingWord[]>();
+	const [trendingWords, setTrendingWords] = useState<TrendingWord[] | undefined>(undefined); // use undefined as check whether loaded or not
 
-	useEffect(() => {
+	const [trendingWordsError, setTrendingWordsError] = useState(false);
 
+	// check whether trending words have been retrieved
+	if (typeof trendingWords === "undefined") {
+		// fetch the words
 		API.getAllTrendingWords().then((trendingWords) => {
-			setTrendingGoogleWords(trendingWords as TrendingWord[]);
-		}).catch(error => {
-			console.error("Failed to fetch hashtags: %o", error);
+			setTrendingWords(trendingWords as TrendingWord[]);
+		}).catch(() => {
+			setTrendingWords([]); // set to something defined so we avoid infinite API calls
+			setTrendingWordsError(!trendingWordsError);
 		});
-	}, []);
-
-	console.log(trendingGoogleWords);
+	}
 
 	return (
 		<>
@@ -32,15 +34,14 @@ const HomePage = () => {
 						<Center>
 							<Text marginBottom={"10%"} fontSize={"2xl"}  color={theme.colors.forest}>Google Trends</Text>
 						</Center>
-						{trendingGoogleWords ?
+						{trendingWords ? 
 							<ContentBox
-								category="Word"
-								statName="Growth"
-								tabletype="google"
-								items={trendingGoogleWords}
-							/> : <div>loading</div>}
+								items={trendingWords}
+								tabletype="google" 
+							/> : <div>loading</div>
+						}
+						
 					</VStack>
-
 				</Box>
 
 				<Box>
@@ -50,8 +51,6 @@ const HomePage = () => {
 						</Center>
 						{/* {trendingHashtags ?
 							<ContentBox
-								category="Word"
-								statName="Growth"
 								items={trendingHashtags}
 								tabletype={"instagram"}
 							/> : <div>loading</div>} */}

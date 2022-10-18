@@ -42,12 +42,12 @@ class GoogleTrendsDataCollector(DataCollector):
         # retrieve frequency growth values
         COLUMN_MAPPER["value"] = COLUMN_NAMES["frequency_growth"]
         frequency_growth_df = pd.DataFrame(
-            {"query": [], "value": []}
-        )  # default response is empty dataframe
+            {"query": [], "value": []} # default response is empty dataframe
+        )  
         if response[search_term]["rising"] is not None:
             frequency_growth_df = response[search_term][
-                "rising"
-            ]  # the search term have "rising" related queries
+                "rising" # the search term have "rising" related queries
+            ]  
         frequency_growth_df = frequency_growth_df.rename(
             columns=COLUMN_MAPPER
         )  # rename columns appropriately
