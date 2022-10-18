@@ -1,7 +1,6 @@
 from array import array
 from typing import List
 from flask import Flask, request
-from api.DataCollectorInterface import DataCollector
 from api.GoogleTrendsDataCollector import GoogleTrendsDataCollector
 from api.InstagramCollector import InstagramCollector
 from flask_cors import CORS
@@ -37,11 +36,8 @@ def create_app():
     def hello_world():
         return "Hello, World!"
 
-    @app.route("/api/v1/trends/", methods=["GET"])
+    @app.route("/api/v1/trends", methods=["GET"])
     def getTrendingWords():
-        metric = request.args.get(
-            "metric"
-        )  # 'frequency_growth' or 'search_count'. Used to show the most searched words or the fastest growing words.
         search_term = request.args.get(
             "search_term", ""
         )  # search term to search for. If empty, the default search term is used.
@@ -49,12 +45,12 @@ def create_app():
         googleCollector = GoogleTrendsDataCollector()
         add_dataframe_from_collector(
             trending_words_dataframes,
-            googleCollector.get_trending_words(metric, search_term),
+            googleCollector.get_trending_words(search_term),
         )
 
         main_data_frame = pd.concat(trending_words_dataframes).reset_index(drop=True)
 
-        return main_data_frame.to_json(orient="records")
+        return main_data_frame.to_json(orient="records", force_ascii=False)
 
     @app.route("/api/v1/interest_over_time/", methods=["GET"])
     def getInterestOverTime():

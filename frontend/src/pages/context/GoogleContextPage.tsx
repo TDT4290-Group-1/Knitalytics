@@ -15,7 +15,6 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import API from "../../api/api";
 import { TrendChart } from "components/TrendChart";
-import { TredningWordsMetric } from "utils/trendingWordsMetric";
 import { SelectedWordContext } from "context/selectedWordContext";
 
 
@@ -38,7 +37,7 @@ const GoogleContextPage = () => {
 		});
 
 		const tmp: string[] = [];
-		trendingWord && API.getAllTrendingWords(TredningWordsMetric.FrequencyGrowth, trendingWord.word).then((trendingWords) => {
+		trendingWord && API.getAllTrendingWords(trendingWord.word).then((trendingWords) => {
 			trendingWords.map(trend => tmp.push(trend.word));
 			setRelatedSearches(tmp.slice(0, 10));
 		}).catch(error => {
