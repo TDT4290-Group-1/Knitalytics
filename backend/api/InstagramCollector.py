@@ -33,7 +33,7 @@ class InstagramCollector(DataCollector):
 
         # returns links to popular posts related to 'query
 
-    def get_related_posts(self, query: str, amount: int = 9) -> List[str]:
+    def get_related_posts(self, query: str, amount: int) -> List[str]:
         id = self.APIAgent.get_hashtag_id(query)
         posts = self.APIAgent.get_posts_from_hashtag(id, "like_count, permalink")
         posts = self.hlp.remove_unpopular_posts(posts)
