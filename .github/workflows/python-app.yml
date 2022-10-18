@@ -5,6 +5,8 @@ name: Backend
 
 on: # runs on the following events
   push: # push to every branch
+    paths:
+      - backend/**
   pull_request: # pull request to "main"
     branches: ["main"]
 
