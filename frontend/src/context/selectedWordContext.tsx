@@ -7,4 +7,4 @@ export interface SelectedWordContextType {
     setWord: Dispatch<SetStateAction<string>>;
   }
   
-export const SelectedWordContext = createContext<SelectedWordContextType>({word: "", setWord: () => console.log("no setMethod sat")});
+export const SelectedWordContext = createContext<SelectedWordContextType>({word: "", setWord: () => null});
