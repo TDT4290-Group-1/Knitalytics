@@ -4,7 +4,6 @@ import  API  from "api/api";
 import {TrendingWord} from "../../../models/trendingword";
 import { useState, useEffect } from "react";
 import theme from "../../theme";
-import { TredningWordsMetric } from "utils/trendingWordsMetric";
 
 
 const HomePage = () => {
@@ -13,12 +12,12 @@ const HomePage = () => {
 
 	useEffect(() => {
 
-		API.getAllTrendingWords(TredningWordsMetric.FrequencyGrowth).then((trendingWords) => {
+		API.getAllTrendingWords().then((trendingWords) => {
 			setTrendingGoogleWords(trendingWords as TrendingWord[]);
 		}).catch(error => {
 			console.error("Failed to fetch hashtags: %o", error);
-		});		
-	},[]);
+		});
+	}, []);
 
 	console.log(trendingGoogleWords);
 
