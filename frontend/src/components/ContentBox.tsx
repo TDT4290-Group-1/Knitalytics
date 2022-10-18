@@ -1,9 +1,10 @@
 import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, Button, Menu, MenuButton } from "@chakra-ui/react";
+import React, { useContext, useState } from "react";
 import theme from "../theme";
 import { TrendingWord } from "../../models/trendingword";
 import { ArrowDownIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { SelectedWordContext } from "context/selectedWordContext";
 
 interface Props {
     items: TrendingWord[] | undefined;
@@ -13,18 +14,20 @@ interface Props {
 
 const ContentBox: React.FC<Props> = ({ items, tabletype }: Props) => {
 
+	const {setTrendingWord} = useContext(SelectedWordContext);
+
 	const navigate = useNavigate();
 
 	// are we displaying frequency growth? If not, we are displaying search count
 	const [displayFrequencyGrowth, setDisplayFrequencyGrowth] = useState(false);
 
-	function nav(word: string){
+	function nav(word: TrendingWord){
 		if (tabletype==="instagram"){
-			sessionStorage.setItem("word", word);
+			setTrendingWord(word);
 			navigate("/InstagramContext");
 		}
 		else {
-			sessionStorage.setItem("word", word);
+			setTrendingWord(word);
 			navigate("/GoogleContext");
 		}
 	}
@@ -72,7 +75,7 @@ const ContentBox: React.FC<Props> = ({ items, tabletype }: Props) => {
 						{items?.sort((word1, word2) => sortWords(word1, word2))
 							.map((item: TrendingWord, index: number) => {
 								return (<Tr key={index}>
-									<Td fontSize="sm" onClick={()=>nav(item.word)}
+									<Td fontSize="sm" onClick={()=>nav(item)}
 										_hover={{
 											color: "hovergreen",
 											cursor: "pointer"

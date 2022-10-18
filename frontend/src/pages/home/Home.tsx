@@ -36,26 +36,6 @@ const HomePage = () => {
 		*/
 	}
 
-
-	// This function needs to differantiate between fetching instagram data or google data.
-	// Awaiting backend implementation
-	useEffect(() => {
-		//TODO: change hardcoded "knitting" to a dynamic query
-		API.getAllRelatedHashtags("knitting").then((trendingHashtags) => {
-			const hashtags = trendingHashtags;
-			const hashtagsMap = hashtags.map((hashtag): TrendingWord => {
-				return {
-					word: hashtag,
-					search_count: -1, // dummy value
-					frequency_growth: -1 // dummy value
-				};
-			});
-			setTrendingHashtags(hashtagsMap);
-		}).catch(error => {
-			console.error("Failed to fetch hashtags: %o", error);
-		});
-	},[]);
-
 	return (
 		<>
 			<Center>

@@ -12,15 +12,15 @@ import { FrequencyStat } from "components/FrequencyStat";
 import InstagramPosts from "components/InstagramPost";
 import RelatedWords from "components/RelatedWords";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import API from "../../api/api";
 import { TrendChart } from "components/TrendChart";
-import { TredningWordsMetric } from "utils/trendingWordsMetric";
+import { SelectedWordContext } from "context/selectedWordContext";
 
 
 const GoogleContextPage = () => {
 	const navigate = useNavigate();
-	const word = sessionStorage.getItem("word");
+	const {trendingWord} = useContext(SelectedWordContext);
 
 	const [trendingHashtags, setTrendingHashtags] = useState<string[]>();
 	const [popularPostUrls, setPopularPostUrls] = useState<string[]>();
@@ -29,16 +29,15 @@ const GoogleContextPage = () => {
 
 
 	useEffect(() => {
-		const word = sessionStorage.getItem("word");
 
-		word && API.getAllRelatedHashtags(word).then((trendingHashtags) => {
+		trendingWord && API.getAllRelatedHashtags(trendingWord.word).then((trendingHashtags) => {
 			setTrendingHashtags(trendingHashtags);
 		}).catch(error => {
 			console.error("Failed to fetch hashtags: %o", error);
 		});
 
 		const tmp: string[] = [];
-		word && API.getAllTrendingWords(TredningWordsMetric.FrequencyGrowth, word).then((trendingWords) => {
+		trendingWord && API.getAllTrendingWords(trendingWord.word).then((trendingWords) => {
 			trendingWords.map(trend => tmp.push(trend.word));
 			setRelatedSearches(tmp.slice(0, 10));
 		}).catch(error => {
@@ -46,7 +45,7 @@ const GoogleContextPage = () => {
 		});
 
 
-		word && API.getAllRelatedPostURLS(word).then((popularPost)=>{
+		trendingWord && API.getAllRelatedPostURLS(trendingWord.word).then((popularPost)=>{
 			setPopularPostUrls(popularPost);
 		}).catch(error => {
 			console.error("Failed to fetch instagram posts: %o", error);
@@ -65,15 +64,14 @@ const GoogleContextPage = () => {
 				gap={6}
 				padding={3}
 			>
-				<GridItem colSpan={1} rounded={"lg"} paddingLeft={"10px"} > 			
-					<Heading color={"forest"} fontSize={"3xl"} as={"u"}>SEARCH</Heading>
-					<Heading color={"teal"} fontSize={"3xl"} marginBottom={"6%"}> {word?.toUpperCase()}</Heading>
-				</GridItem>
+				{/* <GridItem colSpan={1} rounded={"lg"} paddingLeft={"10px"} > 			
+					<Heading color={"forest"} fontSize={"3xl"}>Lets view some details about the search</Heading>
+				</GridItem> */}
 
-				<GridItem colSpan={3} rounded={"lg"} textAlign={"right"} paddingRight={"10px"}>
+				<GridItem colSpan={4} rounded={"lg"} textAlign={"right"} paddingRight={"10px"}>
 					{/* DUMMY TEXT HERE */}
-					<Heading color={"forest"} fontSize={"5xl"}  as={"u"} >TOPIC </Heading>
-					<Heading color={"teal"} fontSize={"5xl"}>KNITTING PATTERN</Heading> 		
+					<Heading color={"forest"} fontSize={"4xl"}  as={"u"} >SEARCH </Heading>
+					<Heading color={"teal"} fontSize={"4xl"}>{trendingWord.word?.toUpperCase()}</Heading> 		
 				</GridItem>
 
 				<GridItem colSpan={1} bg='hovergreen' padding={"10px"} rounded={"lg"} paddingBottom={"30px"}>
