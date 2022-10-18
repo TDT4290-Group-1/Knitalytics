@@ -33,15 +33,19 @@ class API {
 	async getAllRelatedHashtags(query: string):Promise<string[]> {
 		const filteredOutWords = getListLocalStorage("filteredOutWords");
 		//filteredOutWords format: "word, word1, word2". String with comma between each word
-		const response = await client.get("/api/v1/relatedHashtags", { params: { query: query, filteredOutWords: filteredOutWords } });
+		const response = await client.get("/api/v1/related_hashtags", { params: { query, filteredOutWords } });
 		return response.data;
 	}
 
 	async getAllRelatedPostURLS(query: string):Promise<string[]> {
-		const response = await client.get("/api/v1/relatedPostURLS", { params: { query: query } });
+		const response = await client.get("/api/v1/related_post_URLS", { params: {  query } });
 		return response.data;
 	}
-        
+
+	async getBusinessPostURLS(followedUsers: string[]):Promise<string[]> {
+		const response = await client.get("/api/v1/business_posts_urls", { params: { followedUsers: JSON.stringify(followedUsers) } });
+		return response.data;
+	}
 }
 
 export default new API();
