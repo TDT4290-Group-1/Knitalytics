@@ -15,7 +15,6 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import API from "../../api/api";
 import { TrendChart } from "components/TrendChart";
-import { TredningWordsMetric } from "utils/trendingWordsMetric";
 import { SelectedWordContext } from "context/selectedWordContext";
 
 
