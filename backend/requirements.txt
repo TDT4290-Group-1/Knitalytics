@@ -2,6 +2,7 @@ attrs
 black
 click
 coverage
+flake8
 Flask
 Flask-Cors
 importlib-metadata
