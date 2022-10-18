@@ -32,17 +32,27 @@ class GoogleTrendsDataCollector(DataCollector):
         Returns:
             pandas.DataFrame
         """
-        kw_list = [search_term]
+        kw_list = [search_term] 
         self.pytrends_client.build_payload(kw_list, geo=geo, timeframe=timeframe)
         response = self.pytrends_client.related_queries()
 
+
+        # we have to account for no related queries in either category
+        # we create a default empty DataFrame and only set its value of the metric actually has values
+        
         # retrieve frequency growth values
         COLUMN_MAPPER["value"] = COLUMN_NAMES["frequency_growth"]
-        frequency_growth_df = response[search_term]["rising"].rename(columns=COLUMN_MAPPER)
+        frequency_growth_df = pd.DataFrame({"query": [], "value": []}) # default response is empty dataframe
+        if response[search_term]["rising"] is not None: 
+            frequency_growth_df = response[search_term]["rising"] # the search term have "rising" related queries 
+        frequency_growth_df = frequency_growth_df.rename(columns=COLUMN_MAPPER) # rename columns appropriately
         
         # retrive search count values
         COLUMN_MAPPER["value"] = COLUMN_NAMES["search_count"]
-        search_count_df = response[search_term]["top"].rename(columns=COLUMN_MAPPER)
+        search_count_df = pd.DataFrame({"query": [], "value": []})
+        if response[search_term]["top"] is not None:   
+            search_count_df = response[search_term]["top"] # the search term have "top" related queries
+        search_count_df = search_count_df.rename(columns=COLUMN_MAPPER)
 
         # We perform outer join on the frequency growth and search count DFs
         # This matches values that exist in both and adds null values where there was no match in the other
