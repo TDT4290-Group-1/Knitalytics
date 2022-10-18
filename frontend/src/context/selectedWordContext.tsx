@@ -1,10 +1,13 @@
 import { createContext, Dispatch, SetStateAction } from "react";
+import { TrendingWord } from "../../models/trendingword";
 
 
 
 export interface SelectedWordContextType {
-    word: string;
-    setWord: Dispatch<SetStateAction<string>>;
+    trendingWord: TrendingWord;
+    setTrendingWord: Dispatch<SetStateAction<TrendingWord>>;
   }
+
+
   
-export const SelectedWordContext = createContext<SelectedWordContextType>({word: "", setWord: () => null});
+export const SelectedWordContext = createContext<SelectedWordContextType>({trendingWord: {word:""}, setTrendingWord: () => null});

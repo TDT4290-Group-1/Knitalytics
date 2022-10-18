@@ -17,7 +17,7 @@ interface Props {
 const ContentBox: React.FC<Props> = ({ category, statName, items, tabletype }: Props) => {
 
 	const [toggle, setToggle] = useState(true);
-	const {setWord} = useContext(SelectedWordContext);
+	const {setTrendingWord} = useContext(SelectedWordContext);
 
 	function toggleSwitch() {
 		setToggle(!toggle);
@@ -25,13 +25,13 @@ const ContentBox: React.FC<Props> = ({ category, statName, items, tabletype }: P
 
 	const navigate = useNavigate();
 
-	function nav(word: string){
+	function nav(word: TrendingWord){
 		if (tabletype==="instagram"){
-			setWord(word);
+			setTrendingWord(word);
 			navigate("/InstagramContext");
 		}
 		else {
-			setWord(word);
+			setTrendingWord(word);
 			navigate("/GoogleContext");
 		}
 	}
@@ -65,7 +65,7 @@ const ContentBox: React.FC<Props> = ({ category, statName, items, tabletype }: P
 
 						{items.sort((o1, o2) => toggle ? ((o1.frequency_growth ?? 0) < (o2.frequency_growth ?? 0) ? 1 : -1) : ( (o1.search_count ?? 0)<(o2.search_count ?? 0) ? 1:-1)).map((item, index) => {
 							return (<Tr key={index}>
-								<Td fontSize="sm" onClick={()=>nav(item.word)}
+								<Td fontSize="sm" onClick={()=>nav(item)}
 									_hover={{
 										color: "hovergreen",
 									}}

@@ -1,5 +1,6 @@
 
 import { useEffect, useState } from "react";
+import { TrendingWord } from "../../models/trendingword";
 import { SelectedWordContext } from "./selectedWordContext";
 
 interface wordProp {
@@ -7,14 +8,14 @@ interface wordProp {
 }
 
 export default function SelectedWordContextProvider({ children }: wordProp) {
-	const [word, setWord] = useState<string>("");
+	const [trendingWord, setTrendingWord] = useState<TrendingWord>({word:""});
 
 
-	console.log("WOrd", word);
+	console.log("WOrd", trendingWord);
     
 	useEffect(() => {
-		console.log(word);
-	}, [word]);
+		console.log(trendingWord);
+	}, [trendingWord]);
 
-	return <SelectedWordContext.Provider value={{word, setWord}}>{children}</SelectedWordContext.Provider>;
+	return <SelectedWordContext.Provider value={{trendingWord, setTrendingWord}}>{children}</SelectedWordContext.Provider>;
 }
