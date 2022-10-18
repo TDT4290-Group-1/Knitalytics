@@ -7,7 +7,7 @@ import {
 	BoxProps,
 } from "@chakra-ui/react";
 import { IconType } from "react-icons";
-import { BiCloset, BiGroup, BiBookmark, BiSortZA } from "react-icons/bi";
+import { BiCloset, BiGroup, BiBookmark, BiSortZA, BiHash } from "react-icons/bi";
 import {
 	FiSettings,
 } from "react-icons/fi";
@@ -29,6 +29,7 @@ const LinkItems: Array<LinkItemProps> = [
 	{ name: "Fashion trends", icon: BiCloset, path: "/" },
 	{ name: "Trending users", icon: BiGroup, path: "/" },
 	{ name: "Watch list", icon: BiBookmark, path: "/InstagramPosts" },
+	{ name: "Hashtags", icon: BiHash, path: "/Hashtags" },
 	{ name: "Settings", icon: FiSettings, path: "/settings" },
 ];
   
