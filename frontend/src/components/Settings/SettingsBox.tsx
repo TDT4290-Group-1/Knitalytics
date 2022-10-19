@@ -5,7 +5,7 @@ import API from "../../api/api";
 import {
 	AiOutlineSend,
 } from "react-icons/ai";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface SettingsBoxProps {
     title: string,
@@ -14,39 +14,38 @@ interface SettingsBoxProps {
 const SettingsBox = ({title, storagePath} : SettingsBoxProps) => {
 
 	const [input, setInput] = useState("");
-	const [validUsername, setValidUsername] = useState<boolean|null>(null);
-	const [listFromStorage, setListFromStorage] = useState(getListLocalStorage(storagePath).split(",").filter(element => {
-		return element !== "";}));
+	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => setInput(event.target.value);
+	const [listFromStorage, setListFromStorage] = useState(
+		getListLocalStorage(storagePath)
+			.split(",")
+			.filter(element => element));
 
-	useEffect(() => {
-		if (validUsername === true) {
+	
+	const handleButtonPress: React.MouseEventHandler = async () => {
+		
+		const usernameValid = await checkValidUsername(input);
+		if (storagePath === "followedUsers" && usernameValid) {
 			const tempList = [...listFromStorage];
 			tempList.push(input);
 			setListFromStorage(tempList);
 			setLocalStorageList(tempList.toString(), storagePath);
-		}
-		setInput("");
-	},[validUsername]);
-
-	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => setInput(event.target.value);
-	
-	const handleButtonPress: React.MouseEventHandler = () => {
-		if (storagePath === "followedUsers") {
-			checkValidUsername(input);
+			setInput("");
 		}
 	};
-
-	const checkValidUsername = (userName: string) => {
-		API.getBusinessUser(userName).then((response) => {
-			if (Object.keys(response)[0] === "error" ) {
-				alert(response["error"]["error_user_msg"]);
-				setValidUsername(false);
-			} else {
-				setValidUsername(true);
-			}
-		}).catch(error => {
+	
+	const checkValidUsername = async (userName: string) => {
+		try {
+			const res = await API.getBusinessUser(userName);
+			const errorMessage = res.error?.error_user_msg;
+			if (errorMessage) {
+				//Enters if statement if errormessage is "falsy"
+				alert(errorMessage);
+			}			
+			return !errorMessage;
+		} catch (error) {
 			console.error("Failed to fetch valid username: %o", error);
-		});
+		}
+		return false;
 	};
 
 	const handleDeleteItem = (itemName: string) => {
