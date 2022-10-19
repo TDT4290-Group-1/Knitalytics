@@ -54,16 +54,19 @@ const ContentBox: React.FC<Props> = ({ items, tabletype }: Props) => {
 
 	return (
 		<Center>
-			<TableContainer maxHeight={"500px"} overflowY={"scroll"}>
-				<Table variant='simple' color={theme.colors.forest} size={"sm"}>
+			<TableContainer maxHeight={"400px"}  overflowY={"scroll"} minWidth={"456px"}>
+				<Table variant='simple' color={theme.colors.forest} size={"md"}>
 					<Thead>
 						<Tr borderBottom="2px" color={theme.colors.forest}>
 							<Th  fontSize="sm">Word</Th> {/** The table always display words */}
 							<Th fontSize="sm" isNumeric paddingRight={0}>
 								<Menu> 
 									<MenuButton as={Button} rightIcon={<ArrowDownIcon />} 
-										onClick={() => setDisplayFrequencyGrowth(!displayFrequencyGrowth)}>
+										onClick={() => setDisplayFrequencyGrowth(!displayFrequencyGrowth)}
+										minWidth={"194px"}
+									>
 										{displayFrequencyGrowth ? "Frequency growth" : "Search count"}
+										
 									</MenuButton>
 								</Menu>	
 							</Th>
