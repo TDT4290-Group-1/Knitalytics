@@ -8,11 +8,10 @@ import { SelectedWordContext } from "context/selectedWordContext";
 
 interface Props {
     items: TrendingWord[] | undefined;
-	tabletype: string;
 }
 
 
-const ContentBox: React.FC<Props> = ({ items, tabletype }: Props) => {
+const ContentBox: React.FC<Props> = ({ items }: Props) => {
 
 	const {setTrendingWord} = useContext(SelectedWordContext);
 
@@ -22,14 +21,8 @@ const ContentBox: React.FC<Props> = ({ items, tabletype }: Props) => {
 	const [displayFrequencyGrowth, setDisplayFrequencyGrowth] = useState(false);
 
 	function nav(word: TrendingWord){
-		if (tabletype==="instagram"){
-			setTrendingWord(word);
-			navigate("/InstagramContext");
-		}
-		else {
-			setTrendingWord(word);
-			navigate("/GoogleContext");
-		}
+		setTrendingWord(word);
+		navigate("/GoogleDetails");
 	}
 
 	function sortWords(word1: TrendingWord, word2: TrendingWord) {

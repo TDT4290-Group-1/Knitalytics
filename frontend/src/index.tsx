@@ -3,7 +3,7 @@ import React from "react";
 import PackagesProviders from "config/PackagesProviders";
 
 import Router from "./router/Router";
-import SidebarWithHeader from "../src/components/Sb";
+import SidebarWithHeader from "./components/sidebar/SideBar";
 
 
 import { root } from "config/ReactConstants";

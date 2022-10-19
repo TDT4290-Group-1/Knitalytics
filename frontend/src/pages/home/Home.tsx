@@ -48,7 +48,6 @@ const HomePage = () => {
 			{trendingWords ? 
 				<ContentBox
 					items={trendingWords}
-					tabletype="google" 
 				/> : <Center><div>loading</div></Center>
 			}
 						

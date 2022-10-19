@@ -8,10 +8,6 @@ interface Props{
 }
 
 export default function InstagramPosts({URLs, heading}:Props){
-	
-	/**
-	 * TODO: query api for relevant urls  
-	 */
 
 	return(
 		<VStack>
@@ -32,8 +28,6 @@ export default function InstagramPosts({URLs, heading}:Props){
 				</GridItem>)}
 			</SimpleGrid>
 		</VStack>
-
-
 	);
 
 
