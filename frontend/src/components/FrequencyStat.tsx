@@ -43,13 +43,12 @@ export const FrequencyStat= ({details}:Props) => {
 			return (
 				<>
 					<HStack>
-						<Icon as={BiAbacus} color={"forest"} boxSize={5}></Icon>
+						<Icon as={BiAbacus} color={"forest"} boxSize={7} alignItems="start"></Icon>
 						<chakra.h1
 							textAlign={"center"}
 							fontSize={"lg"}
-							paddingBottom={10}
-							color={"lighthovergreen"}>
-							{details.search_count}%
+							color={"forest"}>
+							{details.search_count}
 						</chakra.h1>
 
 					</HStack>
