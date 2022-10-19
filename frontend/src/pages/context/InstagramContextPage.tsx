@@ -9,7 +9,7 @@ import {
 	Heading,
 	chakra
 } from "@chakra-ui/react";
-import { FrequencyStat } from "components/FrequencyStat";
+// import { FrequencyStat } from "components/FrequencyStat";
 // import InstagramPosts from "components/InstagramPost";
 // import RelatedWords from "components/RelatedWords";
 // import WordCloud from "components/OccuringWith";
@@ -59,7 +59,7 @@ const InstagramContextPage = () => {
 								color={"forest"}>
 								How is the word doing? 
 							</chakra.h1>
-							<FrequencyStat/>
+							{/* <FrequencyStat/> */}
 						</VStack>
 					</Box>
 				</GridItem>
