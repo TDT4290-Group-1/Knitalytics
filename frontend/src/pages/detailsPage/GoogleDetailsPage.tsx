@@ -15,7 +15,7 @@ import { TrendChart } from "components/TrendChart";
 import { SelectedWordContext } from "context/selectedWordContext";
 
 
-const GoogleContextPage = () => {
+const GoogleDetailsPage = () => {
 	const navigate = useNavigate();
 	const {trendingWord} = useContext(SelectedWordContext);
 
@@ -101,4 +101,4 @@ const GoogleContextPage = () => {
 
 };
 
-export default GoogleContextPage;
+export default GoogleDetailsPage;

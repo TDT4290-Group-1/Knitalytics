@@ -28,7 +28,7 @@ const ContentBox: React.FC<Props> = ({ items, tabletype }: Props) => {
 		}
 		else {
 			setTrendingWord(word);
-			navigate("/GoogleContext");
+			navigate("/GoogleDetails");
 		}
 	}
 
