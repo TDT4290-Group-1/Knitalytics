@@ -46,3 +46,6 @@ class InstagramCollector(DataCollector):
             posts = self.APIAgent.get_posts_from_ig_user(ig_user)
             post_urls += self.hlp.get_post_url(posts[:5])
         return post_urls
+
+    def get_business_user(self, bus_user) -> str:
+        return self.APIAgent.get_business_user(bus_user)

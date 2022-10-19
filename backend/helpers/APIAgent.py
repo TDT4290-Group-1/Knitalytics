@@ -36,6 +36,19 @@ class APIAgent:
         response = requests.get(url=self.base_url + endpoint, params=PARAMS)
         return json.loads(response.text)["business_discovery"]["media"]["data"]
 
+    def get_business_user(self, bus_user) -> str:
+        PARAMS = {
+            "access_token": self.access_token,
+            "user_id": self.user_id,
+            "fields": "business_discovery.username(" + bus_user + "){id}",
+        }
+        endpoint = "/" + self.user_id
+        try:
+            response = requests.get(url=self.base_url + endpoint, params=PARAMS)
+            return json.loads(response.text)
+        except KeyError:
+            return json.loads(response.text)
+
     # returns id of the hashtag specified in query.
     def get_hashtag_id(self, query: str) -> str or dict:
         PARAMS = {

@@ -1,6 +1,7 @@
 import { Text, Center, VStack, Input, HStack, Button, Box } from "@chakra-ui/react";
 import { getListLocalStorage, setLocalStorageList } from "api/localStorage";
 import HashtagBox from "./HashtagBox";
+import API from "../../api/api";
 import {
 	AiOutlineSend,
 } from "react-icons/ai";
@@ -13,17 +14,38 @@ interface SettingsBoxProps {
 const SettingsBox = ({title, storagePath} : SettingsBoxProps) => {
 
 	const [input, setInput] = useState("");
-	const [listFromStorage, setListFromStorage] = useState(getListLocalStorage(storagePath).split(",").filter(element => {
-		return element !== "";}));
-
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => setInput(event.target.value);
+	const [listFromStorage, setListFromStorage] = useState(
+		getListLocalStorage(storagePath)
+			.split(",")
+			.filter(element => element));
+
 	
-	const handleButtonPress: React.MouseEventHandler = () => {
-		const tempList = [...listFromStorage];
-		tempList.push(input);
-		setListFromStorage(tempList);
-		setLocalStorageList(tempList.toString(), storagePath);
-		setInput("");
+	const handleButtonPress: React.MouseEventHandler = async () => {
+		
+		const usernameValid = await checkValidUsername(input);
+		if (storagePath === "followedUsers" && usernameValid) {
+			const tempList = [...listFromStorage];
+			tempList.push(input);
+			setListFromStorage(tempList);
+			setLocalStorageList(tempList.toString(), storagePath);
+			setInput("");
+		}
+	};
+	
+	const checkValidUsername = async (userName: string) => {
+		try {
+			const res = await API.getBusinessUser(userName);
+			const errorMessage = res.error?.error_user_msg;
+			if (errorMessage) {
+				//Enters if statement if errormessage is "falsy"
+				alert(errorMessage);
+			}			
+			return !errorMessage;
+		} catch (error) {
+			console.error("Failed to fetch valid username: %o", error);
+		}
+		return false;
 	};
 
 	const handleDeleteItem = (itemName: string) => {

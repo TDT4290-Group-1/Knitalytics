@@ -45,7 +45,13 @@ class API {
 		const response = await client.get("/api/v1/business_posts_urls", { params: { followedUsers: JSON.stringify(followedUsers) } });
 		return response.data;
 	}
+	async getBusinessUser(username: string):Promise<{id?: string, error?: {error_user_msg: string}}> {
+		const response = await client.get("/api/v1/business_user", { params: { username: JSON.stringify(username) } });
+		return response.data;
+	}
+	
 }
+
 
 export default new API();
 
