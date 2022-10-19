@@ -11,7 +11,7 @@ import { BiCloset, BiGroup, BiBookmark, BiSortZA, BiHash } from "react-icons/bi"
 import {
 	FiSettings,
 } from "react-icons/fi";
-import {NavItem} from "../components/NavItem";
+import {NavItem} from "./NavItem";
 
 
 
