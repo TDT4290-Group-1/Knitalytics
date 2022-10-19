@@ -50,21 +50,18 @@ const ContentBox: React.FC<Props> = ({ items, tabletype }: Props) => {
 		}
 	}
 
-	// helper variable to determine display and sorting value
-
 	return (
 		<Center >
 			<TableContainer maxHeight={"400px"}  overflowY={"scroll"} minWidth={"468px"} borderRadius={"lg"}>
 				<Table variant='simple' color={theme.colors.forest} size={"md"} background={theme.colors.palehovergreen}>
 					<Thead position="sticky" top={0} bgColor={theme.colors.lighthovergreen}>
 						<Tr borderBottom="2px" color={theme.colors.forest} borderRadius={"lg"}>
-							<Th  fontSize="sm">Word</Th> {/** The table always display words */}
+							<Th  fontSize="sm">Word</Th> 
 							<Th fontSize="sm" isNumeric paddingRight={"12px"}>
 								<Menu > 
 									<MenuButton as={Button} rightIcon={<ArrowDownIcon />} 
 										onClick={() => setDisplayFrequencyGrowth(!displayFrequencyGrowth)}
 										minWidth={"194px"}
-										// colorScheme={theme.colors.palehovergreen}
 										variant={"ghost"}
 									>
 										{displayFrequencyGrowth ? "Frequency growth" : "Search count"}
@@ -86,7 +83,6 @@ const ContentBox: React.FC<Props> = ({ items, tabletype }: Props) => {
 										}}
 									>{`${index + 1}. ${item.word}`}</Td>
 									<Td fontSize="sm"  isNumeric>{displayFrequencyGrowth ? item.frequency_growth : item.search_count}</Td>
-									{/* <Td fontSize="sm" isNumeric>{item.search_count}</Td>  */}
 								</Tr>);})}
 					</Tbody>
 
