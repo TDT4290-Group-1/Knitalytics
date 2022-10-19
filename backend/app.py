@@ -115,7 +115,7 @@ def create_app():
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
         )
         args = request.args
-        ig_user = json.loads(args.get("username", default="[]", type=str))
+        ig_user = json.loads(args.get("username", default="", type=str))
         return metaCollector.get_business_user(ig_user)
 
     return app
