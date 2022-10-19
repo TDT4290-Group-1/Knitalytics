@@ -77,7 +77,7 @@ def create_app():
         filteredOutWords = args.get("filteredOutWords", default="", type=str)
         return metaCollector.get_related_hashtags(query, filteredOutWords)
 
-    #Takes a hashtags and an amount: {query: str, amount: int}
+    # Takes a hashtags and an amount: {query: str, amount: int}
     @app.route("/api/v1/related_post_URLS")
     def getRelatedPostURLS():
         metaCollector = InstagramCollector(
