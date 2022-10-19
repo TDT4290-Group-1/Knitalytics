@@ -28,8 +28,8 @@ const HomePage = () => {
 				<chakra.h1
 					textAlign={"center"}
 					fontSize={"5xl"}
-					py={10}
 					paddingBottom={20}
+					paddingTop={5}
 					fontWeight={"bold"}
 					color={"forest"}>
 					Trending Words 
@@ -40,7 +40,7 @@ const HomePage = () => {
 				<ContentBox
 					items={trendingWords}
 					tabletype="google" 
-				/> : <div>loading</div>
+				/> : <Center><div>loading</div></Center>
 			}
 						
 

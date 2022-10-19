@@ -53,8 +53,8 @@ const ContentBox: React.FC<Props> = ({ items, tabletype }: Props) => {
 	// helper variable to determine display and sorting value
 
 	return (
-		<Center>
-			<TableContainer maxHeight={"400px"}  overflowY={"scroll"} minWidth={"456px"}>
+		<Center >
+			<TableContainer maxHeight={"400px"}  overflowY={"scroll"} minWidth={"456px"} >
 				<Table variant='simple' color={theme.colors.forest} size={"md"}>
 					<Thead>
 						<Tr borderBottom="2px" color={theme.colors.forest}>
