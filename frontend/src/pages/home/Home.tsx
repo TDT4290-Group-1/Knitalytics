@@ -1,65 +1,57 @@
-import { Center, VStack, Text, SimpleGrid, Box } from "@chakra-ui/react";
+import { Center, chakra, VStack } from "@chakra-ui/react";
 import ContentBox from "components/ContentBox";
 import  API  from "api/api";
 import {TrendingWord} from "../../../models/trendingword";
-import { useState, useEffect } from "react";
-import theme from "../../theme";
-import { TredningWordsMetric } from "utils/trendingWordsMetric";
+import { useState } from "react";
 
 
 const HomePage = () => {
 
-	const [trendingGoogleWords, setTrendingGoogleWords] = useState<TrendingWord[]>();
+	const [trendingWords, setTrendingWords] = useState<TrendingWord[] | undefined>(undefined); // use undefined as check whether loaded or not
 
-	useEffect(() => {
+	const [trendingWordsError, setTrendingWordsError] = useState(false);
 
-		API.getAllTrendingWords(TredningWordsMetric.FrequencyGrowth).then((trendingWords) => {
-			setTrendingGoogleWords(trendingWords as TrendingWord[]);
-		}).catch(error => {
-			console.error("Failed to fetch hashtags: %o", error);
-		});		
-	},[]);
-
-	console.log(trendingGoogleWords);
+	// check whether trending words have been retrieved
+	if (typeof trendingWords === "undefined") {
+		// fetch the words
+		API.getAllTrendingWords().then((trendingWords) => {
+			setTrendingWords(trendingWords as TrendingWord[]);
+		}).catch(() => {
+			setTrendingWords([]); // set to something defined so we avoid infinite API calls
+			setTrendingWordsError(!trendingWordsError);
+		});
+	}
 
 	return (
 		<>
 			<Center>
-				<Text fontSize={"6xl"} marginBottom={"6%"} color={theme.colors.forest}>Trending words</Text>
+				<VStack>
+					<chakra.h1
+						textAlign={"center"}
+						fontSize={"5xl"}
+						paddingTop={5}
+						fontWeight={"bold"}
+						color={"forest"}>
+					Trending Words 
+					</chakra.h1>
+					<chakra.h1
+						textAlign={"center"}
+						fontSize={"lg"}
+						paddingBottom={20}
+						fontWeight={"bold"}
+						color={"forest"}>
+					Google searches 
+					</chakra.h1>
+				</VStack>
 			</Center>
-			<SimpleGrid minChildWidth='350px' spacingY='50px' spacingX="0px">
-				<Box>
-					<VStack >
-						<Center>
-							<Text marginBottom={"10%"} fontSize={"2xl"}  color={theme.colors.forest}>Google Trends</Text>
-						</Center>
-						{trendingGoogleWords ?
-							<ContentBox
-								category="Word"
-								statName="Growth"
-								tabletype="google"
-								items={trendingGoogleWords}
-							/> : <div>loading</div>}
-					</VStack>
-
-				</Box>
-
-				<Box>
-					<VStack>
-						<Center>
-							<Text marginBottom={"10%"} fontSize={"2xl"} color={theme.colors.forest}>Instagram Hashtags</Text>
-						</Center>
-						{/* {trendingHashtags ?
-							<ContentBox
-								category="Word"
-								statName="Growth"
-								items={trendingHashtags}
-								tabletype={"instagram"}
-							/> : <div>loading</div>} */}
-					</VStack>
-
-				</Box>
-			</SimpleGrid>
+				
+			{trendingWords ? 
+				<ContentBox
+					items={trendingWords}
+					tabletype="google" 
+				/> : <Center><div>loading</div></Center>
+			}
+						
 
 		</>
 	);

@@ -9,12 +9,13 @@ import {
 	Tooltip,
 	Legend,
 } from "chart.js";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import theme from "../theme";
 import  API  from "api/api";
 import { GraphData } from "../../models/trendingword";
 import {nb} from "date-fns/locale";
+import { SelectedWordContext } from "context/selectedWordContext";
 
   
 ChartJS.register(
@@ -29,14 +30,11 @@ ChartJS.register(
 export const TrendChart = () => {
 
 	const [graphData, setGraphData] = useState<GraphData[]>();
+	const {trendingWord} = useContext(SelectedWordContext);
 
 	useEffect(() => {
-		const word = localStorage.getItem("word");
- 
-		word && API.getInteresOvertimeForSearchTerm(word).then((stats) => {
+		trendingWord && API.getInteresOvertimeForSearchTerm(trendingWord.word).then((stats) => {
 			setGraphData(stats);
-			console.log("YOLOSWAGGGGGG");
-			console.log(stats);
 		}).catch(error => {
 			console.error("Failed to fetch graph data: %o", error);
 		});		
@@ -46,14 +44,10 @@ export const TrendChart = () => {
 	const counts: number[] = [];
 	if(graphData){
 		graphData.forEach(elem => labels.push((new Date(elem.date)).toLocaleDateString()));
-		console.log("LABELS (dates): ");
-		console.log(labels);
 		
 	}
 	if(graphData){
 		graphData.forEach(element=>counts.push(element.relative_search_value));
-		console.log("COUNTS : ");
-		console.log(counts);
 	}
 
 	const options = {
