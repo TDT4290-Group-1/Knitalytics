@@ -1,4 +1,4 @@
-import { Center, chakra } from "@chakra-ui/react";
+import { Center, chakra, VStack } from "@chakra-ui/react";
 import ContentBox from "components/ContentBox";
 import  API  from "api/api";
 import {TrendingWord} from "../../../models/trendingword";
@@ -25,15 +25,24 @@ const HomePage = () => {
 	return (
 		<>
 			<Center>
-				<chakra.h1
-					textAlign={"center"}
-					fontSize={"5xl"}
-					paddingBottom={20}
-					paddingTop={5}
-					fontWeight={"bold"}
-					color={"forest"}>
+				<VStack>
+					<chakra.h1
+						textAlign={"center"}
+						fontSize={"5xl"}
+						paddingTop={5}
+						fontWeight={"bold"}
+						color={"forest"}>
 					Trending Words 
-				</chakra.h1>
+					</chakra.h1>
+					<chakra.h1
+						textAlign={"center"}
+						fontSize={"lg"}
+						paddingBottom={20}
+						fontWeight={"bold"}
+						color={"forest"}>
+					Google searches 
+					</chakra.h1>
+				</VStack>
 			</Center>
 				
 			{trendingWords ? 

@@ -54,16 +54,18 @@ const ContentBox: React.FC<Props> = ({ items, tabletype }: Props) => {
 
 	return (
 		<Center >
-			<TableContainer maxHeight={"400px"}  overflowY={"scroll"} minWidth={"456px"} >
-				<Table variant='simple' color={theme.colors.forest} size={"md"}>
-					<Thead>
-						<Tr borderBottom="2px" color={theme.colors.forest}>
+			<TableContainer maxHeight={"400px"}  overflowY={"scroll"} minWidth={"468px"} borderRadius={"lg"}>
+				<Table variant='simple' color={theme.colors.forest} size={"md"} background={theme.colors.palehovergreen}>
+					<Thead position="sticky" top={0} bgColor={theme.colors.lighthovergreen}>
+						<Tr borderBottom="2px" color={theme.colors.forest} borderRadius={"lg"}>
 							<Th  fontSize="sm">Word</Th> {/** The table always display words */}
-							<Th fontSize="sm" isNumeric paddingRight={0}>
-								<Menu> 
+							<Th fontSize="sm" isNumeric paddingRight={"12px"}>
+								<Menu > 
 									<MenuButton as={Button} rightIcon={<ArrowDownIcon />} 
 										onClick={() => setDisplayFrequencyGrowth(!displayFrequencyGrowth)}
 										minWidth={"194px"}
+										// colorScheme={theme.colors.palehovergreen}
+										variant={"ghost"}
 									>
 										{displayFrequencyGrowth ? "Frequency growth" : "Search count"}
 										
@@ -72,8 +74,7 @@ const ContentBox: React.FC<Props> = ({ items, tabletype }: Props) => {
 							</Th>
 						</Tr>
 					</Thead>
-
-					<Tbody >
+					<Tbody>
 
 						{items?.sort((word1, word2) => sortWords(word1, word2))
 							.map((item: TrendingWord, index: number) => {
