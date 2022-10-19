@@ -1,10 +1,11 @@
 import { Text, Center, VStack, Input, HStack, Button, Box } from "@chakra-ui/react";
 import { getListLocalStorage, setLocalStorageList } from "api/localStorage";
 import HashtagBox from "./HashtagBox";
+import API from "../../api/api";
 import {
 	AiOutlineSend,
 } from "react-icons/ai";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface SettingsBoxProps {
     title: string,
@@ -13,17 +14,39 @@ interface SettingsBoxProps {
 const SettingsBox = ({title, storagePath} : SettingsBoxProps) => {
 
 	const [input, setInput] = useState("");
+	const [validUsername, setValidUsername] = useState<boolean|null>(null);
 	const [listFromStorage, setListFromStorage] = useState(getListLocalStorage(storagePath).split(",").filter(element => {
 		return element !== "";}));
+
+	useEffect(() => {
+		if (validUsername === true) {
+			const tempList = [...listFromStorage];
+			tempList.push(input);
+			setListFromStorage(tempList);
+			setLocalStorageList(tempList.toString(), storagePath);
+		}
+		setInput("");
+	},[validUsername]);
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => setInput(event.target.value);
 	
 	const handleButtonPress: React.MouseEventHandler = () => {
-		const tempList = [...listFromStorage];
-		tempList.push(input);
-		setListFromStorage(tempList);
-		setLocalStorageList(tempList.toString(), storagePath);
-		setInput("");
+		if (storagePath === "followedUsers") {
+			checkValidUsername(input);
+		}
+	};
+
+	const checkValidUsername = (userName: string) => {
+		API.getBusinessUser(userName).then((response) => {
+			if (Object.keys(response)[0] === "error" ) {
+				alert(response["error"]["error_user_msg"]);
+				setValidUsername(false);
+			} else {
+				setValidUsername(true);
+			}
+		}).catch(error => {
+			console.error("Failed to fetch valid username: %o", error);
+		});
 	};
 
 	const handleDeleteItem = (itemName: string) => {

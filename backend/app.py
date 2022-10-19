@@ -109,6 +109,15 @@ def create_app():
         except ValueError as e:
             return str(e)
 
+    @app.route("/api/v1/business_user")
+    def getBusinessUser():
+        metaCollector = InstagramCollector(
+            os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
+        )
+        args = request.args
+        ig_user = json.loads(args.get("username", default="[]", type=str))
+        return metaCollector.get_business_user(ig_user)
+
     return app
 
 
