@@ -17,9 +17,7 @@ interface RelationProps {
 
 export default function RelatedWords({ heading, type, relatedWords}: RelationProps) {
 
-    
 	return (
-		
 		<VStack marginBottom={"15%"}>
 			<chakra.h1
 				textAlign={"center"}
@@ -38,8 +36,7 @@ export default function RelatedWords({ heading, type, relatedWords}: RelationPro
 					</Tag>)}
 			</Box>
 		</VStack>
-		
-		
+
 	);
 
 }

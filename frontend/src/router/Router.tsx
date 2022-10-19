@@ -16,7 +16,6 @@ const Router = () => {
 			<Route path="/GoogleDetails" element={<GoogleDetailsPage/>}/>
 			<Route path="/InstagramPosts" element={<InstagramWatchPage/>}/>
 			<Route path="/Hashtags" element={<HashtagsPage/>}/>
-			{/* TODO fix path for context med params */}
 		</Routes>
 	);
 };
