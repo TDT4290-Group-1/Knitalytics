@@ -1,4 +1,5 @@
 import pandas as pd
+from py import process
 from api.DataCollectorInterface import DataCollector, COLUMN_NAMES
 
 from pytrends.request import TrendReq
@@ -13,6 +14,11 @@ COLUMN_MAPPER = {
 class GoogleTrendsDataCollector(DataCollector):
     def __init__(self, host_language="en-US", tz=120) -> None:
         self.pytrends_client = TrendReq(host_language, tz)
+
+    def _build_payload(self, search_term, geo, timeframe):
+        kw_list = [search_term]
+        self.pytrends_client.build_payload(kw_list, geo=geo, timeframe=timeframe)
+
 
     def __collect_trending_word_data__(
         self,
@@ -72,15 +78,26 @@ class GoogleTrendsDataCollector(DataCollector):
         )  # reset the index to get the "word" column again
 
     # Method used to process the raw data of trending words. Returns a list of TrendingWord objects from the given data frames.
-    def __process_trending_word_data__(self, data_frame: pd.DataFrame) -> pd.DataFrame:
+    def __process_trending_word_data__(self, data_frame: pd.DataFrame, filter) -> pd.DataFrame:
         processed_data = data_frame.copy()
+
+        if filter:
+            before_filter = processed_data.shape[0]
+            print(f"Rows before filtering: {before_filter}")
+
+            last_12 = self.__collect_trending_word_data__(timeframe="today 12-m")
+
+            processed_data = processed_data.loc[~processed_data[COLUMN_NAMES["word"]].isin(last_12[COLUMN_NAMES["word"]]), :]
+
+            print(f"Deleted {before_filter - processed_data.shape[0]} rows after filtering queries that are also in last 12 months")
+
         return processed_data
 
     # Method used by the endpoint to get the trending words. Returns a list of TrendingWord objects.
-    def get_trending_words(self, search_term: str) -> pd.DataFrame:
+    def get_trending_words(self, search_term: str, filter= False) -> pd.DataFrame:
         if search_term == "":
             return self.__process_trending_word_data__(
-                self.__collect_trending_word_data__()
+                self.__collect_trending_word_data__(), filter
             )
         else:
             return self.__process_trending_word_data__(
