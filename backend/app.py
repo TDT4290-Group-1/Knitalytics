@@ -41,11 +41,12 @@ def create_app():
         search_term = request.args.get(
             "search_term", ""
         )  # search term to search for. If empty, the default search term is used.
+        filter = request.args.get("filter", False)
         trending_words_dataframes: List[DataFrame] = []
         googleCollector = GoogleTrendsDataCollector()
         add_dataframe_from_collector(
             trending_words_dataframes,
-            googleCollector.get_trending_words(search_term),
+            googleCollector.get_trending_words(search_term, filter),
         )
 
         main_data_frame = pd.concat(trending_words_dataframes).reset_index(drop=True)
