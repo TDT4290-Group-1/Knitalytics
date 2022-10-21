@@ -8,7 +8,6 @@ interface Props{
 }
 
 export default function InstagramPosts({URLs, heading}:Props){
-	console.log(URLs);
 
 	return(
 		<VStack>
