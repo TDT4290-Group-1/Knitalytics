@@ -5,6 +5,7 @@ import {
 	TagLabel,
 	TagLeftIcon,
 	VStack,
+	Text
 
 } from "@chakra-ui/react";
 import { BiHash} from "react-icons/bi";
@@ -28,12 +29,21 @@ export default function RelatedWords({ heading, type, relatedWords}: RelationPro
 				{heading} 
 			</chakra.h1>
 			<Box textAlign={"center"} >
-
-				{relatedWords.map(word => 
+				{relatedWords.length>0 ? (relatedWords.map(word => 
 					<Tag size={"lg"} key={word} variant='subtle' colorScheme={"green"} margin={"1%"}>
 						{type === "instagram" && <TagLeftIcon boxSize='12px' as={BiHash} />}
 						<TagLabel>{word}</TagLabel>
-					</Tag>)}
+					</Tag>)) : (
+					type === "google"? (
+						<Text color={"forest"} padding={"10px"}>
+							Could not find any related search terms
+						</Text>
+					):(
+						<Text color={"forest"} padding={"10px"}>
+							Could not find any related hashtags
+						</Text>
+					)
+				)}
 			</Box>
 		</VStack>
 
