@@ -1,4 +1,4 @@
-import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, Button, Menu, MenuButton } from "@chakra-ui/react";
+import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, Button, Menu, MenuButton, Checkbox, Flex } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import theme from "../theme";
 import { TrendingWord } from "../../models/trendingword";
@@ -45,22 +45,30 @@ const ContentBox: React.FC<Props> = ({ items }: Props) => {
 
 	return (
 		<Center >
-			<TableContainer maxHeight={"400px"}  overflowY={"scroll"} minWidth={"468px"} borderRadius={"lg"}>
+			<TableContainer maxHeight={"400px"}  width="50%" overflowY={"scroll"} minWidth={"468px"} borderRadius={"lg"}>
 				<Table variant='simple' color={theme.colors.forest} size={"md"} background={theme.colors.palehovergreen}>
 					<Thead position="sticky" top={0} bgColor={theme.colors.lighthovergreen}>
-						<Tr borderBottom="2px" color={theme.colors.forest} borderRadius={"lg"}>
+						<Tr borderBottom="2px" color={theme.colors.forest} borderRadius={"lg"} justifyContent="space-between">
 							<Th  fontSize="sm">Word</Th> 
-							<Th fontSize="sm" isNumeric paddingRight={"12px"}>
-								<Menu > 
-									<MenuButton as={Button} rightIcon={<ArrowDownIcon />} 
-										onClick={() => setDisplayFrequencyGrowth(!displayFrequencyGrowth)}
-										minWidth={"194px"}
-										variant={"ghost"}
+							<Th fontSize="sm" isNumeric margin="2%" width="271px">
+								<Flex alignItems={"center"} justifyContent="space-between"> 
+									<Checkbox colorScheme='red' 
+											border="black" 
+											size="sm"
+											margin="2%"
 									>
-										{displayFrequencyGrowth ? "Frequency growth" : "Search count"}
-										
-									</MenuButton>
-								</Menu>	
+										Filter
+									</Checkbox>
+									<Button rightIcon={<ArrowDownIcon/>}
+											justifyContent="flex-end"
+											onClick={() => setDisplayFrequencyGrowth(!displayFrequencyGrowth)}
+											minWidth="194px"
+											variant={"ghost"}
+										>
+											{displayFrequencyGrowth ? "Frequency growth" : "Search count"}
+											
+									</Button>
+								</Flex>
 							</Th>
 						</Tr>
 					</Thead>
