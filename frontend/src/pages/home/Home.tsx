@@ -1,4 +1,4 @@
-import { Center, chakra, VStack } from "@chakra-ui/react";
+import { Center, chakra, VStack, Checkbox } from "@chakra-ui/react";
 import ContentBox from "components/ContentBox";
 import  API  from "api/api";
 import {TrendingWord} from "../../../models/trendingword";
@@ -11,16 +11,19 @@ const HomePage = () => {
 
 	const [trendingWordsError, setTrendingWordsError] = useState(false);
 
+	const [filter, setFilter] = useState(false);
+	
 	// check whether trending words have been retrieved
 	if (typeof trendingWords === "undefined") {
 		// fetch the words
-		API.getAllTrendingWords().then((trendingWords) => {
+		API.getAllTrendingWords("", filter).then((trendingWords) => {
 			setTrendingWords(trendingWords as TrendingWord[]);
 		}).catch(() => {
 			setTrendingWords([]); // set to something defined so we avoid infinite API calls
 			setTrendingWordsError(!trendingWordsError);
 		});
 	}
+
 
 	return (
 		<>
@@ -44,14 +47,11 @@ const HomePage = () => {
 					</chakra.h1>
 				</VStack>
 			</Center>
-				
-			{trendingWords ? 
 				<ContentBox
 					items={trendingWords}
-				/> : <Center><div>loading</div></Center>
-			}
-						
-
+					setTrendingWords={setTrendingWords}
+					setFilter={setFilter}
+				/>
 		</>
 	);
 };

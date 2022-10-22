@@ -1,6 +1,7 @@
-import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, Button, Menu, MenuButton, Checkbox, Flex } from "@chakra-ui/react";
-import React, { useContext, useState } from "react";
+import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, Button, Checkbox, Flex, useCheckbox } from "@chakra-ui/react";
+import React, { ChangeEvent, useContext, useRef, useState } from "react";
 import theme from "../theme";
+import API from "../api/api"
 import { TrendingWord } from "../../models/trendingword";
 import { ArrowDownIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
@@ -8,10 +9,12 @@ import { SelectedWordContext } from "context/selectedWordContext";
 
 interface Props {
     items: TrendingWord[] | undefined;
+	setTrendingWords: (trendingWords: TrendingWord[] | undefined) => void;
+	setFilter: (error: boolean) => void;
 }
 
 
-const ContentBox: React.FC<Props> = ({ items }: Props) => {
+const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter }: Props) => {
 
 	const {setTrendingWord} = useContext(SelectedWordContext);
 
