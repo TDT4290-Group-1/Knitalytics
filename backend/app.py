@@ -41,7 +41,12 @@ def create_app():
         search_term = request.args.get(
             "search_term", ""
         )  # search term to search for. If empty, the default search term is used.
-        filter = request.args.get("filter", False)
+
+        # the 'type' argument is a function that compares the GET argument value with the literal string "true"
+        # and sets the value of 'filter' variable correspondingly.
+        # This allows all specifications of "true" and "false" to be evaluated correctly, e.g. "TRUE" is also accepted as a value
+        filter = request.args.get("filter", False, type=lambda a: a.lower() == "true")
+        print(type(filter))
         trending_words_dataframes: List[DataFrame] = []
         googleCollector = GoogleTrendsDataCollector()
         add_dataframe_from_collector(

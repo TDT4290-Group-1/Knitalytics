@@ -78,8 +78,10 @@ class GoogleTrendsDataCollector(DataCollector):
         )  # reset the index to get the "word" column again
 
     # Method used to process the raw data of trending words. Returns a list of TrendingWord objects from the given data frames.
-    def __process_trending_word_data__(self, data_frame: pd.DataFrame, filter) -> pd.DataFrame:
+    def __process_trending_word_data__(self, data_frame: pd.DataFrame, filter: bool) -> pd.DataFrame:
         processed_data = data_frame.copy()
+
+        print(f"Filter data: {filter}")
 
         if filter:
             before_filter = processed_data.shape[0]
