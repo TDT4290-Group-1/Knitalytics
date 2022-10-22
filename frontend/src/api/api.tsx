@@ -15,8 +15,8 @@ class API {
 	 * @param searchTerm Optional search term to search for. If empty, the default search term is used.
 	 * @returns a JSON list of trening words with the gived metric value
 	 */
-	async getAllTrendingWords(searchTerm?: string): Promise<TrendingWord[]> {
-		const response = await client.get(`/api/v1/trends?${searchTerm ? "&search_term=" + searchTerm : ""}`);
+	async getAllTrendingWords(searchTerm?: string, filter?: boolean): Promise<TrendingWord[]> {
+		const response = await client.get(`/api/v1/trends?${searchTerm ? "&search_term=" + searchTerm : ""}${filter ? "&filter=" + filter : ""}`);
 		return response.data;
 	}
 
