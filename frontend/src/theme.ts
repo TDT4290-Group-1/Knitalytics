@@ -8,6 +8,7 @@ const theme = extendTheme({
 		sleekgrey:"#A5A5AF",
 		hovergreen: "#4c917c",
 		lighthovergreen: "#cfe6df",
+		palehovergreen: "rgba(207, 230, 223, 0.2)",
 		itembackdrop: "#e4f5f3",
 		almostwhite: "#f7fcfc",
 		lightgreen: "rgba(65,145,121, 0.4)",

@@ -1,50 +1,103 @@
 import {
-	Stat,
-	StatLabel,
-	StatNumber,
-	StatHelpText,
-	StatArrow,
-	StatGroup,
-
+	chakra, HStack, Icon, VStack,
 } from "@chakra-ui/react";
-import theme from "../theme";
+import { TrendingWord } from "../../models/trendingword";
+import { BiTrendingUp, BiAbacus } from "react-icons/bi";
 
-/**
- * DONE: set up first stat component
- * TODO: take props to display actual data 
- */
+interface Props {
+	details: TrendingWord;
+}
 
-
-export const FrequencyStat= () => {
+export const FrequencyStat= ({details}:Props) => {
 	
+	function getFrequency() {
+		if (details.frequency_growth){
+			return (
+				<>
+					<HStack paddingBottom={10}>
+						<Icon as={BiTrendingUp} color={"forest"} boxSize={7} alignItems="start"></Icon>
+
+						<chakra.h1
+							textAlign={"center"}
+							fontSize={"lg"}
+							color={"forest"}>
+							{details.frequency_growth}%
+						</chakra.h1>
+
+					</HStack>
+				</>
+			);
+		}
+		return (
+			<chakra.h1
+				textAlign={"center"}
+				fontSize={"sm"}
+				py={5}
+				color={"forest"}>
+			The search is not on the list of top frequency growths
+			</chakra.h1>);
+	}
+
+	function getSearchCount() {
+		if (details.search_count){
+			return (
+				<>
+					<HStack>
+						<Icon as={BiAbacus} color={"forest"} boxSize={7} alignItems="start"></Icon>
+						<chakra.h1
+							textAlign={"center"}
+							fontSize={"lg"}
+							color={"forest"}>
+							{details.search_count}
+						</chakra.h1>
+
+					</HStack>
+				</>
+			);
+		}
+		return (
+			<chakra.h1
+				textAlign={"center"}
+				fontSize={"sm"}
+				py={0}
+				color={"forest"}>
+			The search is not on the list of top search counts
+			</chakra.h1>);
+	}
     
 	return (
 
+		<VStack >
+			<chakra.h1
+				textAlign={"center"}
+				fontSize={"4xl"}
+				py={10}
+				fontWeight={"bold"}
+				color={"forest"}>
+				Metrics
+			</chakra.h1>
 
-		<StatGroup backgroundColor={"itembackdrop"} border={`1px solid ${theme.colors.sleekgrey}`} borderRadius={5} >
-			<Stat margin={"20px"}>
+			<chakra.h1
+				textAlign={"center"}
+				fontSize={"2xl"}
+				py={0}
+				color={"forest"}
+			>
+					Frequency Growth
+			</chakra.h1>
+			{getFrequency()}
 
-				<StatLabel>Growth</StatLabel>
-				<StatNumber>345,670</StatNumber>
+			<chakra.h1
+				textAlign={"center"}
+				fontSize={"2xl"}
+				py={0}
+				color={"forest"}
+			>
+					Search count
+			</chakra.h1>
+			{getSearchCount()}
 
-
-				<StatHelpText>
-					<StatArrow type='increase' />
-                    23.36%
-				</StatHelpText>
-			</Stat>
-
-			<Stat margin={"20px"} textAlign={"right"}>
-				<StatLabel>Search count</StatLabel>
-				<StatNumber>45</StatNumber>
-				<StatHelpText>
-					<StatArrow type='decrease' />
-                    9.05%
-				</StatHelpText>
-			</Stat>
-		</StatGroup>
-
-
+		</VStack>
 
 	);
 };

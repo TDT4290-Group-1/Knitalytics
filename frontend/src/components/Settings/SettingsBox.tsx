@@ -1,6 +1,7 @@
 import { Text, Center, VStack, Input, HStack, Button, Box } from "@chakra-ui/react";
 import { getListLocalStorage, setLocalStorageList } from "api/localStorage";
 import HashtagBox from "./HashtagBox";
+
 import {
 	AiOutlineSend,
 } from "react-icons/ai";
@@ -14,10 +15,12 @@ interface SettingsBoxProps {
 const SettingsBox = ({title, storagePath, validateInput} : SettingsBoxProps) => {
 
 	const [input, setInput] = useState("");
-	const [listFromStorage, setListFromStorage] = useState(getListLocalStorage(storagePath).split(",").filter(element => {
-		return element !== "";}));
-
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => setInput(event.target.value);
+	const [listFromStorage, setListFromStorage] = useState(
+		getListLocalStorage(storagePath)
+			.split(",")
+			.filter(element => element));
+
 	
 	const handleButtonPress: React.MouseEventHandler = async () => {
 

@@ -7,11 +7,11 @@ import {
 	BoxProps,
 } from "@chakra-ui/react";
 import { IconType } from "react-icons";
-import { BiCloset, BiGroup, BiBookmark, BiSortZA } from "react-icons/bi";
+import { BiGroup, BiSortZA, BiHash } from "react-icons/bi";
 import {
 	FiSettings,
 } from "react-icons/fi";
-import {NavItem} from "../components/NavItem";
+import {NavItem} from "./NavItem";
 
 
 
@@ -26,9 +26,8 @@ interface SidebarProps extends BoxProps {
   }
 const LinkItems: Array<LinkItemProps> = [
 	{ name: "Trending words", icon: BiSortZA, path: "/" },
-	{ name: "Fashion trends", icon: BiCloset, path: "/" },
-	{ name: "Trending users", icon: BiGroup, path: "/" },
-	{ name: "Watch list", icon: BiBookmark, path: "/InstagramPosts" },
+	{ name: "Followed users", icon: BiGroup, path: "/InstagramPosts" },
+	{ name: "Hashtags", icon: BiHash, path: "/Hashtags" },
 	{ name: "Settings", icon: FiSettings, path: "/settings" },
 ];
   

@@ -21,17 +21,33 @@ class APIAgent:
         }
         endpoint = "/" + id + "/top_media"
         response = requests.get(url=self.base_url + endpoint, params=PARAMS)
-        return json.loads(response.text)
+        posts: List[str] = json.loads(response.text)["data"]
+        return posts
 
-    def get_caption_from_ig_user(self, ig_user) -> str:
+    def get_posts_from_ig_user(self, ig_user) -> str:
         PARAMS = {
             "access_token": self.access_token,
             "user_id": self.user_id,
-            "fields": "business_discovery.username(" + ig_user + "){media{caption}}",
+            "fields": "business_discovery.username("
+            + ig_user
+            + "){media{caption, permalink}}",
         }
         endpoint = "/" + self.user_id
         response = requests.get(url=self.base_url + endpoint, params=PARAMS)
-        return json.loads(response.text)
+        return json.loads(response.text)["business_discovery"]["media"]["data"]
+
+    def get_business_user(self, bus_user) -> str:
+        PARAMS = {
+            "access_token": self.access_token,
+            "user_id": self.user_id,
+            "fields": "business_discovery.username(" + bus_user + "){id}",
+        }
+        endpoint = "/" + self.user_id
+        try:
+            response = requests.get(url=self.base_url + endpoint, params=PARAMS)
+            return json.loads(response.text)
+        except KeyError:
+            return json.loads(response.text)
 
     # returns id of the hashtag specified in query.
     def get_hashtag_id(self, query: str) -> str or dict:

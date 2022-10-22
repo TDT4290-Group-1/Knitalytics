@@ -1,42 +1,38 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
-name: Python application
+name: Backend
 
-on:
-  push:
-    branches: ["main"]
-  pull_request:
+on: # runs on the following events
+  push: # push to every branch
+    paths:
+      - backend/**
+  pull_request: # pull request to "main"
     branches: ["main"]
 
-permissions:
+permissions: # acces token for GitHub runner can only read repository
   contents: read
 
 jobs:
-  build:
+  backend-test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend # steps run in backend directory by default
 
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.10
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: "3.10"
+          cache: "pip" # cache dependencies
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install flake8 pytest
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: Lint with flake8
-        run: |
-          # stop the build if there are Python syntax errors or undefined names
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+          pip install -r requirements.txt
+      - name: Format with Black
+        run: black ./ # Format everything according to Black
       - name: Test with pytest
         run: |
-          cd backend
-          pip install --upgrade pip
-          pip install -r requirements.txt
           python -m pytest
-          black ./ --check   
