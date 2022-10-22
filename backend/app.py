@@ -38,6 +38,9 @@ def create_app():
 
     @app.route("/api/v1/trends/", methods=["GET"])
     def getTrendingWords():
+        # Arg validation
+        if "metric" not in request.args or "search_term" not in request.args:
+            return "Missing query parameter metric or search_term"
         metric = request.args.get(
             "metric"
         )  # 'frequency_growth' or 'search_count'. Used to show the most searched words or the fastest growing words.
@@ -62,6 +65,9 @@ def create_app():
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
         )
         args = request.args
+        # Arg validation
+        if "query" not in args:
+            return "Missing query parameter query"
         query = args.get("query", default="", type=str)
         filteredOutWords = args.get("filteredOutWords", default="", type=str)
         # to test backend you can change 'query' to hardcoded keyword
@@ -73,6 +79,9 @@ def create_app():
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
         )
         args = request.args
+        # Arg validation
+        if "query" not in args:
+            return "Missing query parameter query"
         query = args.get("query", default="", type=str)
         return metaCollector.get_related_posts(query)
 
@@ -94,6 +103,9 @@ def create_app():
                 os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
             )
             args = request.args
+            # Arg validation
+            if "username" not in args or "followedUsers" not in args:
+                return "Missing query parameter username or followedUsers"
             followedUsers = args.get("followedUsers", default="[]", type=str)
             users = json.loads(followedUsers)
             return metaCollector.get_business_post_urls(users)
@@ -106,6 +118,10 @@ def create_app():
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
         )
         args = request.args
+        # Arg validation
+        if "username" not in args:
+            return "Missing query parameter username"
+
         ig_user = json.loads(args.get("username", default="", type=str))
         return metaCollector.get_business_user(ig_user)
 
@@ -115,6 +131,10 @@ def create_app():
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
         )
         args = request.args
+        # Arg validation
+        if "hashtag" not in args:
+            return "Missing query parameter 'hashtag'"
+
         hashtag = json.loads(args.get("hashtag", default="", type=str))
         return metaCollector.get_hashtag_id(hashtag)
 
