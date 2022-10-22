@@ -27,33 +27,49 @@ class InstagramCollector(DataCollector):
             return response_text["error"]["error_user_title"]
         # do a check here
         id = response_text["data"][0]["id"]
-        response_text = self.APIAgent.get_posts_from_hashtag(
-            id, "like_count, caption")
+        response_text = self.APIAgent.get_posts_from_hashtag(id, "like_count, caption")
         # do a check here
         hashtags = self.hlp.parse_hashtag_from_posts(
-            response_text["data"], "knit, strik")[:amount]
+            response_text["data"], "knit, strik"
+        )[:amount]
         return hashtags  # returns a list
 
     def get_hashtags_business_users(self, ig_users=["knittingforolive"]) -> List[str]:
         captions: List[str] = []
         for ig_user in ig_users:
-            caption = self.APIAgent.get_caption_from_ig_user(
-                ig_user)["business_discovery"]["media"]["data"]["caption"]
+            caption = self.APIAgent.get_caption_from_ig_user(ig_user)[
+                "business_discovery"
+            ]["media"]["data"]["caption"]
             captions.append(caption)
         hashtags = self.hlp.parse_hashtag_from_captions(captions)
         return hashtags
 
         # returns links to popular posts related to 'query
+
     def get_related_posts(self, query: str, amount: int = 9) -> List[str]:
         response_text = self.APIAgent.get_hashtag_id(query)
         if next(iter(response_text)) == "error":
             return response_text  # returns a dict
         id = response_text["data"][0]["id"]
         response_text2 = self.APIAgent.get_posts_from_hashtag(
-            id, "like_count, permalink")
+            id, "like_count, permalink"
+        )
         if next(iter(response_text2)) == "error":
             return response_text["error"]["error_user_title"]  # returns a dict
         posts = posts["data"]
         posts = self.hlp.remove_unpopular_posts(posts)
         post_url = self.hlp.get_post_url(posts)
-        return post_url[amount]  # returns a list
+        return post_url[:amount]
+
+    def get_business_post_urls(self, ig_users) -> List[str]:
+        post_urls: List[str] = []
+        for ig_user in ig_users:
+            posts = self.APIAgent.get_posts_from_ig_user(ig_user)
+            post_urls += self.hlp.get_post_url(posts[:5])
+        return post_urls
+
+    def get_business_user(self, bus_user) -> str:
+        return self.APIAgent.get_business_user(bus_user)
+
+    def get_hashtag_id(self, hashtag) -> str:
+        return self.APIAgent.get_hashtag_id(hashtag)

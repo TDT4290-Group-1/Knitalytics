@@ -5,7 +5,7 @@ import requests
 import json
 
 
-class APIAgent():
+class APIAgent:
     def __init__(self, access_token, user_id) -> None:
         self.base_url = "https://graph.facebook.com/v15.0"
         self.access_token = access_token
@@ -20,8 +20,7 @@ class APIAgent():
             "fields": fields,
         }
         endpoint = "/" + id + "/top_media"
-        response = requests.get(
-            url=self.base_url + endpoint, params=PARAMS)
+        response = requests.get(url=self.base_url + endpoint, params=PARAMS)
         return json.loads(response.text)
 
     def get_caption_from_ig_user(self, ig_user) -> str:
@@ -31,8 +30,7 @@ class APIAgent():
             "fields": "business_discovery.username(" + ig_user + "){media{caption}}",
         }
         endpoint = "/" + self.user_id
-        response = requests.get(
-            url=self.base_url + endpoint, params=PARAMS)
+        response = requests.get(url=self.base_url + endpoint, params=PARAMS)
         return json.loads(response.text)
 
     # returns id of the hashtag specified in query.
@@ -43,6 +41,8 @@ class APIAgent():
             "q": query,
         }
         endpoint = "/ig_hashtag_search"
-        response = requests.get(
-            url=self.base_url + endpoint, params=PARAMS)
-        return json.loads(response.text)
+        try:
+            response = requests.get(url=self.base_url + endpoint, params=PARAMS)
+            return json.loads(response.text)["data"][0]["id"]
+        except KeyError:
+            return json.loads(response.text)

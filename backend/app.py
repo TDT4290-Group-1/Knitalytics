@@ -4,6 +4,7 @@ from api.DataCollectorInterface import DataCollector
 from api.GoogleTrendsDataCollector import GoogleTrendsDataCollector
 from api.InstagramCollector import InstagramCollector
 from flask_cors import CORS
+import json
 import pandas as pd
 from pandas import DataFrame
 import os
@@ -85,6 +86,37 @@ def create_app():
             return metaCollector.get_hashtags_business_users()
         except ValueError as e:
             return str(e)
+
+    @app.route("/api/v1/business_posts_urls")
+    def getBusinessPostURLS():
+        try:
+            metaCollector = InstagramCollector(
+                os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
+            )
+            args = request.args
+            followedUsers = args.get("followedUsers", default="[]", type=str)
+            users = json.loads(followedUsers)
+            return metaCollector.get_business_post_urls(users)
+        except ValueError as e:
+            return str(e)
+
+    @app.route("/api/v1/business_user")
+    def getBusinessUser():
+        metaCollector = InstagramCollector(
+            os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
+        )
+        args = request.args
+        ig_user = json.loads(args.get("username", default="", type=str))
+        return metaCollector.get_business_user(ig_user)
+
+    @app.route("/api/v1/hashtag_id")
+    def getHashtagId():
+        metaCollector = InstagramCollector(
+            os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
+        )
+        args = request.args
+        hashtag = json.loads(args.get("hashtag", default="", type=str))
+        return metaCollector.get_hashtag_id(hashtag)
 
     return app
 
