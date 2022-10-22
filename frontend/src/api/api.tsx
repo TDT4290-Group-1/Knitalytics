@@ -34,7 +34,15 @@ class API {
 		const response = await client.get("/api/v1/relatedPostURLS", { params: { query: query } });
 		return response.data;
 	}
-        
+	async getBusinessUser(username: string):Promise<{id?: string, error?: {error_user_msg: string}}> {
+		const response = await client.get("/api/v1/business_user", { params: { username: JSON.stringify(username) } });
+		return response.data;
+	}
+	async getHashtagId(hashtag: string):Promise<{error?: {error_user_msg: string}}> {
+		const response = await client.get("/api/v1/hashtag_id", { params: { hashtag: JSON.stringify(hashtag) } });
+		return response.data;
+	}
+	
 }
 
 export default new API();

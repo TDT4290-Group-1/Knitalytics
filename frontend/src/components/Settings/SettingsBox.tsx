@@ -9,8 +9,9 @@ import { useState } from "react";
 interface SettingsBoxProps {
     title: string,
     storagePath: string,
+	validateInput: (input: string) => Promise<boolean>,
 }
-const SettingsBox = ({title, storagePath} : SettingsBoxProps) => {
+const SettingsBox = ({title, storagePath, validateInput} : SettingsBoxProps) => {
 
 	const [input, setInput] = useState("");
 	const [listFromStorage, setListFromStorage] = useState(getListLocalStorage(storagePath).split(",").filter(element => {
@@ -18,12 +19,16 @@ const SettingsBox = ({title, storagePath} : SettingsBoxProps) => {
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => setInput(event.target.value);
 	
-	const handleButtonPress: React.MouseEventHandler = () => {
-		const tempList = [...listFromStorage];
-		tempList.push(input);
-		setListFromStorage(tempList);
-		setLocalStorageList(tempList.toString(), storagePath);
-		setInput("");
+	const handleButtonPress: React.MouseEventHandler = async () => {
+
+		const inputValid = await validateInput(input);
+		if (inputValid) {
+			const tempList = [...listFromStorage];
+			tempList.push(input);
+			setListFromStorage(tempList);
+			setLocalStorageList(tempList.toString(), storagePath);
+			setInput("");
+		}
 	};
 
 	const handleDeleteItem = (itemName: string) => {
