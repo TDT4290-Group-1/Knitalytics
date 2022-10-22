@@ -28,6 +28,11 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter }: Pro
 		navigate("/GoogleDetails");
 	}
 
+	function onCheckboxChanged(checked: boolean) {
+		setTrendingWords(undefined);
+		setFilter(checked);
+	}
+
 	function sortWords(word1: TrendingWord, word2: TrendingWord) {
 		if (displayFrequencyGrowth) {
 			if (typeof word1.frequency_growth === "undefined") {
@@ -59,6 +64,7 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter }: Pro
 											border="black" 
 											size="sm"
 											margin="2%"
+											onChange={(e) => onCheckboxChanged(e.target.checked)}
 									>
 										Filter
 									</Checkbox>
@@ -75,6 +81,7 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter }: Pro
 							</Th>
 						</Tr>
 					</Thead>
+					{items ? 
 					<Tbody>
 
 						{items?.sort((word1, word2) => sortWords(word1, word2))
@@ -89,7 +96,8 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter }: Pro
 									<Td fontSize="sm"  isNumeric>{displayFrequencyGrowth ? item.frequency_growth : item.search_count}</Td>
 								</Tr>);})}
 					</Tbody>
-
+					: <div>Loading...</div>
+					}
 				</Table>
 			</TableContainer>
 		</Center>
