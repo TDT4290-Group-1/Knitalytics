@@ -1,4 +1,5 @@
 from array import array
+from flask import abort
 from typing import List
 from flask import Flask, request
 from api.GoogleTrendsDataCollector import GoogleTrendsDataCollector
@@ -73,7 +74,8 @@ def create_app():
         args = request.args
         # Arg validation
         if "query" not in args:
-            return "Missing query parameter query"
+            # Returns http error to frontend
+            abort(422, "Missing query parameter query")
         query = args.get("query", default="", type=str)
         filteredOutWords = args.get("filteredOutWords", default="", type=str)
         return metaCollector.get_related_hashtags(query, filteredOutWords)
@@ -87,7 +89,7 @@ def create_app():
         args = request.args
         # Arg validation
         if "query" not in args:
-            return "Missing query parameter query"
+            abort(422, "Missing query parameter query")
         query = args.get("query", default="", type=str)
         amount = args.get("amount", default=10, type=int)
 
@@ -116,7 +118,7 @@ def create_app():
             args = request.args
             # Arg validation
             if "followedUsers" not in args:
-                return "Missing query parameter followedUsers"
+                abort(422, "Missing query parameter followedUsers")
             followedUsers = args.get("followedUsers", default="[]", type=str)
             users = json.loads(followedUsers)
             return metaCollector.get_business_post_urls(users)
@@ -131,7 +133,7 @@ def create_app():
         args = request.args
         # Arg validation
         if "username" not in args:
-            return "Missing query parameter username"
+            abort(422, "Missing query parameter followedUsers")
 
         ig_user = json.loads(args.get("username", default="", type=str))
         return metaCollector.get_business_user(ig_user)
@@ -144,7 +146,7 @@ def create_app():
         args = request.args
         # Arg validation
         if "hashtag" not in args:
-            return "Missing query parameter 'hashtag'"
+            abort(422, "Missing query parameter hashtag")
 
         hashtag = json.loads(args.get("hashtag", default="", type=str))
         return metaCollector.get_hashtag_id(hashtag)
