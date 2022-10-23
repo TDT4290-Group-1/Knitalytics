@@ -80,10 +80,9 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter }: Pro
 							</Th>
 						</Tr>
 					</Thead>
-					{items ? 
-						<Tbody>
-
-							{items?.sort((word1, word2) => sortWords(word1, word2))
+					<Tbody>
+						{items?
+							items?.sort((word1, word2) => sortWords(word1, word2))
 								.map((item: TrendingWord, index: number) => {
 									return (<Tr key={index}>
 										<Td fontSize="sm" onClick={()=>nav(item)}
@@ -93,10 +92,9 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter }: Pro
 											}}
 										>{`${index + 1}. ${item.word}`}</Td>
 										<Td fontSize="sm"  isNumeric>{displayFrequencyGrowth ? item.frequency_growth : item.search_count}</Td>
-									</Tr>);})}
-						</Tbody>
-						: <div>Loading...</div>
-					}
+									</Tr>);})
+							:<Tr><Td>Loading...</Td></Tr>}
+					</Tbody>
 				</Table>
 			</TableContainer>
 		</Center>
