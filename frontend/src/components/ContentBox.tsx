@@ -53,13 +53,13 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter }: Pro
 
 	return (
 		<Center >
-			<TableContainer maxHeight={"400px"}  width="50%" overflowY={"scroll"} minWidth={"468px"} borderRadius={"lg"}>
+			<TableContainer maxHeight={"60vh"} overflowY={"scroll"} minWidth={"65%"} borderRadius={"lg"}>
 				<Table variant='simple' color={theme.colors.forest} size={"md"} background={theme.colors.palehovergreen}>
 					<Thead position="sticky" top={0} bgColor={theme.colors.lighthovergreen}>
 						<Tr borderBottom="2px" color={theme.colors.forest} borderRadius={"lg"} justifyContent="space-between">
 							<Th  fontSize="sm">Word</Th> 
-							<Th fontSize="sm" isNumeric margin="2%" width="271px">
-								<Flex alignItems={"center"} justifyContent="space-between"> 
+							<Th fontSize="sm" isNumeric margin="2%" width="100%">
+								<Flex alignItems={"center"} justifyContent="flex-end"> 
 									<Checkbox colorScheme='red' 
 											border="black" 
 											size="sm"
