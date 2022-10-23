@@ -103,7 +103,7 @@ class GoogleTrendsDataCollector(DataCollector):
             )
         else:
             return self.__process_trending_word_data__(
-                self.__collect_trending_word_data__(search_term=search_term)
+                self.__collect_trending_word_data__(search_term=search_term), filter
             )
 
     # Method used to get the interest over time for a given keyword. Returns a dataframe of the interest over time in relative numbers.
