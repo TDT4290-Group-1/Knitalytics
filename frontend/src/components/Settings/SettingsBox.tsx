@@ -30,8 +30,8 @@ const SettingsBox = ({title, storagePath, validateInput} : SettingsBoxProps) => 
 			tempList.push(input);
 			setListFromStorage(tempList);
 			setLocalStorageList(tempList.toString(), storagePath);
-			setInput("");
 		}
+		setInput("");
 	};
 
 	const handleDeleteItem = (itemName: string) => {
