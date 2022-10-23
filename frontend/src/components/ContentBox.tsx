@@ -1,7 +1,6 @@
-import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, Button, Checkbox, Flex, useCheckbox } from "@chakra-ui/react";
-import React, { ChangeEvent, useContext, useRef, useState } from "react";
+import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, Button, Checkbox, Flex } from "@chakra-ui/react";
+import React, { useContext, useState } from "react";
 import theme from "../theme";
-import API from "../api/api"
 import { TrendingWord } from "../../models/trendingword";
 import { ArrowDownIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
@@ -61,20 +60,20 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter }: Pro
 							<Th fontSize="sm" isNumeric margin="2%" width="100%">
 								<Flex alignItems={"center"} justifyContent="flex-end"> 
 									<Checkbox colorScheme='red' 
-											border="black" 
-											size="sm"
-											margin="2%"
-											onChange={(e) => onCheckboxChanged(e.target.checked)}
+										border="black" 
+										size="sm"
+										margin="2%"
+										onChange={(e) => onCheckboxChanged(e.target.checked)}
 									>
 										Filter
 									</Checkbox>
 									<Button rightIcon={<ArrowDownIcon/>}
-											justifyContent="flex-end"
-											onClick={() => setDisplayFrequencyGrowth(!displayFrequencyGrowth)}
-											minWidth="194px"
-											variant={"ghost"}
-										>
-											{displayFrequencyGrowth ? "Frequency growth" : "Search count"}
+										justifyContent="flex-end"
+										onClick={() => setDisplayFrequencyGrowth(!displayFrequencyGrowth)}
+										minWidth="194px"
+										variant={"ghost"}
+									>
+										{displayFrequencyGrowth ? "Frequency growth" : "Search count"}
 											
 									</Button>
 								</Flex>
@@ -82,21 +81,21 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter }: Pro
 						</Tr>
 					</Thead>
 					{items ? 
-					<Tbody>
+						<Tbody>
 
-						{items?.sort((word1, word2) => sortWords(word1, word2))
-							.map((item: TrendingWord, index: number) => {
-								return (<Tr key={index}>
-									<Td fontSize="sm" onClick={()=>nav(item)}
-										_hover={{
-											color: "hovergreen",
-											cursor: "pointer"
-										}}
-									>{`${index + 1}. ${item.word}`}</Td>
-									<Td fontSize="sm"  isNumeric>{displayFrequencyGrowth ? item.frequency_growth : item.search_count}</Td>
-								</Tr>);})}
-					</Tbody>
-					: <div>Loading...</div>
+							{items?.sort((word1, word2) => sortWords(word1, word2))
+								.map((item: TrendingWord, index: number) => {
+									return (<Tr key={index}>
+										<Td fontSize="sm" onClick={()=>nav(item)}
+											_hover={{
+												color: "hovergreen",
+												cursor: "pointer"
+											}}
+										>{`${index + 1}. ${item.word}`}</Td>
+										<Td fontSize="sm"  isNumeric>{displayFrequencyGrowth ? item.frequency_growth : item.search_count}</Td>
+									</Tr>);})}
+						</Tbody>
+						: <div>Loading...</div>
 					}
 				</Table>
 			</TableContainer>

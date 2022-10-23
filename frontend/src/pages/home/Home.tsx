@@ -1,4 +1,4 @@
-import { Center, chakra, VStack, Checkbox } from "@chakra-ui/react";
+import { Center, chakra, VStack } from "@chakra-ui/react";
 import ContentBox from "components/ContentBox";
 import  API  from "api/api";
 import {TrendingWord} from "../../../models/trendingword";
@@ -47,11 +47,11 @@ const HomePage = () => {
 					</chakra.h1>
 				</VStack>
 			</Center>
-				<ContentBox
-					items={trendingWords}
-					setTrendingWords={setTrendingWords}
-					setFilter={setFilter}
-				/>
+			<ContentBox
+				items={trendingWords}
+				setTrendingWords={setTrendingWords}
+				setFilter={setFilter}
+			/>
 		</>
 	);
 };
