@@ -1,10 +1,11 @@
-import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, Button, Checkbox, Flex } from "@chakra-ui/react";
+import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, Button, Checkbox, Flex, HStack } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import theme from "../theme";
 import { TrendingWord } from "../../models/trendingword";
 import { ArrowDownIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { SelectedWordContext } from "context/selectedWordContext";
+import ToolTip from "./ToolTip";
 
 interface Props {
     items: TrendingWord[] | undefined;
@@ -60,14 +61,17 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter }: Pro
 							<Th  fontSize="sm">Word</Th> 
 							<Th fontSize="sm" isNumeric margin="2%" width="100%">
 								<Flex alignItems={"center"} justifyContent="flex-end"> 
-									<Checkbox colorScheme='red' 
-										border="black" 
-										size="sm"
-										margin="2%"
-										onChange={(e) => onCheckboxChanged(e.target.checked)}
-									>
+									<HStack>
+										<ToolTip tooltip="Filter out all results that is also among top results the past twelve months"/>
+										<Checkbox colorScheme='red' 
+											border="black" 
+											size="sm"
+											margin="2%"
+											onChange={(e) => onCheckboxChanged(e.target.checked)}
+										>
 										Filter
-									</Checkbox>
+										</Checkbox>
+									</HStack>
 									<Button rightIcon={<ArrowDownIcon/>}
 										justifyContent="flex-end"
 										onClick={() => setDisplayFrequencyGrowth(!displayFrequencyGrowth)}
@@ -97,8 +101,8 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter }: Pro
 										</Tr>);
 									} else {
 										return;
-								}
-							}):<Tr><Td>Loading...</Td></Tr>
+									}
+								}):<Tr><Td>Loading...</Td></Tr>
 						}
 					</Tbody>
 				</Table>
