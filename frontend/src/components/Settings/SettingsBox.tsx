@@ -6,13 +6,15 @@ import {
 	AiOutlineSend,
 } from "react-icons/ai";
 import { useState } from "react";
+import ToolTip from "components/ToolTip";
 
 interface SettingsBoxProps {
     title: string,
     storagePath: string,
 	validateInput: (input: string) => Promise<boolean>,
+	tooltip?: string;
 }
-const SettingsBox = ({title, storagePath, validateInput} : SettingsBoxProps) => {
+const SettingsBox = ({title, storagePath, validateInput, tooltip} : SettingsBoxProps) => {
 
 	const [input, setInput] = useState("");
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => setInput(event.target.value);
@@ -42,10 +44,17 @@ const SettingsBox = ({title, storagePath, validateInput} : SettingsBoxProps) => 
 		setLocalStorageList(tempList.toString(), storagePath);
 	};
 
+
 	return (
 		<VStack borderStyle="solid" borderWidth="2px" borderColor="sleekGrey" borderRadius="10%" m={5} p={5}>
 			<Center borderBottom="black">
-				<Text marginBottom={"10%"} fontSize={"2xl"}  color="forest">{title}</Text>
+				<HStack>
+					{tooltip &&
+					<ToolTip
+						tooltip={tooltip}/>
+					}
+					<Text marginBottom={"10%"} fontSize={"2xl"}  color="forest">{title}</Text>
+				</HStack>
 			</Center>
 			<Box>
 				{listFromStorage && listFromStorage.map((word: string, index: number) => (

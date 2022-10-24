@@ -41,9 +41,21 @@ const Settings = () => {
 				<Text fontSize={"6xl"} marginBottom={"6%"} color="forest">Settings</Text>
 			</Center>
 			<SimpleGrid minChildWidth='200px' spacing={5}>
-				<SettingsBox title="Filtered out words" storagePath="filteredOutWords" validateInput={validateFilterWord}></SettingsBox>
-				<SettingsBox title="Followed users" storagePath="followedUsers" validateInput={validateUsername}></SettingsBox>
-				<SettingsBox title="Followed hashtags" storagePath="followedHashtags" validateInput={validateHashtag}></SettingsBox>
+				<SettingsBox title="Filtered out words"
+					storagePath="filteredOutWords"
+					validateInput={validateFilterWord}
+					tooltip="Filter out hashtags containing these words"
+				/>
+				<SettingsBox title="Followed users"
+					storagePath="followedUsers"
+					validateInput={validateUsername}
+					tooltip="Administrate usernames you want to follow"
+				/>
+				<SettingsBox title="Followed hashtags"
+					storagePath="followedHashtags"
+					validateInput={validateHashtag}
+					tooltip="Administrate hashtags you want to follow"
+				/>
 			</SimpleGrid>
 		</>
 	);
