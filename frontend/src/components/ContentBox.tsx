@@ -1,4 +1,4 @@
-import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, Button, Menu, MenuButton } from "@chakra-ui/react";
+import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, Button, Checkbox, Flex } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import theme from "../theme";
 import { TrendingWord } from "../../models/trendingword";
@@ -8,10 +8,12 @@ import { SelectedWordContext } from "context/selectedWordContext";
 
 interface Props {
     items: TrendingWord[] | undefined;
+	setTrendingWords: (trendingWords: TrendingWord[] | undefined) => void;
+	setFilter: (error: boolean) => void;
 }
 
 
-const ContentBox: React.FC<Props> = ({ items }: Props) => {
+const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter }: Props) => {
 
 	const {setTrendingWord} = useContext(SelectedWordContext);
 
@@ -23,6 +25,11 @@ const ContentBox: React.FC<Props> = ({ items }: Props) => {
 	function nav(word: TrendingWord){
 		setTrendingWord(word);
 		navigate("/GoogleDetails");
+	}
+
+	function onCheckboxChanged(checked: boolean) {
+		setTrendingWords(undefined);
+		setFilter(checked);
 	}
 
 	function sortWords(word1: TrendingWord, word2: TrendingWord) {
@@ -46,45 +53,54 @@ const ContentBox: React.FC<Props> = ({ items }: Props) => {
 
 	return (
 		<Center >
-			<TableContainer maxHeight={"400px"}  overflowY={"scroll"} minWidth={"468px"} borderRadius={"lg"}>
+			<TableContainer maxHeight={"60vh"} overflowY={"scroll"} minWidth={"65%"} borderRadius={"lg"}>
 				<Table variant='simple' color={theme.colors.forest} size={"md"} background={theme.colors.palehovergreen}>
 					<Thead position="sticky" top={0} bgColor={theme.colors.lighthovergreen}>
-						<Tr borderBottom="2px" color={theme.colors.forest} borderRadius={"lg"}>
+						<Tr borderBottom="2px" color={theme.colors.forest} borderRadius={"lg"} justifyContent="space-between">
 							<Th  fontSize="sm">Word</Th> 
-							<Th fontSize="sm" isNumeric paddingRight={"12px"}>
-								<Menu > 
-									<MenuButton as={Button} rightIcon={<ArrowDownIcon />} 
+							<Th fontSize="sm" isNumeric margin="2%" width="100%">
+								<Flex alignItems={"center"} justifyContent="flex-end"> 
+									<Checkbox colorScheme='red' 
+										border="black" 
+										size="sm"
+										margin="2%"
+										onChange={(e) => onCheckboxChanged(e.target.checked)}
+									>
+										Filter
+									</Checkbox>
+									<Button rightIcon={<ArrowDownIcon/>}
+										justifyContent="flex-end"
 										onClick={() => setDisplayFrequencyGrowth(!displayFrequencyGrowth)}
-										minWidth={"194px"}
+										minWidth="194px"
 										variant={"ghost"}
 									>
 										{displayFrequencyGrowth ? "Frequency growth" : "Search count"}
-										
-									</MenuButton>
-								</Menu>	
+											
+									</Button>
+								</Flex>
 							</Th>
 						</Tr>
 					</Thead>
 					<Tbody>
-
-						{items?.sort((word1, word2) => sortWords(word1, word2))
-							.map((item: TrendingWord, index: number) => {
-								if ((displayFrequencyGrowth && item.frequency_growth !== null) || (!displayFrequencyGrowth && item.search_count !== null)) {
-									return (<Tr key={index}>
-										<Td fontSize="sm" onClick={()=>nav(item)}
-											_hover={{
-												color: "hovergreen",
-												cursor: "pointer"
-											}}
-										>{`${index + 1}. ${item.word}`}</Td>
-										<Td fontSize="sm"  isNumeric>{displayFrequencyGrowth ? item.frequency_growth : item.search_count}</Td>
-									</Tr>);
-								} else {
-									return;
+						{items?
+							items?.sort((word1, word2) => sortWords(word1, word2))
+								.map((item: TrendingWord, index: number) => {
+									if ((displayFrequencyGrowth && item.frequency_growth !== null) || (!displayFrequencyGrowth && item.search_count !== null)) {
+										return (<Tr key={index}>
+											<Td fontSize="sm" onClick={()=>nav(item)}
+												_hover={{
+													color: "hovergreen",
+													cursor: "pointer"
+												}}
+											>{`${index + 1}. ${item.word}`}</Td>
+											<Td fontSize="sm"  isNumeric>{displayFrequencyGrowth ? item.frequency_growth : item.search_count}</Td>
+										</Tr>);
+									} else {
+										return;
 								}
-							})}
+							}):<Tr><Td>Loading...</Td></Tr>
+						}
 					</Tbody>
-
 				</Table>
 			</TableContainer>
 		</Center>
