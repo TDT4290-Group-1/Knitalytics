@@ -12,7 +12,7 @@ const ToolTip = ({ tooltip } : TooltipProps) => {
 		bg={"lighthovergreen"}
 		border={"1px solid teal"}
 		borderRadius={"lg"}
-		placement='left'>
+		placement='auto'>
 		<InfoOutlineIcon color={"forest"}/>					
 	</Tooltip>);
 };
