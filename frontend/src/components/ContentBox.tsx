@@ -50,6 +50,7 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter }: Pro
 		}
 	}
 
+
 	return (
 		<Center >
 			<TableContainer maxHeight={"60vh"} overflowY={"scroll"} minWidth={"65%"} borderRadius={"lg"}>
@@ -84,16 +85,21 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter }: Pro
 						{items?
 							items?.sort((word1, word2) => sortWords(word1, word2))
 								.map((item: TrendingWord, index: number) => {
-									return (<Tr key={index}>
-										<Td fontSize="sm" onClick={()=>nav(item)}
-											_hover={{
-												color: "hovergreen",
-												cursor: "pointer"
-											}}
-										>{`${index + 1}. ${item.word}`}</Td>
-										<Td fontSize="sm"  isNumeric>{displayFrequencyGrowth ? item.frequency_growth : item.search_count}</Td>
-									</Tr>);})
-							:<Tr><Td>Loading...</Td></Tr>}
+									if ((displayFrequencyGrowth && item.frequency_growth !== null) || (!displayFrequencyGrowth && item.search_count !== null)) {
+										return (<Tr key={index}>
+											<Td fontSize="sm" onClick={()=>nav(item)}
+												_hover={{
+													color: "hovergreen",
+													cursor: "pointer"
+												}}
+											>{`${index + 1}. ${item.word}`}</Td>
+											<Td fontSize="sm"  isNumeric>{displayFrequencyGrowth ? item.frequency_growth : item.search_count}</Td>
+										</Tr>);
+									} else {
+										return;
+								}
+							}):<Tr><Td>Loading...</Td></Tr>
+						}
 					</Tbody>
 				</Table>
 			</TableContainer>

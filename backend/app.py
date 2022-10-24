@@ -1,9 +1,11 @@
 from array import array
+from flask import abort
 from typing import List
 from flask import Flask, request
 from api.GoogleTrendsDataCollector import GoogleTrendsDataCollector
 from api.InstagramCollector import InstagramCollector
 from flask_cors import CORS
+import json
 import pandas as pd
 from pandas import DataFrame
 import os
@@ -38,6 +40,7 @@ def create_app():
 
     @app.route("/api/v1/trends", methods=["GET"])
     def getTrendingWords():
+        # 'frequency_growth' or 'search_count'. Used to show the most searched words or the fastest growing words.
         search_term = request.args.get(
             "search_term", ""
         )  # search term to search for. If empty, the default search term is used.
@@ -75,6 +78,10 @@ def create_app():
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
         )
         args = request.args
+        # Arg validation
+        if "query" not in args:
+            # Returns http error to frontend
+            abort(422, "Missing query parameter query")
         query = args.get("query", default="", type=str)
         filteredOutWords = args.get("filteredOutWords", default="", type=str)
         return metaCollector.get_related_hashtags(query, filteredOutWords)
@@ -86,6 +93,9 @@ def create_app():
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
         )
         args = request.args
+        # Arg validation
+        if "query" not in args:
+            abort(422, "Missing query parameter query")
         query = args.get("query", default="", type=str)
         amount = args.get("amount", default=10, type=int)
 
@@ -112,6 +122,9 @@ def create_app():
                 os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
             )
             args = request.args
+            # Arg validation
+            if "followedUsers" not in args:
+                abort(422, "Missing query parameter followedUsers")
             followedUsers = args.get("followedUsers", default="[]", type=str)
             users = json.loads(followedUsers)
             return metaCollector.get_business_post_urls(users)
@@ -124,8 +137,25 @@ def create_app():
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
         )
         args = request.args
+        # Arg validation
+        if "username" not in args:
+            abort(422, "Missing query parameter followedUsers")
+
         ig_user = json.loads(args.get("username", default="", type=str))
         return metaCollector.get_business_user(ig_user)
+
+    @app.route("/api/v1/hashtag_id")
+    def getHashtagId():
+        metaCollector = InstagramCollector(
+            os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
+        )
+        args = request.args
+        # Arg validation
+        if "hashtag" not in args:
+            abort(422, "Missing query parameter hashtag")
+
+        hashtag = json.loads(args.get("hashtag", default="", type=str))
+        return metaCollector.get_hashtag_id(hashtag)
 
     return app
 

@@ -30,10 +30,9 @@ class InstagramCollector(DataCollector):
             posts = self.APIAgent.get_posts_from_ig_user(ig_user)
             captions += self.hlp.get_captions(posts)
         return self.hlp.parse_hashtag_from_captions(captions, filteredOutWords)
-
         # returns links to popular posts related to 'query
 
-    def get_related_posts(self, query: str, amount: int) -> List[str]:
+    def get_related_posts(self, query: str, amount: int = 9) -> List[str]:
         id = self.APIAgent.get_hashtag_id(query)
         posts = self.APIAgent.get_posts_from_hashtag(id, "like_count, permalink")
         posts = self.hlp.remove_unpopular_posts(posts)
@@ -49,3 +48,6 @@ class InstagramCollector(DataCollector):
 
     def get_business_user(self, bus_user) -> str:
         return self.APIAgent.get_business_user(bus_user)
+
+    def get_hashtag_id(self, hashtag) -> str:
+        return self.APIAgent.get_hashtag_id(hashtag)
