@@ -1,4 +1,4 @@
-import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, Button, Checkbox, Flex } from "@chakra-ui/react";
+import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, Button, Checkbox, Flex, Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import theme from "../theme";
 import { TrendingWord } from "../../models/trendingword";
@@ -15,12 +15,20 @@ interface Props {
 
 const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter }: Props) => {
 
+	const TIMEFRAME_LABELS = {"last_day": "Last day",
+							  "last_week": "Last week",
+							  "last_month": "Last month",
+							  "last_three_months": "Last three months",
+							  "last_twelve_months": "Last year"}
+
 	const {setTrendingWord} = useContext(SelectedWordContext);
 
 	const navigate = useNavigate();
 
 	// are we displaying frequency growth? If not, we are displaying search count
 	const [displayFrequencyGrowth, setDisplayFrequencyGrowth] = useState(false);
+
+	const [timeframe, setTimeframe] = useState("last_three_months");
 
 	function nav(word: TrendingWord){
 		setTrendingWord(word);
@@ -50,16 +58,28 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter }: Pro
 		}
 	}
 
+	console.log(Object.entries(TIMEFRAME_LABELS))
 
 	return (
 		<Center >
-			<TableContainer maxHeight={"60vh"} overflowY={"scroll"} minWidth={"65%"} borderRadius={"lg"}>
+			<TableContainer minHeight={"40vh"} maxHeight={"60vh"} overflowY={"scroll"} minWidth={"65%"} borderRadius={"lg"}>
 				<Table variant='simple' color={theme.colors.forest} size={"md"} background={theme.colors.palehovergreen}>
 					<Thead position="sticky" top={0} bgColor={theme.colors.lighthovergreen}>
 						<Tr borderBottom="2px" color={theme.colors.forest} borderRadius={"lg"} justifyContent="space-between">
 							<Th  fontSize="sm">Word</Th> 
 							<Th fontSize="sm" isNumeric margin="2%" width="100%">
-								<Flex alignItems={"center"} justifyContent="flex-end"> 
+								<Flex alignItems={"center"} justifyContent="flex-end">
+									<Menu>
+										<MenuButton>{TIMEFRAME_LABELS[timeframe]}</MenuButton>
+										<MenuList>
+											{Object.entries(TIMEFRAME_LABELS).map((timeframe_label) => {
+												const name = timeframe_label[0]
+												const label = timeframe_label[1]
+												return <MenuItem name={name}>{label}</MenuItem>
+											})
+											}
+										</MenuList>
+									</Menu> 
 									<Checkbox colorScheme='red' 
 										border="black" 
 										size="sm"
