@@ -19,19 +19,19 @@ class API {
 	 * @returns a JSON list of trening words with the gived metric value
 	 */
 	async getAllTrendingWords(search_term: string, filter: boolean, timeframe: string): Promise<TrendingWord[]> {
-		let url = "/api/v1/trends"
-		let params = {"search_term": search_term, "filter": filter, "timeframe": timeframe} // build dictionary so we can loop
+		let url = "/api/v1/trends";
+		const params = {"search_term": search_term, "filter": filter, "timeframe": timeframe}; // build dictionary so we can loop
 		
 		// loop through parameters and iteratively build url string
 		for (let i=0; i < Object.entries(params).length; i++) {
-			const param = Object.entries(params)[i][0] // param name
-			const value = Object.entries(params)[i][1] // param value
+			const param = Object.entries(params)[i][0]; // param name
+			const value = Object.entries(params)[i][1]; // param value
 			if (i != 0) { // if this is not first parameter
-				url += '&' // need to concatenate parameters
+				url += "&"; // need to concatenate parameters
 			} else {
-				url += '?' // indicate parameters
+				url += "?"; // indicate parameters
 			}
-			url += `${param}=${value}` // iteravely build string
+			url += `${param}=${value}`; // iteravely build string
 		}
 
 		const response = await client.get(url);

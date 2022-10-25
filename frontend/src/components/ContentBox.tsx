@@ -18,11 +18,13 @@ interface Props {
 const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter, timeframe, setTimeframe }: Props) => {
 
 	// conversion from timeframe string to formatted labels to display in dropdown menu
-	const TIMEFRAME_LABELS = {"last_day": "Last day",
-							  "last_week": "Last week",
-							  "last_month": "Last month",
-							  "last_three_months": "Last three months",
-							  "last_twelve_months": "Last year"}
+	const TIMEFRAME_LABELS = {
+		"last_day": "Last day", 
+		"last_week": "Last week", 
+		"last_month": "Last month", 
+		"last_three_months": "Last three months", 
+		"last_twelve_months": "Last year"
+	};
 
 	const {setTrendingWord} = useContext(SelectedWordContext);
 
@@ -64,7 +66,7 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter, timef
 		}
 	}
 
-	console.log(Object.entries(TIMEFRAME_LABELS))
+	console.log(Object.entries(TIMEFRAME_LABELS));
 
 	return (
 		<Center >
@@ -85,17 +87,17 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter, timef
 									</Checkbox>
 									<Menu>
 										<MenuButton as={Button} rightIcon={<ChevronDownIcon/>} 
-													size="sm" variant={"ghost"}>
+											size="sm" variant={"ghost"}>
 											{TIMEFRAME_LABELS[timeframe]}
 										</MenuButton>
 										<MenuList>
 											{/* Iteratively extract the timeframe string and formatted label */}
 											{Object.entries(TIMEFRAME_LABELS).map((timeframe_label) => { 
-												const name = timeframe_label[0]
-												const label = timeframe_label[1]
-												return <MenuItem name={name} onClick={e => {timeFrameClicked(e.currentTarget.name)}}>
-															{label} {/* Formatted label */}
-														</MenuItem>
+												const name = timeframe_label[0];
+												const label = timeframe_label[1];
+												return <MenuItem key={name} name={name} onClick={e => {timeFrameClicked(e.currentTarget.name);}}>
+													{label} {/* Formatted label */}
+												</MenuItem>;
 											})
 											}
 										</MenuList>
@@ -129,8 +131,8 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter, timef
 										</Tr>);
 									} else {
 										return;
-								}
-							}):<Tr><Td>Loading...</Td></Tr>
+									}
+								}):<Tr><Td>Loading...</Td></Tr>
 						}
 					</Tbody>
 				</Table>
