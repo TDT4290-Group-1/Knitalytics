@@ -33,7 +33,7 @@ const GoogleDetailsPage = () => {
 		});
 
 		const tmp: string[] = [];
-		trendingWord && API.getAllTrendingWords(trendingWord.word).then((trendingWords) => {
+		trendingWord && API.getAllTrendingWords(trendingWord.word, false, "").then((trendingWords) => {
 			trendingWords.map(trend => tmp.push(trend.word));
 			setRelatedSearches(tmp.slice(0, 10));
 		}).catch(error => {
