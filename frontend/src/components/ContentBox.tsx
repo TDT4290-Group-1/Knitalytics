@@ -17,6 +17,7 @@ interface Props {
 
 const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter, timeframe, setTimeframe }: Props) => {
 
+	// conversion from timeframe string to formatted labels to display in dropdown menu
 	const TIMEFRAME_LABELS = {"last_day": "Last day",
 							  "last_week": "Last week",
 							  "last_month": "Last month",
@@ -42,7 +43,7 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter, timef
 
 	function timeFrameClicked(timeframe: string) {
 		setTrendingWords(undefined); // we have to retrieve words again
-		setTimeframe(timeframe);
+		setTimeframe(timeframe); // set the new timeframe
 	}
 
 	function sortWords(word1: TrendingWord, word2: TrendingWord) {
@@ -88,11 +89,12 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter, timef
 											{TIMEFRAME_LABELS[timeframe]}
 										</MenuButton>
 										<MenuList>
-											{Object.entries(TIMEFRAME_LABELS).map((timeframe_label) => {
+											{/* Iteratively extract the timeframe string and formatted label */}
+											{Object.entries(TIMEFRAME_LABELS).map((timeframe_label) => { 
 												const name = timeframe_label[0]
 												const label = timeframe_label[1]
 												return <MenuItem name={name} onClick={e => {timeFrameClicked(e.currentTarget.name)}}>
-															{label}
+															{label} {/* Formatted label */}
 														</MenuItem>
 											})
 											}
