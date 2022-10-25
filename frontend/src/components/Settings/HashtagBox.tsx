@@ -14,7 +14,8 @@ const HashtagBox = ({ name, deleteCallback }: HashtagBoxProps) => {
 			borderRadius='full'
 			variant='solid'
 			colorScheme="teal"
-			m={3}
+			m={1}
+
 		>
 			<TagLabel>{name}</TagLabel>
 			<TagCloseButton onClick={() => deleteCallback()}/>
