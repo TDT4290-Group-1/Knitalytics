@@ -1,5 +1,6 @@
-import { Center, Text, SimpleGrid } from "@chakra-ui/react";
+import { Center, SimpleGrid, GridItem, chakra } from "@chakra-ui/react";
 import SettingsBox from "components/Settings/SettingsBox";
+import theme from "theme";
 import API from "../../api/api";
 
 const Settings = () => {
@@ -38,12 +39,42 @@ const Settings = () => {
 	return (
 		<>
 			<Center>
-				<Text fontSize={"6xl"} marginBottom={"6%"} color="forest">Settings</Text>
+				<chakra.h1
+					textAlign={"center"}
+					fontSize={"5xl"}
+					paddingTop={"2%"}
+					paddingBottom={"7%"}
+					fontWeight={"bold"}
+					color={"forest"}>
+					Settings
+				</chakra.h1>
 			</Center>
-			<SimpleGrid minChildWidth='200px' spacing={5}>
-				<SettingsBox title="Filtered out words" storagePath="filteredOutWords" validateInput={validateFilterWord}></SettingsBox>
-				<SettingsBox title="Followed users" storagePath="followedUsers" validateInput={validateUsername}></SettingsBox>
-				<SettingsBox title="Followed hashtags" storagePath="followedHashtags" validateInput={validateHashtag}></SettingsBox>
+			<SimpleGrid  templateRows='auto'
+				minChildWidth='300px'
+				h='auto'
+				gap={6}
+				padding={3}>
+				<GridItem  rounded={"2xl"} border={`1px solid ${theme.colors.hovergreen}`} bg={"almostwhite"}>
+					<SettingsBox title="Filtered out words"
+						storagePath="filteredOutWords"
+						validateInput={validateFilterWord}
+						tooltip="Filter out hashtags containing these words"
+					/>
+				</GridItem>
+				<GridItem rounded={"2xl"} border={`1px solid ${theme.colors.hovergreen}`} bg={"almostwhite"}>
+					<SettingsBox title="Followed users"
+						storagePath="followedUsers"
+						validateInput={validateUsername}
+						tooltip="Administrate usernames you want to follow"
+					/>
+				</GridItem>
+				<GridItem rounded={"2xl"} border={`1px solid ${theme.colors.hovergreen}`} bg={"almostwhite"}>
+					<SettingsBox title="Followed hashtags"
+						storagePath="followedHashtags"
+						validateInput={validateHashtag}
+						tooltip="Administrate hashtags you want to follow"
+					/>
+				</GridItem>
 			</SimpleGrid>
 		</>
 	);
