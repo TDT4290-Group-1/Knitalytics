@@ -1,4 +1,4 @@
-import { Text, Center, VStack, Input, HStack, Button, Box } from "@chakra-ui/react";
+import { Text, Center, VStack, Input, HStack, Box, IconButton } from "@chakra-ui/react";
 import { getListLocalStorage, setLocalStorageList } from "api/localStorage";
 import HashtagBox from "./HashtagBox";
 
@@ -7,6 +7,7 @@ import {
 } from "react-icons/ai";
 import { useState } from "react";
 import ToolTip from "components/ToolTip";
+import theme from "theme";
 
 interface SettingsBoxProps {
     title: string,
@@ -46,26 +47,35 @@ const SettingsBox = ({title, storagePath, validateInput, tooltip} : SettingsBoxP
 
 
 	return (
-		<VStack borderStyle="solid" borderWidth="2px" borderColor="sleekGrey" borderRadius="10%" m={5} p={5}>
+		<VStack padding={"5%"} margin={"5%"}>
 			<Center borderBottom="black">
-				<HStack>
+				<HStack paddingBottom={"10%"} >
 					{tooltip &&
 					<ToolTip
 						tooltip={tooltip}/>
 					}
-					<Text marginBottom={"10%"} fontSize={"2xl"}  color="forest">{title}</Text>
+					
+					<Text fontSize={"2xl"}  color="forest">{title}</Text>
 				</HStack>
 			</Center>
-			<Box>
+			
+			<Box paddingBottom={"10%"}>
 				{listFromStorage && listFromStorage.map((word: string, index: number) => (
 					<HashtagBox key={index} name={word} deleteCallback={() => handleDeleteItem(word)}></HashtagBox>
 				))}
 			</Box>
-			<HStack maxWidth="300px">
-				<Input placeholder='Add new word...' size='sm' value={input} onChange={handleInputChange}/>
-				<Button variant='ghost' onClick={handleButtonPress}>
-					<AiOutlineSend width="50px"></AiOutlineSend>
-				</Button>
+			<HStack maxWidth="300px" >
+				<Input placeholder='Add new word...' size='sm' 
+					value={input} 
+					onChange={handleInputChange} 
+					variant="outline"
+					rounded={"lg"}
+					borderColor={theme.colors.hovergreen}
+				/>
+				<IconButton variant='ghost'
+					onClick={handleButtonPress}
+					icon={<AiOutlineSend width="50px" color={theme.colors.hovergreen}/>} aria-label={"Add"}
+				/>
 			</HStack>
 		</VStack>
 	);
