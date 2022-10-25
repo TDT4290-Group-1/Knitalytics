@@ -12,15 +12,17 @@ const HomePage = () => {
 	const [trendingWordsError, setTrendingWordsError] = useState(false);
 
 	const [filter, setFilter] = useState(false);
+
+	const [timeframe, setTimeframe] = useState("last_three_months");
 	
 	// check whether trending words have been retrieved
 	if (typeof trendingWords === "undefined") {
 		// fetch the words
-		API.getAllTrendingWords("", filter).then((trendingWords) => {
+		API.getAllTrendingWords("", filter, timeframe).then((trendingWords) => {
 			setTrendingWords(trendingWords as TrendingWord[]);
 		}).catch(() => {
 			setTrendingWords([]); // set to something defined so we avoid infinite API calls
-			setTrendingWordsError(!trendingWordsError);
+			setTrendingWordsError(true);
 		});
 	}
 
@@ -51,6 +53,8 @@ const HomePage = () => {
 				items={trendingWords}
 				setTrendingWords={setTrendingWords}
 				setFilter={setFilter}
+				timeframe={timeframe}
+				setTimeframe={setTimeframe}
 			/>
 		</>
 	);
