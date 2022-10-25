@@ -2,6 +2,7 @@
 import {GraphData, TrendingWord} from "../../models/trendingword";
 import axios from "axios";
 import { getListLocalStorage } from "api/localStorage";
+import { type } from "os";
 
 const client = axios.create({ baseURL: "http://127.0.0.1:5000/" });
 /**
@@ -11,12 +12,28 @@ class API {
 
 
 	/**
-	 * @param metric 'frequency_growth' or 'search_count'. Used to show the most searched words or the fastest growing words.
-	 * @param searchTerm Optional search term to search for. If empty, the default search term is used.
+	 * @param search_term Optional search term to search for. If empty, the default search term is used.
+	 * @param searchTerm 
 	 * @returns a JSON list of trening words with the gived metric value
 	 */
-	async getAllTrendingWords(searchTerm?: string, filter?: boolean): Promise<TrendingWord[]> {
-		const response = await client.get(`/api/v1/trends?${searchTerm ? "&search_term=" + searchTerm : ""}${filter ? "&filter=" + filter : ""}`);
+	async getAllTrendingWords(search_term: string, filter: boolean, timeframe: string): Promise<TrendingWord[]> {
+		let url = "/api/v1/trends"
+		let params = {"search_term": search_term, "filter": filter, "timeframe": timeframe}
+		
+		for (let i=0; i < Object.entries(params).length; i++) {
+			const param = Object.entries(params)[i][0]
+			const value = Object.entries(params)[i][1]
+			if (i != 0) {
+				url += '&'
+			} else {
+				url += '?'
+			}
+			url += `${param}=${value}`
+		}
+
+		console.log(`URL: ${url}`)
+
+		const response = await client.get(url);
 		return response.data;
 	}
 
