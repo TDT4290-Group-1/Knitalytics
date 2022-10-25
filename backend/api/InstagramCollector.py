@@ -34,16 +34,19 @@ class InstagramCollector(DataCollector):
 
     def get_related_posts(self, query: str, amount: int = 9) -> List[str]:
         id = self.APIAgent.get_hashtag_id(query)
-        posts = self.APIAgent.get_posts_from_hashtag(id, "like_count, permalink")
+        posts = self.APIAgent.get_posts_from_hashtag(
+            id, "like_count, permalink")
         posts = self.hlp.remove_unpopular_posts(posts)
         post_url = self.hlp.get_post_url(posts)
         return post_url[:amount]
 
-    def get_business_post_urls(self, ig_users) -> List[str]:
-        post_urls: List[str] = []
+    def get_business_post_urls(self, ig_users, sort) -> List[str]:
+        posts = []
         for ig_user in ig_users:
-            posts = self.APIAgent.get_posts_from_ig_user(ig_user)
-            post_urls += self.hlp.get_post_url(posts[:5])
+            posts += self.APIAgent.get_posts_from_ig_user(ig_user)[:5]
+        if sort == "likes":
+            posts = self.hlp.sort_posts_likes(posts)
+        post_urls = self.hlp.get_post_url(posts)
         return post_urls
 
     def get_business_user(self, bus_user) -> str:

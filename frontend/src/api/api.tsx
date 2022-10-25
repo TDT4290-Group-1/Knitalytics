@@ -41,8 +41,8 @@ class API {
 		return response.data;
 	}
 
-	async getBusinessPostURLS(followedUsers: string[]):Promise<string[]> {
-		const response = await client.get("/api/v1/business_posts_urls", { params: { followedUsers: JSON.stringify(followedUsers) } });
+	async getBusinessPostURLS(followedUsers: string[], sort: string):Promise<string[]> {
+		const response = await client.get("/api/v1/business_posts_urls", { params: { followedUsers: JSON.stringify(followedUsers), sort } });
 		return response.data;
 	}
 	async getBusinessUser(username: string):Promise<{id?: string, error?: {error_user_msg: string}}> {

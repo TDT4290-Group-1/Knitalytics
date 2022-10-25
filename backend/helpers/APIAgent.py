@@ -30,7 +30,7 @@ class APIAgent:
             "user_id": self.user_id,
             "fields": "business_discovery.username("
             + ig_user
-            + "){media{caption, permalink}}",
+            + "){media{like_count, caption, permalink}}",
         }
         endpoint = "/" + self.user_id
         response = requests.get(url=self.base_url + endpoint, params=PARAMS)
@@ -44,7 +44,8 @@ class APIAgent:
         }
         endpoint = "/" + self.user_id
         try:
-            response = requests.get(url=self.base_url + endpoint, params=PARAMS)
+            response = requests.get(
+                url=self.base_url + endpoint, params=PARAMS)
             return json.loads(response.text)
         except KeyError:
             return json.loads(response.text)
@@ -58,7 +59,8 @@ class APIAgent:
         }
         endpoint = "/ig_hashtag_search"
         try:
-            response = requests.get(url=self.base_url + endpoint, params=PARAMS)
+            response = requests.get(
+                url=self.base_url + endpoint, params=PARAMS)
             return json.loads(response.text)["data"][0]["id"]
         except KeyError:
             return json.loads(response.text)

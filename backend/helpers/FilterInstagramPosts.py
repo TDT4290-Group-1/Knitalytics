@@ -1,5 +1,6 @@
 from typing import List
 import unicodedata as ud
+from operator import itemgetter
 import re
 
 
@@ -47,6 +48,13 @@ class FilterInstagramPosts:
         for post in posts:
             post_url.append(post["permalink"])
         return post_url
+
+    # sort the list "posts" after the amount of likes, in descending order
+
+    def sort_posts(self, posts: List[str]) -> List[str]:
+        return sorted(
+            posts, key=itemgetter("like_count"), reverse=True
+        )
 
     # removes hashtags that contains certain words
 
