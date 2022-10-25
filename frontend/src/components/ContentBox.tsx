@@ -10,10 +10,12 @@ interface Props {
     items: TrendingWord[] | undefined;
 	setTrendingWords: (trendingWords: TrendingWord[] | undefined) => void;
 	setFilter: (error: boolean) => void;
+	timeframe: string;
+	setTimeframe: (timeframe: string) => void;
 }
 
 
-const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter }: Props) => {
+const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter, timeframe, setTimeframe }: Props) => {
 
 	const TIMEFRAME_LABELS = {"last_day": "Last day",
 							  "last_week": "Last week",
@@ -28,8 +30,6 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter }: Pro
 	// are we displaying frequency growth? If not, we are displaying search count
 	const [displayFrequencyGrowth, setDisplayFrequencyGrowth] = useState(false);
 
-	const [timeframe, setTimeframe] = useState("last_three_months");
-
 	function nav(word: TrendingWord){
 		setTrendingWord(word);
 		navigate("/GoogleDetails");
@@ -38,6 +38,11 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter }: Pro
 	function onCheckboxChanged(checked: boolean) {
 		setTrendingWords(undefined);
 		setFilter(checked);
+	}
+
+	function timeFrameClicked(timeframe: string) {
+		setTrendingWords(undefined); // we have to retrieve words again
+		setTimeframe(timeframe);
 	}
 
 	function sortWords(word1: TrendingWord, word2: TrendingWord) {
@@ -75,7 +80,9 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter }: Pro
 											{Object.entries(TIMEFRAME_LABELS).map((timeframe_label) => {
 												const name = timeframe_label[0]
 												const label = timeframe_label[1]
-												return <MenuItem name={name}>{label}</MenuItem>
+												return <MenuItem name={name} onClick={e => {timeFrameClicked(e.currentTarget.name)}}>
+															{label}
+														</MenuItem>
 											})
 											}
 										</MenuList>
