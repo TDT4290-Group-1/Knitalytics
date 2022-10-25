@@ -44,8 +44,7 @@ class InstagramCollector(DataCollector):
         posts = []
         for ig_user in ig_users:
             posts += self.APIAgent.get_posts_from_ig_user(ig_user)[:5]
-        if sort == "likes":
-            posts = self.hlp.sort_posts_likes(posts)
+        posts = self.hlp.sort_posts(posts, sort)
         post_urls = self.hlp.get_post_url(posts)
         return post_urls
 

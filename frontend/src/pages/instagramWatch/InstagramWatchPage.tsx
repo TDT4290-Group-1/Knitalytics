@@ -27,6 +27,7 @@ const InstagramWatchPage = () => {
 		<>
 			<Select w="200px" bg="lightgreen" borderColor='lightgreen' variant='filled' placeholder='Select sorting' value={sort} onChange={handleSelectChange}>
 				<option value='likes'>Likes</option>
+				<option value='comments'>Comments</option>
 			</Select>
 			{postURLS &&
 		<InstagramPosts URLs={postURLS} heading={"Instagram posts from users you are following"}></InstagramPosts>}
