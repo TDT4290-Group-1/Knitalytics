@@ -2,7 +2,7 @@ import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, Button, Checkb
 import React, { useContext, useState } from "react";
 import theme from "../theme";
 import { TrendingWord } from "../../models/trendingword";
-import { ArrowDownIcon } from "@chakra-ui/icons";
+import { ArrowDownIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { SelectedWordContext } from "context/selectedWordContext";
 
@@ -74,8 +74,19 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter, timef
 							<Th  fontSize="sm">Word</Th> 
 							<Th fontSize="sm" isNumeric margin="2%" width="100%">
 								<Flex alignItems={"center"} justifyContent="flex-end">
+									<Checkbox colorScheme='red' 
+										border="black" 
+										size="sm"
+										margin="2%"
+										onChange={(e) => onCheckboxChanged(e.target.checked)}
+									>
+										Filter
+									</Checkbox>
 									<Menu>
-										<MenuButton>{TIMEFRAME_LABELS[timeframe]}</MenuButton>
+										<MenuButton as={Button} rightIcon={<ChevronDownIcon/>} 
+													size="sm" variant={"ghost"}>
+											{TIMEFRAME_LABELS[timeframe]}
+										</MenuButton>
 										<MenuList>
 											{Object.entries(TIMEFRAME_LABELS).map((timeframe_label) => {
 												const name = timeframe_label[0]
@@ -87,14 +98,6 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter, timef
 											}
 										</MenuList>
 									</Menu> 
-									<Checkbox colorScheme='red' 
-										border="black" 
-										size="sm"
-										margin="2%"
-										onChange={(e) => onCheckboxChanged(e.target.checked)}
-									>
-										Filter
-									</Checkbox>
 									<Button rightIcon={<ArrowDownIcon/>}
 										justifyContent="flex-end"
 										onClick={() => setDisplayFrequencyGrowth(!displayFrequencyGrowth)}
