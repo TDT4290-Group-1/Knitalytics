@@ -49,12 +49,15 @@ def create_app():
         # and sets the value of 'filter' variable correspondingly.
         # This allows all specifications of "true" and "false" to be evaluated correctly, e.g. "TRUE" is also accepted as a value
         filter = request.args.get("filter", False, type=lambda a: a.lower() == "true")
-        print(type(filter))
+        
+        # retrive timeframe arg
+        timeframe = request.args.get("timeframe", "")
+        
         trending_words_dataframes: List[DataFrame] = []
         googleCollector = GoogleTrendsDataCollector()
         add_dataframe_from_collector(
             trending_words_dataframes,
-            googleCollector.get_trending_words(search_term, filter),
+            googleCollector.get_trending_words(search_term, timeframe, filter),
         )
 
         main_data_frame = pd.concat(trending_words_dataframes).reset_index(drop=True)
