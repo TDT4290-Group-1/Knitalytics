@@ -7,12 +7,16 @@ import { useState } from "react";
 
 const HomePage = () => {
 
+	// words to dispaly
 	const [trendingWords, setTrendingWords] = useState<TrendingWord[] | undefined>(undefined); // use undefined as check whether loaded or not
 
+	// whether error occurred
 	const [trendingWordsError, setTrendingWordsError] = useState(false);
 
+	// whether to remove commonly occurring 
 	const [filter, setFilter] = useState(false);
 
+	// timeframe to retrieve statistics for
 	const [timeframe, setTimeframe] = useState("last_three_months");
 	
 	// check whether trending words have been retrieved
