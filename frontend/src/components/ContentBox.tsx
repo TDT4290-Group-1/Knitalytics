@@ -61,7 +61,7 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter }: Pro
 							<Th  fontSize="sm">Word</Th> 
 							<Th fontSize="sm" isNumeric margin="2%" width="100%">
 								<Flex alignItems={"center"} justifyContent="flex-end"> 
-									<HStack>
+									<HStack marginRight={"2%"}>
 										<ToolTip tooltip="Filter out all results that is also among top results the past twelve months"/>
 										<Checkbox colorScheme='red' 
 											border="black" 
@@ -72,15 +72,24 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter }: Pro
 										Filter
 										</Checkbox>
 									</HStack>
-									<Button rightIcon={<ArrowDownIcon/>}
-										justifyContent="flex-end"
-										onClick={() => setDisplayFrequencyGrowth(!displayFrequencyGrowth)}
-										minWidth="194px"
-										variant={"ghost"}
-									>
-										{displayFrequencyGrowth ? "Frequency growth" : "Search count"}
-											
-									</Button>
+									<HStack>
+										
+										<Button rightIcon={<ArrowDownIcon/>}
+											justifyContent="flex-end"
+											onClick={() => setDisplayFrequencyGrowth(!displayFrequencyGrowth)}
+											minWidth="194px"
+											variant={"ghost"}
+										>
+											{displayFrequencyGrowth ? "Frequency growth" : "Search count"}
+												
+										</Button>
+										{displayFrequencyGrowth ? (
+											<ToolTip tooltip="Showing top list of search terms with the highest persentage increase. Click button to show search count."/>	
+
+										) : (
+											<ToolTip tooltip="Showing top list of search terms with the highest relative count. Click button to show Frequency growth."/>
+										)}
+									</HStack>
 								</Flex>
 							</Th>
 						</Tr>
