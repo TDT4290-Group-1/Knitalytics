@@ -1,6 +1,4 @@
-from time import time
 import pandas as pd
-from py import process
 from api.DataCollectorInterface import DataCollector, COLUMN_NAMES
 
 from pytrends.request import TrendReq
