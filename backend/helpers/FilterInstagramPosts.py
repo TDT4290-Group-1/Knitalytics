@@ -55,14 +55,11 @@ class FilterInstagramPosts:
         if sort == "likes":
             # in case some of the posts do not have a like count
             try:
-                return sorted(
-                    posts, key=itemgetter("like_count"), reverse=True)
+                return sorted(posts, key=itemgetter("like_count"), reverse=True)
             except:
                 return posts
         elif sort == "comments":
-            return sorted(
-                posts, key=itemgetter("comments_count"), reverse=True
-            )
+            return sorted(posts, key=itemgetter("comments_count"), reverse=True)
         return posts
 
     # removes hashtags that contains certain words

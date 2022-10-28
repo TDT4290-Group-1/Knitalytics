@@ -1,5 +1,6 @@
 import { HStack, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select } from "@chakra-ui/react";
 import { getListLocalStorage, getItemLocalStorage, setItemLocalStorage } from "api/localStorage";
+import ToolTip from "components/ToolTip";
 import InstagramPosts from "components/InstagramPost";
 import { useEffect, useState } from "react";
 import API from "../../api/api";
@@ -31,10 +32,12 @@ const InstagramWatchPage = () => {
 	return(
 		<>
 			<HStack>
+				<ToolTip tooltip="Default sorting of posts is based on user. Change to sorting based on likes or comments"/>
 				<Select w="200px" bg="lightgreen" borderColor='lightgreen' variant='filled' placeholder='Select sorting' value={sort} onChange={handleSelectChange}>
 					<option value='likes'>Likes</option>
 					<option value='comments'>Comments</option>
 				</Select>
+				<ToolTip tooltip="Amount of posts per user. Only use arrows to change value."/>
 				<NumberInput variant="filled" maxW="70px" borderColor='lightgreen' defaultValue={5} min={1} max={20} value={postAmount} onChange={handlePostAmountChange}>
 					<NumberInputField bg="lightgreen" borderColor='lightgreen'/>
 					<NumberInputStepper>
