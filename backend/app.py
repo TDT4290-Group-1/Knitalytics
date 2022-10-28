@@ -125,9 +125,11 @@ def create_app():
             # Arg validation
             if "followedUsers" not in args:
                 abort(422, "Missing query parameter followedUsers")
+            sort = args.get("sort", default="", type=str)
+            postAmount = args.get("postAmount", default="", type=str)
             followedUsers = args.get("followedUsers", default="[]", type=str)
             users = json.loads(followedUsers)
-            return metaCollector.get_business_post_urls(users)
+            return metaCollector.get_business_post_urls(users, sort, postAmount)
         except ValueError as e:
             return str(e)
 
