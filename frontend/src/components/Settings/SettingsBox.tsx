@@ -1,5 +1,5 @@
 import { Text, Center, VStack, Input, HStack, Box, IconButton } from "@chakra-ui/react";
-import { getListLocalStorage, setLocalStorageList } from "api/localStorage";
+import { getListLocalStorage, setItemLocalStorage } from "api/localStorage";
 import HashtagBox from "./HashtagBox";
 
 import {
@@ -32,7 +32,7 @@ const SettingsBox = ({title, storagePath, validateInput, tooltip} : SettingsBoxP
 			const tempList = [...listFromStorage];
 			tempList.push(input);
 			setListFromStorage(tempList);
-			setLocalStorageList(tempList.toString(), storagePath);
+			setItemLocalStorage(tempList.toString(), storagePath);
 		}
 		setInput("");
 	};
@@ -42,7 +42,7 @@ const SettingsBox = ({title, storagePath, validateInput, tooltip} : SettingsBoxP
 		const index = tempList.indexOf(itemName);
 		tempList.splice(index, 1);
 		setListFromStorage(tempList);
-		setLocalStorageList(tempList.toString(), storagePath);
+		setItemLocalStorage(tempList.toString(), storagePath);
 	};
 
 

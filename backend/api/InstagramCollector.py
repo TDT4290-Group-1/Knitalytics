@@ -40,10 +40,10 @@ class InstagramCollector(DataCollector):
         post_url = self.hlp.get_post_url(posts)
         return post_url[:amount]
 
-    def get_business_post_urls(self, ig_users, sort) -> List[str]:
+    def get_business_post_urls(self, ig_users, sort, post_amount) -> List[str]:
         posts = []
         for ig_user in ig_users:
-            posts += self.APIAgent.get_posts_from_ig_user(ig_user)[:5]
+            posts += self.APIAgent.get_posts_from_ig_user(ig_user)[:int(post_amount)]
         posts = self.hlp.sort_posts(posts, sort)
         post_urls = self.hlp.get_post_url(posts)
         return post_urls
