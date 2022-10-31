@@ -4,6 +4,7 @@ import {
 	Grid,
 	GridItem,
 	Heading,
+	Button,
 } from "@chakra-ui/react";
 import { FrequencyStat } from "components/FrequencyStat";
 import InstagramPosts from "components/InstagramPost";
@@ -48,6 +49,12 @@ const GoogleDetailsPage = () => {
 		});
 	},[]);
 
+	function openInGoogle(){
+		const url = "https://google.com/search?q=" + trendingWord.word;
+
+		window.open(url, "_blank", "noopener,noreferrer");
+	}
+
 
 	return (
 		<>
@@ -60,11 +67,14 @@ const GoogleDetailsPage = () => {
 				gap={6}
 				padding={3}
 			>
-
 				<GridItem colSpan={4} rounded={"lg"} textAlign={"right"} paddingRight={"10px"}>
 					<Heading color={"forest"} fontSize={"4xl"}  as={"u"} >SEARCH </Heading>
-					<Heading color={"teal"} fontSize={"4xl"}>{trendingWord.word?.toUpperCase()}</Heading> 		
+					<Heading color={"teal"} fontSize={"4xl"}>{trendingWord.word?.toUpperCase()}</Heading>
+					<Button variant={"link"} colorScheme={"teal"} onClick={() => openInGoogle()}>
+						Explore search in Google
+					</Button> 		
 				</GridItem>
+			
 
 				<GridItem colSpan={1} bg='hovergreen' padding={"10px"} rounded={"lg"} paddingBottom={"30px"}>
 					<FrequencyStat details={trendingWord}/>
