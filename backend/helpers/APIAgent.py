@@ -1,5 +1,3 @@
-from ast import Str
-from os import link
 from typing import List
 import requests
 import json
