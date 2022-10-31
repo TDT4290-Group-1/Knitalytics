@@ -71,7 +71,7 @@ const GoogleDetailsPage = () => {
 					<Heading color={"forest"} fontSize={"4xl"}  as={"u"} >SEARCH </Heading>
 					<Heading color={"teal"} fontSize={"4xl"}>{trendingWord.word?.toUpperCase()}</Heading>
 					<Button variant={"link"} colorScheme={"teal"} onClick={() => openInGoogle()}>
-						Explore in search in Google
+						Explore search in Google
 					</Button> 		
 				</GridItem>
 			
