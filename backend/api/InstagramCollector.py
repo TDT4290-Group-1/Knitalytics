@@ -1,9 +1,7 @@
 from helpers.FilterInstagramPosts import FilterInstagramPosts
 from helpers.APIAgent import APIAgent
 from api.DataCollectorInterface import DataCollector
-import helpers.FilterInstagramPosts as hlp
 
-from os import link
 from typing import List
 
 

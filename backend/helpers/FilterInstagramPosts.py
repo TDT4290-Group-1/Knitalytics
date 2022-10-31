@@ -72,7 +72,7 @@ class FilterInstagramPosts:
         relevant_hashtags = []
         for hashtag in hashtags:
             match = re.search(filteredOutWords, hashtag, re.IGNORECASE)
-            if match == None:
+            if match is None:
                 relevant_hashtags.append(hashtag)
         return relevant_hashtags
 

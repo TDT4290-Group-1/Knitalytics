@@ -1,4 +1,3 @@
-from array import array
 from flask import abort
 from typing import List
 from flask import Flask, request
@@ -10,7 +9,6 @@ import pandas as pd
 from pandas import DataFrame
 import os
 from dotenv import load_dotenv
-import json
 
 load_dotenv()
 
