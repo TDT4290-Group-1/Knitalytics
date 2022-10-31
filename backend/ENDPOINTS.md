@@ -6,8 +6,20 @@
 Server front page, may be changed later. Returns currently a blank page with "hello world"
 
 ## GET /api/v1/trends/
+Returns a list of all trending words related to the word "Knitting" or the given search term from Google Trends 
+#### Accepts optional argument: search_term
+The word to get related trending word for.
 
-Returns a list of all trending words from the differant data collectors.
+## GET /api/v1/interest_over_time/
+Returns a list of relative seach interest for the work "Knitting" ot the given seach term from Google Trends for the past year
+#### Accepts optional argument: search_term
+
+## GET /api/v1/related_hashtags/
+## GET /api/v1/related_post_URLS/
+## GET /api/v1/business_hashtags/
+## GET /api/v1/business_posts_urls/
+## GET /api/v1/business_user/
+## GET /api/v1/hashtag_id/
 
 <!-- ### Request
 
