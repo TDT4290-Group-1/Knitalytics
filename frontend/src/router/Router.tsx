@@ -6,6 +6,7 @@ import GoogleDetailsPage from "pages/detailsPage/GoogleDetailsPage";
 import InstagramWatchPage from "pages/instagramWatch";
 import Settings from "pages/settings";
 import HashtagsPage from "pages/hashtags/HashtagsPage";
+import FashionBrandsPage from "pages/fashionBrands/FashionBrandsPage";
 
 const Router = () => {
 	return (
@@ -16,6 +17,7 @@ const Router = () => {
 			<Route path="/GoogleDetails" element={<GoogleDetailsPage/>}/>
 			<Route path="/InstagramPosts" element={<InstagramWatchPage/>}/>
 			<Route path="/Hashtags" element={<HashtagsPage/>}/>
+			<Route path="/FashionBrands" element={<FashionBrandsPage/>}/>
 		</Routes>
 	);
 };
