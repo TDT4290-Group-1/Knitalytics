@@ -1,23 +1,37 @@
 # Endpoints
 
-
-## GET / 
-
-Server front page, may be changed later. Returns currently a blank page with "hello world"
-
 ## GET /api/v1/trends/
 Returns a list of all trending words related to the word "Knitting" or the given search term from Google Trends 
-#### Accepts optional argument: search_term
-The word to get related trending word for.
+### Argument:
+  - **"search_term(optional)":** The word to get related trending word for.
 
 ## GET /api/v1/interest_over_time/
 Returns a list of relative seach interest for the work "Knitting" ot the given seach term from Google Trends for the past year
-#### Accepts optional argument: search_term
+### Argument:
+  - **"search_term(optional)":** The word to get trending data for.
 
 ## GET /api/v1/related_hashtags/
+Return a list with a
+### Arguments:
+  - **"query(required)":** the word we want to get related hashtags for.
+  - **"filtererdOutWords(optinal)":** the hastags we want to filter out, if the contains these words.
+
+
 ## GET /api/v1/related_post_URLS/
+### Arguments:
+  - **"query(required)":** the word we want to get related post urls for.
+  - **"amount(optional":** the amount of related post urls we want
+
 ## GET /api/v1/business_hashtags/
+### TODO:
+
+
 ## GET /api/v1/business_posts_urls/
+### Arguments:
+  - **"followedUsers(required)":** a list Instagram users we want to get posts for
+  - **"sort(optional)":** wheter we want to sort the post based on the number of ´likes´or ´comments´
+  - **"postAmount(optional)":** the amount of posrt we want to view
+
 ## GET /api/v1/business_user/
 ## GET /api/v1/hashtag_id/
 
