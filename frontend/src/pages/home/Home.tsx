@@ -27,7 +27,7 @@ const HomePage = () => {
 		}).catch((error) => {
 			setTrendingWords([]); // set to something defined so we avoid infinite API calls
 			if (error.response) {
-				console.log(`Error response: ${error.response.data}`)
+				console.log(`Error response: ${error.response.data}`);
 				setTrendingWordsError(error.response.data);
 			}
 		});
@@ -57,14 +57,14 @@ const HomePage = () => {
 				</VStack>
 			</Center>
 			{trendingWordsError ? 
-			<p>{trendingWordsError}</p> :
+				<p>{trendingWordsError}</p> :
 				<ContentBox
-				items={trendingWords}
-				setTrendingWords={setTrendingWords}
-				setFilter={setFilter}
-				timeframe={timeframe}
-				setTimeframe={setTimeframe}
-			/>
+					items={trendingWords}
+					setTrendingWords={setTrendingWords}
+					setFilter={setFilter}
+					timeframe={timeframe}
+					setTimeframe={setTimeframe}
+				/>
 			}
 			
 		</>
