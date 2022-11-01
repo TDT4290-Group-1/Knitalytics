@@ -1,6 +1,6 @@
 import AddLink, {Link} from "components/Links/AddLink";
 import LinkList from "components/Links/LinkList";
-import { Heading, VStack } from "@chakra-ui/react";
+import { Heading, VStack, Text } from "@chakra-ui/react";
 import {useState, useEffect} from "react";
 
 const FashionBrandsPage = () => {
@@ -32,7 +32,11 @@ const FashionBrandsPage = () => {
 		<>
 			<VStack p={4}>
 				<Heading>Links to websites</Heading>
-				<LinkList links={links} deleteLink={deleteLink}/>
+				{
+					links.length !== 0 ?
+						<LinkList links={links} deleteLink={deleteLink}/> :
+						<Text>No links added</Text>
+				}
 				<AddLink addLink={addLink}/>
 			</VStack>
 		</>
