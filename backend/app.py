@@ -98,7 +98,7 @@ def create_app():
             # Returns http error to frontend
             abort(422, "Missing query parameter query")
         query = args.get("query", default="", type=str)
-        filteredOutWords = args.get("filteredOutWords", default="", type=str)
+        filteredOutWords = args.get("filteredOutWords", default="[]", type=str)
         return metaCollector.get_related_hashtags(query, filteredOutWords)
 
     # Takes a hashtags and an amount: {query: str, amount: int}
@@ -110,11 +110,12 @@ def create_app():
         args = request.args
         # Arg validation
         if "query" not in args:
+            # Returns http error to frontend
             abort(422, "Missing query parameter query")
         query = args.get("query", default="", type=str)
         amount = args.get("amount", default=10, type=int)
 
-        return metaCollector.get_related_posts(query, amount)
+        return metaCollector.get_related_post_urls(query, amount)
 
     @app.route("/api/v1/business_hashtags")
     def getBusinessHashtags():
@@ -123,6 +124,10 @@ def create_app():
                 os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
             )
             args = request.args
+            # Arg validation
+            if "followedUsers" not in args or "filteredOutWords" not in args:
+                # Returns http error to frontend
+                abort(422, "Missing query parameter query")
             followedUsers = args.get("followedUsers", default="[]", type=str)
             filteredOutWords = args.get("filteredOutWords", default="", type=str)
             users = json.loads(followedUsers)
@@ -140,8 +145,8 @@ def create_app():
             # Arg validation
             if "followedUsers" not in args:
                 abort(422, "Missing query parameter followedUsers")
-            sort = args.get("sort", default="", type=str)
-            postAmount = args.get("postAmount", default="", type=str)
+            sort = args.get("sort", default="user", type=str)
+            postAmount = args.get("postAmount", default=10, type=str)
             followedUsers = args.get("followedUsers", default="[]", type=str)
             users = json.loads(followedUsers)
             return metaCollector.get_business_post_urls(users, sort, postAmount)
@@ -157,7 +162,6 @@ def create_app():
         # Arg validation
         if "username" not in args:
             abort(422, "Missing query parameter followedUsers")
-
         ig_user = json.loads(args.get("username", default="", type=str))
         return metaCollector.get_business_user(ig_user)
 
@@ -170,7 +174,6 @@ def create_app():
         # Arg validation
         if "hashtag" not in args:
             abort(422, "Missing query parameter hashtag")
-
         hashtag = json.loads(args.get("hashtag", default="", type=str))
         return metaCollector.get_hashtag_id(hashtag)
 

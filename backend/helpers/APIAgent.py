@@ -10,7 +10,7 @@ class APIAgent:
         self.user_id = user_id
 
     # get popular posts from 'query' which must be a hashtag
-    def get_posts_from_hashtag(self, id: str, fields: str) -> str:
+    def get_posts_from_hashtag(self, id: str, fields: str):
         PARAMS = {
             "access_token": self.access_token,
             "user_id": self.user_id,
@@ -19,8 +19,11 @@ class APIAgent:
         }
         endpoint = "/" + id + "/top_media"
         response = requests.get(url=self.base_url + endpoint, params=PARAMS)
-        posts: List[str] = json.loads(response.text)["data"]
-        return posts
+        try:
+            posts: List[str] = json.loads(response.text)["data"]
+            return posts
+        except:
+            return json.loads(response.text)
 
     def get_posts_from_ig_user(self, ig_user) -> str:
         PARAMS = {
@@ -32,7 +35,10 @@ class APIAgent:
         }
         endpoint = "/" + self.user_id
         response = requests.get(url=self.base_url + endpoint, params=PARAMS)
-        return json.loads(response.text)["business_discovery"]["media"]["data"]
+        try:
+            return json.loads(response.text)["business_discovery"]["media"]["data"]
+        except:
+            return json.loads(response.text)
 
     def get_business_user(self, bus_user) -> str:
         PARAMS = {
