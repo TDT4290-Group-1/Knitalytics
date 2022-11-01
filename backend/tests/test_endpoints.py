@@ -3,12 +3,8 @@ import pandas as pd
 
 # mock return value from GoogleTrendsCollector
 MOCK_TRENDS_DF = pd.DataFrame(
-        {
-            "word": ["word1", "word2"],
-            "frequency_growth": [1, 2],
-            "search_count": [3, 4]
-        }
-    )
+    {"word": ["word1", "word2"], "frequency_growth": [1, 2], "search_count": [3, 4]}
+)
 
 # we mock the GoogleTrendsDataCollector, as this is the method that communicates with an external API
 

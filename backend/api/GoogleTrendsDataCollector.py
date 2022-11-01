@@ -1,6 +1,4 @@
-from multiprocessing import dummy
 import pandas as pd
-from requests import Response
 import werkzeug.exceptions
 from api.DataCollectorInterface import DataCollector, COLUMN_NAMES
 
@@ -13,8 +11,13 @@ COLUMN_MAPPER = {
     "value": None,
 }  # mapper used to rename columns to standard values
 
-VALID_TIMEFRAMES = {"last_day": "now 1-d", "last_week": "now 7-d", "last_month": "today 1-m",
-                    "last_three_months": "today 3-m", "last_twelve_months": "today 12-m"}
+VALID_TIMEFRAMES = {
+    "last_day": "now 1-d",
+    "last_week": "now 7-d",
+    "last_month": "today 1-m",
+    "last_three_months": "today 3-m",
+    "last_twelve_months": "today 12-m",
+}
 
 
 class GoogleTrendsDataCollector(DataCollector):
@@ -27,14 +30,13 @@ class GoogleTrendsDataCollector(DataCollector):
             self.search_term = KNITTING_TOPIC
         else:
             self.search_term = search_term
-        
+
         if timeframe == "":
             self.timeframe = VALID_TIMEFRAMES["last_three_months"]
         else:
             self.timeframe = VALID_TIMEFRAMES[timeframe]
-        
+
         self.geo = geo
-        
 
     def __collect_trending_word_data__(
         self,
@@ -56,12 +58,14 @@ class GoogleTrendsDataCollector(DataCollector):
         """
         self._set_parameters(search_term=search_term, timeframe=timeframe, geo=geo)
         kw_list = [self.search_term]
-        self.pytrends_client.build_payload(kw_list, geo=self.geo, timeframe=self.timeframe)
-       
+        self.pytrends_client.build_payload(
+            kw_list, geo=self.geo, timeframe=self.timeframe
+        )
+
         try:
             response = self.pytrends_client.related_queries()
-        except pytrends.exceptions.ResponseError: 
-            raise # raise the error to be handled by caller
+        except pytrends.exceptions.ResponseError:
+            raise  # raise the error to be handled by caller
 
         # we have to account for no related queries in either category
         # we create a default empty DataFrame and only set its value of the metric actually has values
@@ -99,7 +103,9 @@ class GoogleTrendsDataCollector(DataCollector):
         )  # reset the index to get the "word" column again
 
     # Method used to process the raw data of trending words. Returns a list of TrendingWord objects from the given data frames.
-    def __process_trending_word_data__(self, data_frame: pd.DataFrame, filter: bool = False) -> pd.DataFrame:
+    def __process_trending_word_data__(
+        self, data_frame: pd.DataFrame, filter: bool = False
+    ) -> pd.DataFrame:
         processed_data = data_frame.copy()
 
         print(f"Filter data: {filter}")
@@ -108,7 +114,9 @@ class GoogleTrendsDataCollector(DataCollector):
             before_filter = processed_data.shape[0]
             print(f"Rows before filtering: {before_filter}")
 
-            last_12 = self.__collect_trending_word_data__(search_term="", timeframe="last_twelve_months")
+            last_12 = self.__collect_trending_word_data__(
+                search_term="", timeframe="last_twelve_months"
+            )
 
             processed_data = processed_data.loc[
                 ~processed_data[COLUMN_NAMES["word"]].isin(
@@ -124,33 +132,38 @@ class GoogleTrendsDataCollector(DataCollector):
         return processed_data
 
     # Method used by the endpoint to get the trending words. Returns a list of TrendingWord objects.
-    def get_trending_words(self, search_term: str, timeframe: str, filter: bool) -> pd.DataFrame:
-            try:
-                word_data = self.__collect_trending_word_data__(search_term=search_term, timeframe=timeframe)
-                return self.__process_trending_word_data__(
-                    word_data, filter
-                )
-            except pytrends.exceptions.ResponseError as error:
-                if error.response.status_code == 429: # if the response code is 429, we raise a Werkzeug HTTPError
-                    raise werkzeug.exceptions.TooManyRequests from error
-                else:
-                    raise error
+    def get_trending_words(
+        self, search_term: str, timeframe: str, filter: bool
+    ) -> pd.DataFrame:
+        try:
+            word_data = self.__collect_trending_word_data__(
+                search_term=search_term, timeframe=timeframe
+            )
+            return self.__process_trending_word_data__(word_data, filter)
+        except pytrends.exceptions.ResponseError as error:
+            if (
+                error.response.status_code == 429
+            ):  # if the response code is 429, we raise a Werkzeug HTTPError
+                raise werkzeug.exceptions.TooManyRequests from error
+            else:
+                raise error
 
     # Method used to get the interest over time for a given keyword. Returns a dataframe of the interest over time in relative numbers.
     def get_interest_over_time(
-        self,
-        search_term,
-        timeframe="last_twelve_months",
-        geo="NO"
+        self, search_term, timeframe="last_twelve_months", geo="NO"
     ) -> pd.DataFrame:
         self._set_parameters(search_term, timeframe, geo)
         kw_list = [self.search_term]
-        self.pytrends_client.build_payload(kw_list, geo=self.geo, timeframe=self.timeframe)
+        self.pytrends_client.build_payload(
+            kw_list, geo=self.geo, timeframe=self.timeframe
+        )
         response_dateframe = self.pytrends_client.interest_over_time()
         date_frame = response_dateframe
         date_frame["date"] = response_dateframe.index
         date_frame = response_dateframe.reset_index(drop=True)
         date_frame = date_frame[["date", self.search_term]]
-        date_frame = date_frame.rename(columns={self.search_term: "relative_search_value"})
+        date_frame = date_frame.rename(
+            columns={self.search_term: "relative_search_value"}
+        )
 
         return date_frame

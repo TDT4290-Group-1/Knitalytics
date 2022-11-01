@@ -1,4 +1,3 @@
-from time import sleep
 from flask import abort
 from typing import List
 from flask import Flask, request
@@ -11,8 +10,6 @@ import pandas as pd
 from pandas import DataFrame
 import os
 from dotenv import load_dotenv
-import json
-import pytrends.exceptions
 
 load_dotenv()
 
@@ -38,10 +35,10 @@ def create_app():
 
     @app.errorhandler(werkzeug.exceptions.TooManyRequests)
     def handle_too_many_requests(error):
-        description = '''
+        description = """
             Could not fetch Trends data due to too many requests to Google.
-            Wait some time, then try refreshing the page. 
-        '''
+            Wait some time, then try refreshing the page.
+        """
         return description, 429
 
     @app.route("/")
@@ -59,14 +56,16 @@ def create_app():
         # and sets the value of 'filter' variable correspondingly.
         # This allows all specifications of "true" and "false" to be evaluated correctly, e.g. "TRUE" is also accepted as a value
         filter = request.args.get("filter", False, type=lambda a: a.lower() == "true")
-        
+
         # retrive timeframe arg
         timeframe = request.args.get("timeframe", "")
-        
+
         trending_words_dataframes: List[DataFrame] = []
         googleCollector = GoogleTrendsDataCollector()
-        
-        google_response = googleCollector.get_trending_words(search_term, timeframe, filter)    
+
+        google_response = googleCollector.get_trending_words(
+            search_term, timeframe, filter
+        )
 
         add_dataframe_from_collector(
             trending_words_dataframes,
