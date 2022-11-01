@@ -1,5 +1,6 @@
 from typing import List
 import unicodedata as ud
+from operator import itemgetter
 import re
 
 
@@ -48,6 +49,19 @@ class FilterInstagramPosts:
             post_url.append(post["permalink"])
         return post_url
 
+    # sort the list "posts" after the amount of likes, in descending order
+
+    def sort_posts(self, posts: List[str], sort: str) -> List[str]:
+        if sort == "likes":
+            # in case some of the posts do not have a like count
+            try:
+                return sorted(posts, key=itemgetter("like_count"), reverse=True)
+            except:
+                return posts
+        elif sort == "comments":
+            return sorted(posts, key=itemgetter("comments_count"), reverse=True)
+        return posts
+
     # removes hashtags that contains certain words
 
     def __remove_spamhashtags__(
@@ -58,7 +72,7 @@ class FilterInstagramPosts:
         relevant_hashtags = []
         for hashtag in hashtags:
             match = re.search(filteredOutWords, hashtag, re.IGNORECASE)
-            if match == None:
+            if match is None:
                 relevant_hashtags.append(hashtag)
         return relevant_hashtags
 

@@ -1,5 +1,3 @@
-from ast import Str
-from os import link
 from typing import List
 import requests
 import json
@@ -30,7 +28,7 @@ class APIAgent:
             "user_id": self.user_id,
             "fields": "business_discovery.username("
             + ig_user
-            + "){media{caption, permalink}}",
+            + "){media{like_count, comments_count, permalink}}",
         }
         endpoint = "/" + self.user_id
         response = requests.get(url=self.base_url + endpoint, params=PARAMS)

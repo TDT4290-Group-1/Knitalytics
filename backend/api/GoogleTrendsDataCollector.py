@@ -110,9 +110,16 @@ class GoogleTrendsDataCollector(DataCollector):
 
             last_12 = self.__collect_trending_word_data__(search_term="", timeframe="last_twelve_months")
 
-            processed_data = processed_data.loc[~processed_data[COLUMN_NAMES["word"]].isin(last_12[COLUMN_NAMES["word"]]), :]
+            processed_data = processed_data.loc[
+                ~processed_data[COLUMN_NAMES["word"]].isin(
+                    last_12[COLUMN_NAMES["word"]]
+                ),
+                :,
+            ]
 
-            print(f"Deleted {before_filter - processed_data.shape[0]} rows after filtering queries that are also in last 12 months")
+            print(
+                f"Deleted {before_filter - processed_data.shape[0]} rows after filtering queries that are also in last 12 months"
+            )
 
         return processed_data
 
@@ -120,14 +127,14 @@ class GoogleTrendsDataCollector(DataCollector):
     def get_trending_words(self, search_term: str, timeframe: str, filter: bool) -> pd.DataFrame:
             try:
                 word_data = self.__collect_trending_word_data__(search_term=search_term, timeframe=timeframe)
+                return self.__process_trending_word_data__(
+                    word_data, filter
+                )
             except pytrends.exceptions.ResponseError as error:
                 if error.response.status_code == 429: # if the response code is 429, we raise a Werkzeug HTTPError
                     raise werkzeug.exceptions.TooManyRequests from error
                 else:
                     raise error
-            return self.__process_trending_word_data__(
-                word_data, filter
-            )
 
     # Method used to get the interest over time for a given keyword. Returns a dataframe of the interest over time in relative numbers.
     def get_interest_over_time(
