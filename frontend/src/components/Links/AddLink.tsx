@@ -2,11 +2,30 @@ import { HStack, Input, Button, useToast } from "@chakra-ui/react";
 import {useState} from "react";
 import {nanoid} from "nanoid";
 
-function AddLink({ addLink }) {
+interface Link {
+    id: string;
+	text: string;
+	url: string;
+}
+
+function handleUrl(url: string) {
+	let newUrl = url;
+	if (url.includes("https://")) {
+		newUrl = newUrl.replace("https://", "");
+	} else if (url.includes("http://")) {
+		newUrl = newUrl.replace("http://", "");
+	}
+	if (url.includes("www.")) {
+		newUrl = newUrl.replace("www.", "");
+	}
+	return newUrl;
+}
+
+function AddLink(props: {addLink: (link: Link) => void}) {
 
 	const warning = useToast();
 
-	function handleSubmit(e: { preventDefault: () => void; }) {
+	async function handleSubmit(e: { preventDefault: () => void; }) {
 		e.preventDefault();
 
 		if (content.length < 4) {
@@ -20,12 +39,13 @@ function AddLink({ addLink }) {
 			return;
 		}
 
-		const link = {
+		const link: Link = {
 			id: nanoid(),
-			body: content,
+			text: handleUrl(content),
+			url: content,
 		};
 
-		addLink(link);
+		props.addLink(link);
 		setContent("");
 	}
 

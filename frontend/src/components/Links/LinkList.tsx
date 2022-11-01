@@ -1,13 +1,13 @@
-import React, {useState} from "react";
-import {HStack, VStack, Text, IconButton, StackDivider, Spacer} from "@chakra-ui/react";
+import {HStack, VStack, IconButton, StackDivider, Spacer, Link} from "@chakra-ui/react";
 import {FaTrash} from "react-icons/fa";
 
 interface Link{
-    id: number;
-	body: string;
+    id: string;
+	text: string;
+	url: string;
 }
 
-function LinkList({ links, deleteLink}) {
+function LinkList(props: {links: Link[], deleteLink: (id: string) => void}) {
 
 	return (
 		<VStack
@@ -19,11 +19,11 @@ function LinkList({ links, deleteLink}) {
 			alignItems="strech"
 			maxW={{base: "80vw", sm: "70vw", lg: "60vw", xl: "50vw"}}
 		>
-			{links.map(link => (
+			{props.links.map(link => (
 				<HStack key={link.id}>
-					<Text>{link.body}</Text>
+					<Link color="teal.500" href={link.url} isExternal>{link.text}</Link>
 					<Spacer />
-					<IconButton icon={<FaTrash />} aria-label={""} onClick={() => deleteLink(link.id)}/>
+					<IconButton icon={<FaTrash />} aria-label={""} onClick={() => props.deleteLink(link.id)}/>
 				</HStack>
 			))}
 		</VStack>
