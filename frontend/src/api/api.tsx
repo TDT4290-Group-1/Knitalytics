@@ -11,12 +11,30 @@ class API {
 
 
 	/**
-	 * @param metric 'frequency_growth' or 'search_count'. Used to show the most searched words or the fastest growing words.
-	 * @param searchTerm Optional search term to search for. If empty, the default search term is used.
+	 * @param search_term Optional search term to search for. If empty, the default search term is used.
+	 * @param filter Optional boolean indicating wether to filter commonly occuring words.
+	 * @param timeframe Optional string indicating which timeframe to retrieve statistics for. 
+	 * Valid values: 
+	 * - [last_day | last_week | last_month | last_three_months | last_year]
 	 * @returns a JSON list of trening words with the gived metric value
 	 */
-	async getAllTrendingWords(searchTerm?: string, filter?: boolean): Promise<TrendingWord[]> {
-		const response = await client.get(`/api/v1/trends?${searchTerm ? "&search_term=" + searchTerm : ""}${filter ? "&filter=" + filter : ""}`);
+	async getAllTrendingWords(search_term: string, filter: boolean, timeframe: string): Promise<TrendingWord[]> {
+		let url = "/api/v1/trends";
+		const params = {"search_term": search_term, "filter": filter, "timeframe": timeframe}; // build dictionary so we can loop
+		
+		// loop through parameters and iteratively build url string
+		for (let i=0; i < Object.entries(params).length; i++) {
+			const param = Object.entries(params)[i][0]; // param name
+			const value = Object.entries(params)[i][1]; // param value
+			if (i != 0) { // if this is not first parameter
+				url += "&"; // need to concatenate parameters
+			} else {
+				url += "?"; // indicate parameters
+			}
+			url += `${param}=${value}`; // iteravely build string
+		}
+
+		const response = await client.get(url);
 		return response.data;
 	}
 
