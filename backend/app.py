@@ -1,7 +1,8 @@
-from array import array
+from time import sleep
 from flask import abort
 from typing import List
 from flask import Flask, request
+import werkzeug.exceptions
 from api.GoogleTrendsDataCollector import GoogleTrendsDataCollector
 from api.InstagramCollector import InstagramCollector
 from flask_cors import CORS
@@ -11,6 +12,7 @@ from pandas import DataFrame
 import os
 from dotenv import load_dotenv
 import json
+import pytrends.exceptions
 
 load_dotenv()
 
@@ -34,6 +36,14 @@ def create_app():
     ):
         trending_words_dataframes.append(dataframe_to_add)
 
+    @app.errorhandler(werkzeug.exceptions.TooManyRequests)
+    def handle_too_many_requests(error):
+        description = '''
+            Could not fetch Trends data due to too many requests to Google.
+            Wait some time, then try refreshing the page. 
+        '''
+        return description, 429
+
     @app.route("/")
     def hello_world():
         return "Hello, World!"
@@ -55,9 +65,12 @@ def create_app():
         
         trending_words_dataframes: List[DataFrame] = []
         googleCollector = GoogleTrendsDataCollector()
+        
+        google_response = googleCollector.get_trending_words(search_term, timeframe, filter)    
+
         add_dataframe_from_collector(
             trending_words_dataframes,
-            googleCollector.get_trending_words(search_term, timeframe, filter),
+            google_response,
         )
 
         main_data_frame = pd.concat(trending_words_dataframes).reset_index(drop=True)

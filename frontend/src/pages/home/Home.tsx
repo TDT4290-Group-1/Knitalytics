@@ -11,7 +11,7 @@ const HomePage = () => {
 	const [trendingWords, setTrendingWords] = useState<TrendingWord[] | undefined>(undefined); // use undefined as check whether loaded or not
 
 	// whether error occurred
-	const [trendingWordsError, setTrendingWordsError] = useState(false);
+	const [trendingWordsError, setTrendingWordsError] = useState(undefined);
 
 	// whether to remove commonly occurring 
 	const [filter, setFilter] = useState(false);
@@ -24,16 +24,19 @@ const HomePage = () => {
 		// fetch the words
 		API.getAllTrendingWords("", filter, timeframe).then((trendingWords) => {
 			setTrendingWords(trendingWords as TrendingWord[]);
-		}).catch(() => {
+		}).catch((error) => {
 			setTrendingWords([]); // set to something defined so we avoid infinite API calls
-			setTrendingWordsError(true);
+			if (error.response) {
+				console.log(`Error response: ${error.response.data}`)
+				setTrendingWordsError(error.response.data);
+			}
 		});
 	}
-
 
 	return (
 		<>
 			<Center>
+				
 				<VStack>
 					<chakra.h1
 						textAlign={"center"}
@@ -53,13 +56,17 @@ const HomePage = () => {
 					</chakra.h1>
 				</VStack>
 			</Center>
-			<ContentBox
+			{trendingWordsError ? 
+			<p>{trendingWordsError}</p> :
+				<ContentBox
 				items={trendingWords}
 				setTrendingWords={setTrendingWords}
 				setFilter={setFilter}
 				timeframe={timeframe}
 				setTimeframe={setTimeframe}
 			/>
+			}
+			
 		</>
 	);
 };

@@ -1,7 +1,11 @@
+from multiprocessing import dummy
 import pandas as pd
+from requests import Response
+import werkzeug.exceptions
 from api.DataCollectorInterface import DataCollector, COLUMN_NAMES
 
 from pytrends.request import TrendReq
+import pytrends.exceptions
 
 KNITTING_TOPIC = "/m/047fr"  # google specific encoding of "Knitting" topic
 COLUMN_MAPPER = {
@@ -53,7 +57,11 @@ class GoogleTrendsDataCollector(DataCollector):
         self._set_parameters(search_term=search_term, timeframe=timeframe, geo=geo)
         kw_list = [self.search_term]
         self.pytrends_client.build_payload(kw_list, geo=self.geo, timeframe=self.timeframe)
-        response = self.pytrends_client.related_queries()
+       
+        try:
+            response = self.pytrends_client.related_queries()
+        except pytrends.exceptions.ResponseError: 
+            raise # raise the error to be handled by caller
 
         # we have to account for no related queries in either category
         # we create a default empty DataFrame and only set its value of the metric actually has values
@@ -110,8 +118,15 @@ class GoogleTrendsDataCollector(DataCollector):
 
     # Method used by the endpoint to get the trending words. Returns a list of TrendingWord objects.
     def get_trending_words(self, search_term: str, timeframe: str, filter: bool) -> pd.DataFrame:
+            try:
+                word_data = self.__collect_trending_word_data__(search_term=search_term, timeframe=timeframe)
+            except pytrends.exceptions.ResponseError as error:
+                if error.response.status_code == 429: # if the response code is 429, we raise a Werkzeug HTTPError
+                    raise werkzeug.exceptions.TooManyRequests from error
+                else:
+                    raise error
             return self.__process_trending_word_data__(
-                self.__collect_trending_word_data__(search_term=search_term, timeframe=timeframe), filter
+                word_data, filter
             )
 
     # Method used to get the interest over time for a given keyword. Returns a dataframe of the interest over time in relative numbers.
