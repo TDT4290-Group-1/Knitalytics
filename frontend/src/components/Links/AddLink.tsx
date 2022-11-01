@@ -18,6 +18,9 @@ function handleUrl(url: string) {
 	if (url.includes("www.")) {
 		newUrl = newUrl.replace("www.", "");
 	}
+	if (url.length > 30) {
+		newUrl = newUrl.substring(0, 30) + "...";
+	}
 	return newUrl;
 }
 
@@ -28,6 +31,7 @@ function AddLink(props: {addLink: (link: Link) => void}) {
 	async function handleSubmit(e: { preventDefault: () => void; }) {
 		e.preventDefault();
 
+		//TODO: Check if URL exists
 		if (content.length < 4) {
 			warning({
 				title: "Hyperlink does not exist",
