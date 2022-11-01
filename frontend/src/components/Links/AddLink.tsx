@@ -2,7 +2,7 @@ import { HStack, Input, Button, useToast } from "@chakra-ui/react";
 import {useState} from "react";
 import {nanoid} from "nanoid";
 
-interface Link {
+export interface Link {
     id: string;
 	text: string;
 	url: string;

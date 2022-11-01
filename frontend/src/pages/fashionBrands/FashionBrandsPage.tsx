@@ -1,13 +1,7 @@
-import AddLink from "components/Links/AddLink";
+import AddLink, {Link} from "components/Links/AddLink";
 import LinkList from "components/Links/LinkList";
 import { Heading, VStack } from "@chakra-ui/react";
 import {useState, useEffect} from "react";
-
-interface Link{
-    id: string;
-	text: string;
-	url: string;
-}
 
 const FashionBrandsPage = () => {
 
