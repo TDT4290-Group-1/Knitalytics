@@ -9,7 +9,7 @@ import {
 import { IconType } from "react-icons";
 import { BiGroup, BiSortZA, BiHash } from "react-icons/bi";
 import {
-	FiSettings,
+	FiSettings, FiLink
 } from "react-icons/fi";
 import {NavItem} from "./NavItem";
 
@@ -28,6 +28,7 @@ const LinkItems: Array<LinkItemProps> = [
 	{ name: "Trending words", icon: BiSortZA, path: "/" },
 	{ name: "Followed users", icon: BiGroup, path: "/InstagramPosts" },
 	{ name: "Hashtags", icon: BiHash, path: "/Hashtags" },
+	{ name: "Links", icon: FiLink, path: "/FashionBrands" },
 	{ name: "Settings", icon: FiSettings, path: "/settings" },
 ];
   
