@@ -20,7 +20,8 @@ class InstagramCollector(DataCollector):
         self.query = query
         id = self.APIAgent.get_hashtag_id(query)
         if type(id) is str:
-            posts = self.APIAgent.get_posts_from_hashtag(id, "like_count, caption")
+            posts = self.APIAgent.get_posts_from_hashtag(
+                id, "like_count, caption")
             if type(posts) is not str:
                 return self.hlp.parse_hashtag_from_posts(posts, filteredOutWords)[
                     :amount
@@ -30,21 +31,15 @@ class InstagramCollector(DataCollector):
         # this will be an error message
         return id
 
-    def get_hashtags_business_users(self, ig_users, filteredOutWords) -> List:
-        captions: List[str] = []
-        for ig_user in ig_users:
-            posts = self.APIAgent.get_posts_from_ig_user(ig_user)
-            if type(posts) is not str:
-                captions += self.hlp.get_captions(posts)
-                return self.hlp.parse_hashtag_from_captions(captions, filteredOutWords)
-        # returns links to popular posts related to 'query
+    # returns links to popular posts related to 'query
 
     def get_related_post_urls(self, query: str, amount: int = 10) -> List:
         query = query.replace(" ", "")
         self.query = query
         id = self.APIAgent.get_hashtag_id(query)
         if type(id) is str:
-            posts = self.APIAgent.get_posts_from_hashtag(id, "like_count, permalink")
+            posts = self.APIAgent.get_posts_from_hashtag(
+                id, "like_count, permalink")
             if type(posts) is not str:
                 post_url = self.hlp.get_post_url(posts)
                 return post_url[:amount]
@@ -54,14 +49,16 @@ class InstagramCollector(DataCollector):
         return id
 
     def get_business_post_urls(self, ig_users, sort="user", post_amount=10) -> List:
-        posts = []
+        all_posts = []
+        post_urls = []
         for ig_user in ig_users:
-            posts += self.APIAgent.get_posts_from_ig_user(ig_user)[: int(post_amount)]
-            if type(posts) is str:
-                # this is an error message
-                return posts
-        posts = self.hlp.sort_posts(posts, sort)
-        post_urls = self.hlp.get_post_url(posts)
+            posts = self.APIAgent.get_posts_from_ig_user(ig_user)[
+                : int(post_amount)]
+            # if posts is str means it's an error message
+            if type(posts) is not str:
+                all_posts += posts
+        all_posts = self.hlp.sort_posts(all_posts, sort)
+        post_urls = self.hlp.get_post_url(all_posts)
         return post_urls
 
     def get_business_user(self, bus_user) -> str:
