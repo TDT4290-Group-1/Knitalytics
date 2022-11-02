@@ -108,11 +108,8 @@ class GoogleTrendsDataCollector(DataCollector):
     ) -> pd.DataFrame:
         processed_data = data_frame.copy()
 
-        print(f"Filter data: {filter}")
-
         if filter:
             before_filter = processed_data.shape[0]
-            print(f"Rows before filtering: {before_filter}")
 
             last_12 = self.__collect_trending_word_data__(
                 search_term="", timeframe="last_twelve_months"
