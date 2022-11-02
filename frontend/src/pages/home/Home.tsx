@@ -57,7 +57,14 @@ const HomePage = () => {
 				</VStack>
 			</Center>
 			{trendingWordsError ? 
-				<p>{trendingWordsError}</p> :
+				<chakra.h1
+					textAlign={"center"}
+					fontSize={"xl"}
+					py={5}
+					fontWeight={"bold"}
+					color={"forest"}>
+					{trendingWordsError}
+				</chakra.h1>:
 				<ContentBox
 					items={trendingWords}
 					setTrendingWords={setTrendingWords}
