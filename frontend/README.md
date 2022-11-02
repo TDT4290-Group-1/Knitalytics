@@ -1,11 +1,23 @@
-This project was bootstrapped with
+This folder is for the Knitalytics frontend. The project was bootstrapped with
 [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+
+## Getting Started
+```bash
+$ npm install
+```
+Installs the dependencies
+
+## Starting App
+
+```bash
+$ npm start
+```
+
 
 Runs the app in the development mode.<br /> Open
 [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -13,22 +25,34 @@ Runs the app in the development mode.<br /> Open
 The page will reload if you make edits.<br /> You will also see any lint errors
 in the console.
 
-### `npm test`
+## Run tests
+```bash
+$ npm test
+```
 
 Launches the test runner in the interactive watch mode.<br /> See the section
 about
 [running tests](https://facebook.github.io/create-react-app/docs/running-tests)
 for more information.
 
-### `npm run lint`
+## Code formatting
 
+```bash
+$ npm run lint
+```
 Runs the lint script and shows all errors
 
-### `npm run lint:fix`
+```bash
+$ npm run lint:fix
+```
 
 Tries to fix all lint errors
 
-### `npm run build`
+
+## Build App
+```bash
+$ npm run build
+```
 
 Builds the app for production to the `build` folder.<br /> It correctly bundles
 React in production mode and optimizes the build for the best performance.
@@ -40,7 +64,10 @@ See the section about
 [deployment](https://facebook.github.io/create-react-app/docs/deployment) for
 more information.
 
-### `npm run eject`
+### Eject Build
+```bash
+$ npm run eject
+```
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 

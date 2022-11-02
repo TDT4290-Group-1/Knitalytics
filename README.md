@@ -33,6 +33,11 @@ This project aims to analyse data related to knitting from various sources in or
 
 - Usability: The customer emphasized their wish for a clean, tidy and intuitive user interface. Our system will handle and represent huge datasets and statistics, so ensuring good usability will be crucial for acheiving this goal. However the end users of the system wil be "superusers", which means that user guidance/assistance does not necessarily have to be a huge focus. 
 
+- Performance: The system will gather and analyze a huge amount of data. Therefore it is important for the user experience to have no long delays. Performance is one of the key factors that affects the scalability of the project.
+
+
+Performance is about a system's ability to meet timing requirements (\cite[p. 133]{bass2003software}). It is generally a fundamentally important quality attribute, and is often linked to a systems scalability (\cite[p. 134]{bass2003software}). Scalability means increasing the work capacity of the system, while still maintaining its performance quality. Since our system is intended to gather and analyse large amounts of data, it is important for the user experience that it does so efficiently to avoid long delays in the user interface. Though the system will be used by a small set of users initially, since Dreamknit may also wish to expand the scope and use of the system, it is also important that it is scalable.
+
 
 
 ### Current solution 

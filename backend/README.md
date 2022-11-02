@@ -4,51 +4,39 @@ This folder is for the Knitalytics backend. Implemented using Flask. Endpoints a
 
 ## Getting Started
 
-Set up environment
-
+#### Mac:
 ```bash
 $ python3 -m venv venv
 $ source venv/bin/activate
 $ pip3 install -r requirements.txt
 ```
 
-If running Windows use `venv\Scripts\activate` instead of `source venv/bin/activate`. Remember to apply migrations. If you do not apply migrations a warning will be displayed when starting the application.
+#### Windows:
+```bash
+$ python3 -m venv venv
+$ venv\Scripts\activate
+$ pip3 install -r requirements.txt
+```
+
+Sets up Python environment and installs Python modules and packages listed in the [requirements file](https://github.com/dream-knit/knitalytics/blob/153-update-documentations/backend/requirements.txt).
+
 
 ## Starting App
-
+#### Mac:
 ```bash
 $ source venv/bin/activate
 $ python3 -m flask run
 ```
-
-If running Windows use `venv\bin\activate` instead of `source venv/bin/activate`. Remember to activate
+#### Windows:
+```bash
+$ venv\bin\activate
+$ python3 -m flask run
+```
 
 This will launch the app at [http://localhost:5000](http://localhost:5000).
 
-<!--
-## Migrations
-
-To apply migrations run
-```bash
-$ python manage.py migrate
-```
-
-To create a superuser (Initial admin account) run
-```bash
-$ python manage.py createsuperuser
-```
-This account can be used to log in to the admin panel for the first time.
-
-If you change or add a model, you have to make and apply migrations. You can do this using
-```bash
-$ python manage.py makemigrations
-$ python manage.py migrate
-```
--->
 
 ## Run tests
-
-To run tests run
 
 ```bash
 $ python3 -m pytest
@@ -63,25 +51,23 @@ $ python3 -m coverage run -m pytest
 $ python3 -m coverage report
 ```
 
-To view test coverage in browser as html file:
-
 ```bash
 $ python3 -m coverage html
 ```
+Will generate html file that shows the test coverage
 
 ## Fix Formatting
 
-Check if formatting is correct using
 
 ```bash
 $ black ./ --check
 ```
-
-To fix any formatting errors run
+Checks if correct formatting is used in the code
 
 ```bash
 $ black ./
 ```
+Fixes formatting errors
 
 ## Further Reading
 

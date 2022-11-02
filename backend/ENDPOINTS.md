@@ -1,686 +1,252 @@
 # Endpoints
 
-
-## GET / 
-
-Server front page, may be changed later. Returns currently a blank page with "hello world"
-
 ## GET /api/v1/trends/
-
-Returns a list of all trending words from the differant data collectors.
-
-<!-- ### Request
-
-Accepts `application/json`.
-
-```json
-{
-  "email": "your@email.com",
-  "password": "password"
-}
-```
-
-### Response
-
-Returns a JWT access and refresh token on the form
-
-```json
-{
-  "refresh": "REFRESH.TOKEN",
-  "access": "ACCESS.TOKEN"
-}
-```
-
-Refresh token is valid for 90 days, access token is valid for 30 minutes.
-
-## POST /auth/refresh/
-
-Authentication endpoint for refreshing your access token when it expires using the refresh token from `/auth/token/`.
-
-### Request
-
-Accepts `application/json`.
-
-```json
-{
-  "refresh": "REFRESH.TOKEN"
-}
-```
-
-### Response
-
-Returns a new JWT access token valid for 30 minutes.
-
-```json
-{
-  "access": "ACCESS.TOKEN"
-}
-```
-
-## POST /auth/register/
-
-Register a new user
-
-### Request
-
-```json
-{
-  "email": "your@email.com",
-  "first_name": "First Name",
-  "last_name": "Last Name",
-  "phone_number": "+4799999999",
-  "password": "Password",
-  "address": {
-    "line1": "Address line 1",
-    "line2": "Address line 2 (Optional)",
-    "postalcode": "1234",
-    "city": "City",
-    "country": "Country"
-  }
-}
-```
-
-### Response
-
-```json
-{
-  "user": {
-    "email": "your@email.com",
-    "first_name": "First Name",
-    "last_name": "Last Name",
-    "phone_number": "+4799999999",
-    "last_login": null,
-    "address": {
-      "line1": "Address line 1",
-      "line2": "Address line 2 (Optional)",
-      "postalcode": "1234",
-      "city": "City",
-      "country": "Country"
-    }
-  },
-  "message": "User Created Successfully.  Now perform Login to get your token"
-}
-```
-
-## GET /auth/user/$id/
-
-Returns the user with the given id
-
-### Response
-
-```json
-{
-  "email": "user@email.com",
-  "first_name": "Firstname",
-  "last_name": "Lastname",
-  "phone_number": "+4799999998",
-  "last_login": null,
-  "address": {
-    "line1": "Address line1",
-    "line2": "Address line2 (optional)",
-    "postalcode": "postalcode",
-    "city": "City",
-    "country": "Country",
-    "geocode": {
-      "lat": 59.9138688,
-      "lng": 10.7522454
-    }
-  },
-  "date_joined": "2021-03-31T22:00:53Z",
-  "is_staff": false,
-  "id": 2
-}
-```
-
-## GET auth/self/
-
-Fetch information about the currently logged in user.
-
-### Response
-
-```json
-{
-  "email": "your@email.com",
-  "first_name": "First Name",
-  "last_name": "Last Name",
-  "phone_number": "Phone Number",
-  "last_login": "2021-02-17T14:59:08.337785Z",
-  "address": {
-    "line1": "Address line 1",
-    "line2": "Address line 2 (Optional)",
-    "postalcode": "1234",
-    "city": "City",
-    "country": "Country"
-  }
-}
-```
-
-## PUT auth/self/
-
-Edit the user
-
-### Request
-
-```json
-{
-  "email": "your@email.com",
-  "first_name": "First Name",
-  "last_name": "Last Name",
-  "phone_number": "+4799889988",
-  "last_login": "2021-02-17T14:59:08.337785Z"
-}
-```
-
-### Response
-
-```json
-{
-  "user": {
-    "email": "your@email.com",
-    "first_name": "First Name",
-    "last_name": "Last Name",
-    "phone_number": "+4799889988",
-    "last_login": "2021-02-17T14:59:08.337785Z",
-    "address": {
-      "line1": "Address line 1",
-      "line2": "Address line 2 (Optional)",
-      "postalcode": "1234",
-      "city": "City",
-      "country": "Country"
-    },
-    "date_joined": "2021-04-06T13:39:37.766908Z",
-    "is_staff": true,
-    "id": 8
-  }
-}
-```
-
-## PUT auth/change/password/
-
-Edit he user's password.
-
-## Request
-
-```json
-{
-  "old_password": "password123",
-  "new_password": "password12345679"
-}
-```
-
-## Response
-
-HTTP_204_NO_CONTENT
-
-## PUT auth/edit/address/
-
-Edit the user's address.
-
-## Request
-
-```json
-{
-  "address": {
-    "line1": "Address line 1",
-    "line2": "Address line 2 (Optional)",
-    "postalcode": "1234",
-    "city": "City",
-    "country": "Country"
-  }
-}
-```
-
-## Response
-
-```json
-{
-  "address": {
-    "line1": "Address line 1",
-    "line2": "Address line 2 (Optional)",
-    "postalcode": "1234",
-    "city": "City",
-    "country": "Country"
-  }
-}
-```
-
-## POST ad/create/
-
-Create an ad
-
-### Request
-
-```json
-{
-  "title": "test",
-  "description": "test",
-  "price": 100
-}
-```
-
-### Response
-
-```json
-{
-  "id": 1,
-  "owner": {
-    "email": "test@test.org",
-    "first_name": "test",
-    "last_name": "test",
-    "phone_number": "98989898"
-  },
-  "thumbnail": null,
-  "images": [],
-  "title": "test",
-  "description": "test",
-  "price": 100,
-  "created_at": "2021-03-11T22:40:10.507173Z",
-  "last_modified": "2021-03-11T22:40:10.507208Z",
-  "is_sold": false,
-  "category": null
-}
-```
-
-## GET ad/$id/
-
-Return the ad with given id
-
-### Response
-
-```json
-{
-  "id": 1,
-  "owner": {
-    "email": "test@test.no",
-    "first_name": "test",
-    "last_name": "test",
-    "phone_number": "98989898"
-  },
-  "thumbnail": null,
-  "images": [],
-  "title": "test",
-  "description": "test",
-  "price": 100,
-  "created_at": "2021-03-11T22:40:10.507173Z",
-  "last_modified": "2021-03-11T22:40:10.507208Z",
-  "is_sold": false,
-  "category": null
-}
-```
-
-## PUT ad/$id/
-
-Update the ad with given id
-
-### Request
-
-```json
-{
-  "title": "test",
-  "description": "test",
-  "price": "100"
-}
-```
-
-### Response
-
-```json
-{
-  "title": "test",
-  "description": "test",
-  "price": "100",
-  "category": null
-}
-```
-
-## DELETE ad/$id/
-
-Delete the ad with given id
-
-## GET ad/list/
-
-Return a list of all ads
-
+Returns a list of all trending words related to the word "Knitting" or the given search term from Google Trends 
+### Argument:
+  - **"search_term(optional)":** The word to get related trending word for.
+  
 ### Response
 
 ```json
 [
-  {
-    "id": 1,
-    "owner": {
-      "email": "test@test.no",
-      "first_name": "test",
-      "last_name": "test",
-      "phone_number": "98989898"
-    },
-    "thumbnail": null,
-    "images": [],
-    "title": "test",
-    "description": "test",
-    "price": 100,
-    "created_at": "2021-03-11T22:40:10.507173Z",
-    "last_modified": "2021-03-11T22:40:10.507208Z",
-    "is_sold": false,
-    "category": null
-  },
-  {
-    "id": 2,
-    "owner": {
-      "email": "admin@admin.no",
-      "first_name": "test",
-      "last_name": "test",
-      "phone_number": "98989898"
-    },
-    "thumbnail": null,
-    "images": [],
-    "title": "test",
-    "description": "test",
-    "price": 100,
-    "created_at": "2021-03-11T22:40:10.507173Z",
-    "last_modified": "2021-03-11T22:40:10.507208Z",
-    "is_sold": true,
-    "category": null
-  }
-]
-```
-
-## GET ad/list/not-sold/
-
-Return a list of not sold ads
-
-### Response
-
-The same as `ad/list/`, but filtered on `is_sold = False`.
-
-## GET ad/list/self
-
-Return a list with all the ads created by user logged in
-
-### Response
-
-```json
-[
-  {
-    "id": 1,
-    "owner": {
-      "email": "test@test.no",
-      "first_name": "test",
-      "last_name": "test",
-      "phone_number": "98989898"
-    },
-    "thumbnail": null,
-    "images": [],
-    "title": "test",
-    "description": "test",
-    "price": 100,
-    "created_at": "2021-03-11T22:40:10.507173Z",
-    "last_modified": "2021-03-11T22:40:10.507208Z",
-    "is_sold": false,
-    "category": null
-  },
-  {
-    "id": 2,
-    "owner": {
-      "email": "test@test.no",
-      "first_name": "test",
-      "last_name": "test",
-      "phone_number": "98989898"
-    },
-    "thumbnail": null,
-    "images": [],
-    "title": "test 1",
-    "description": "test 1",
-    "price": 100,
-    "created_at": "2021-03-11T22:40:10.507173Z",
-    "last_modified": "2021-03-11T22:40:10.507208Z",
-    "is_sold": false,
-    "category": null
-  }
-]
-```
-
-## GET ad/list-by-user/$id/
-
-Return a list with all the ads created by given user
-
-### Response
-
-```json
-{
-        "id": 1,
-        "owner": {
-            "id": 1,
-            "email": "user@email.com",
-            "first_name": "user",
-            "last_name": "account",
-            "phone_number": "+4799999999"
-        },
-        "thumbnail": {
-            "id": 1,
-            "url": "http://localhost:8000/ad/image/1/",
-            "description": null
-        },
-        "images": [
-            {
-                "id": 1,
-                "url": "http://localhost:8000/ad/image/1/",
-                "description": null
-            }
-        ],
-        "distance": -1,
-        "title": "dyr",
-        "description": "Test1",
-        "price": 100,
-        "created_at": "2021-04-05T07:45:04.464893Z",
-        "last_modified": "2021-04-05T07:45:04.464932Z",
-        "is_sold": false,
-        "category": 1
+    {
+        "word": "amanda genser",
+        "frequency_growth": 23050.0,
+        "search_count": null
     },
     {
-        "id": 1,
-        "owner": {
-            "id": 1,
-            "email": "user@email.com",
-            "first_name": "user",
-            "last_name": "account",
-            "phone_number": "+4799999999"
-        },
-        "thumbnail": {
-            "id": 2,
-            "url": "http://localhost:8000/ad/image/2/",
-            "description": "21 gir"
-        },
-        "images": [
-            {
-                "id": 2,
-                "url": "http://localhost:8000/ad/image/2/",
-                "description": "god som ny"
-            },
-            {
-                "id": 3,
-                "url": "http://localhost:8000/ad/image/3/",
-                "description": "ubrukt"
-            }
-        ],
-        "distance": -1,
-        "title": "Sykkel",
-        "description": "Ubrukt sykkel",
-        "price": 1000,
-        "created_at": "2021-04-05T07:45:47.257834Z",
-        "last_modified": "2021-04-05T07:45:47.257927Z",
-        "is_sold": false,
-        "category": 1
+        "word": "baby strikk",
+        "frequency_growth": null,
+        "search_count": 7.0
     },
-```
-
-## POST ad/create/image/$id/
-
-Create an image
-
-### Request
-
-```json
-{
-  "image": "FILE.IMAGE",
-  "ad": 1,
-  "description": "test"
-}
-```
-
-### Response
-
-```json
-{
-  "id": 1,
-  "url": "http://localhost:8000/ad/image/1/",
-  "description": "Test"
-}
-```
-
-## GET ad/image/$id/
-
-Return the image with given id
-
-### Response
-
-Returns `image/jpeg`
-
-## PUT ad/image/$id/
-
-Update the description of an image. Accepts form data "description".
-
-## DELETE ad/image/$id/
-
-Delete the given image.
-
-## GET ad/category/list/
-
-Returns a list of all the possible categories.
-
-### Response
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Bil"
-  },
-  {
-    "id": 2,
-    "name": "Fritid"
-  },
-  {
-    "id": 3,
-    "name": "Dyr"
-  }
+    {
+        "word": "knit sweater",
+        "frequency_growth": null,
+        "search_count": 7.0
+    },
+    {
+        "word": "strikke hals",
+        "frequency_growth": 160.0,
+        "search_count": 4.0
+    }
 ]
 ```
 
-## GET ad/category/$id/
+## GET /api/v1/interest_over_time/
+Returns a list of relative seach interest for the work "Knitting" ot the given seach term from Google Trends for the past year
+### Argument:
+  - **"search_term(optional)":** The word to get trending data for.
 
-Returns the given category.
+### Response:
+ ```json
+[
+    {
+        "date": 1636243200000,
+        "relative_search_value": 86
+    },
+    {
+        "date": 1641686400000,
+        "relative_search_value": 95
+    },
+    {
+        "date": 1642291200000,
+        "relative_search_value": 87
+    },
+    {
+        "date": 1644710400000,
+        "relative_search_value": 83
+    },
+   
+    {
+        "date": 1648944000000,
+        "relative_search_value": 69
+    },
+    {
+        "date": 1650758400000,
+        "relative_search_value": 52
+    },
+    {
+        "date": 1651363200000,
+        "relative_search_value": 51
+    },
+    {
+        "date": 1651968000000,
+        "relative_search_value": 48
+    },
+    {
+        "date": 1652572800000,
+        "relative_search_value": 50
+    },
+    {
+        "date": 1653177600000,
+        "relative_search_value": 53
+    },
+    {
+        "date": 1656806400000,
+        "relative_search_value": 56
+    },
+    {
+        "date": 1658620800000,
+        "relative_search_value": 61
+    },
+    {
+        "date": 1659225600000,
+        "relative_search_value": 63
+    },
+    {
+        "date": 1662249600000,
+        "relative_search_value": 71
+    },
+    {
+        "date": 1662854400000,
+        "relative_search_value": 75
+    },
+    {
+        "date": 1663459200000,
+        "relative_search_value": 85
+    },
+    {
+        "date": 1664064000000,
+        "relative_search_value": 90
+    },
+    {
+        "date": 1665878400000,
+        "relative_search_value": 82
+    },
+    {
+        "date": 1666483200000,
+        "relative_search_value": 85
+    }
+] 
+  ```
 
-### Response
-
-```json
-{
-  "id": 1,
-  "name": "Bil"
-}
-```
-## GET ad/list/bycategory/$category_id/
-
-Returns a list of all ads with the given category.
-
-### Response
-
-The same as `ad/list/`, but filtered on `category = category_id`.
-
-## POST /ad/favorite/create/
-
-Creates a favorited-ad-by-user with the given request details.
-
-### Request
-
-Accepts `application/json`.
-
-```json
-{
-    "user": 7,
-    "favorite_ad": 4
-}
-```
-
-### Response
-
-Returns the favorited-ad-by-user that was created.
-
-```json
-{
-    "user": 7,
-    "favorite_ad": 4
-}
-```
-
-## DELETE /ad/favorite/$user_id-$ad_id/
-
-Deletes the given favorited-ad-by-user.
 
 
-### Response
+## GET /api/v1/related_hashtags/
+Returns a list with related hastags for the given query hashtag
+### Arguments:
+  - **"query(required)":** the word we want to get related hashtags for.
+  - **"filtererdOutWords(optional)":** the hastags we want to filter out, if them contains these words.
+  
+ ### Response
+ 
+ ```json
+ [
+    "strickenmachtglücklich",
+    "stricken",
+    "strickenistmeinyoga",
+    "islantilaisneule",
+    "islantilainenvillapaita",
+    "lettlopi",
+    "socktober2022",
+    "neuloosi",
+    "lopapeysa",
+    "slowfashion"
+  ]
+  ```
 
-"Item successfully deleted!"
 
-
-## GET ad/favorite/list/
-
-Returns a list of all exisiting favorited-ads-by-user combinations.
-
-### Response
-
+## GET /api/v1/related_post_URLS/
+Returns a list of related Instrgram post URLs for the given query
+### Arguments:
+  - **"query(required)":** the word we want to get related post urls for.
+  - **"amount(optional":** the amount of related post urls we want
+  
+### Response:
 ```json
 [
-  {
-    "id": 1,
-    "user": 7,
-    "favorite_ad": 5
-  },
-  {
-    "id": 2,
-    "user": 5,
-    "favorite_ad": 4
-  }
+    "https://www.instagram.com/p/CkY36xPPVQH/",
+    "https://www.instagram.com/p/CjdGVmoKc58/",
+    "https://www.instagram.com/p/CkNHplUpK4o/",
+    "https://www.instagram.com/p/CjgiogBPJ2R/",
+    "https://www.instagram.com/p/CkOMcB2sc9I/",
+    "https://www.instagram.com/p/CkQllmUsBoz/",
+    "https://www.instagram.com/p/CjR4vcsMr1C/",
+    "https://www.instagram.com/p/CjsVFOJDVDX/",
+    "https://www.instagram.com/p/CkBYVIHqGC5/",
+    "https://www.instagram.com/p/CkU04TKor1w/"
 ]
 ```
 
-## GET ad/favorite/list/self/
+## GET /api/v1/business_posts_urls/
+Returns a list of Instagram post URLs from the given followed users list.
+### Arguments:
+  - **"followedUsers(required)":** a list Instagram users we want to get posts for
+  - **"sort(optional)":** whether we want to sort the post based on the number of ´likes´or ´comments´
+  - **"postAmount(required)":** the amount of posrt we want to view
+  
+  
+ ### Response:
+ ```json
+ [
+    "https://www.instagram.com/reel/Cj5kgOPs0lf/",
+    "https://www.instagram.com/reel/CjqEStMO1f5/",
+    "https://www.instagram.com/p/CkIzKagLyj3/",
+    "https://www.instagram.com/p/Cjv5NFML99y/",
+    "https://www.instagram.com/p/Cj0Tyr6Lh1u/",
+    "https://www.instagram.com/p/CkS6lrzoIpf/",
+    "https://www.instagram.com/p/CkRGShQIzA3/",
+    "https://www.instagram.com/p/CkWesS_IwB2/",
+    "https://www.instagram.com/p/CkY88X8o00s/",
+    "https://www.instagram.com/p/CkQ1-8yoE4o/"
+]
+```
 
-Returns a list of all favorited-ads-by-user combinations for the user sending the request .
+## GET /api/v1/business_user/
+Returns the user id for the given username input if it exists
 
-### Response
-
-The same as `ad/favorite/list`, but filtered on `user = requesting_user.id`.
-
-
-## GET ad/favorite/user/$id/
-
-Returns a list of all favorited-ads-by-user combinations for the given user .
-
-### Response
-
-The same as `ad/favorite/list`, but filtered on `user = user.id`.
-
-
-## GET ad/favorite/detail/$user_id-$ad_id/
-
-Returns favorited-ads-by-user combination the given user and ad .
-
-### Response
-
+### Arguments:
+  - **username(required):** the username of the user we want user id for
+### Response:
+**If user exists:**
 ```json
 {
-    "id": 2,
-    "user": 7,
-    "favorite_ad": 5
+    "business_discovery": {
+        "id": "17841401746480004"
+    },
+    "id": "17841430076357420"
 }
-``` -->
+```
+**If user does not exist:**
+```json
+{
+    "error": {
+        "code": 110,
+        "error_subcode": 2207013,
+        "error_user_msg": "Finner ikke brukeren med brukernavnet zuck2.",
+        "error_user_title": "Finner ikke brukeren",
+        "fbtrace_id": "ANBNR3TGl3LX21R8bjSzjYE",
+        "is_transient": false,
+        "message": "Invalid user id",
+        "type": "OAuthException"
+    }
+}
+```
+
+## GET /api/v1/hashtag_id/
+Returns the hastag id for the given hastag input if it exists
+
+### Arguments:
+  - **hashtag(required):** the hashtag we want hashtag id for
+### Response:
+**If hashtag exists:**
+```json
+17841539938112178
+```
+**If hashtag does not exist:**
+```json
+{
+    "error": {
+        "code": 24,
+        "error_subcode": 2207024,
+        "error_user_msg": "Emneknaggen \"strikke1\" som brukeren forespurte, kan ikke vises pga. manglende tillatelser, eller så er den ugyldig eller eksisterer ikke.",
+        "error_user_title": "Fant ingen samsvarende emneknagg",
+        "fbtrace_id": "AwKpPqgf3rrpSHqI1SnU4kV",
+        "is_transient": false,
+        "message": "The requested resource does not exist",
+        "type": "OAuthException"
+    }
+}
+```
+
+
