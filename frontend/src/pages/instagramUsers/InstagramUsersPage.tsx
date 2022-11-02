@@ -1,11 +1,11 @@
 import { Center, chakra, HStack, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select, VStack, Text } from "@chakra-ui/react";
-import { getListLocalStorage, getItemLocalStorage, setItemLocalStorage } from "api/localStorage";
+import { getListLocalStorage, getItemLocalStorage, setItemLocalStorage } from "services/localStorageService";
 import ToolTip from "components/ToolTip";
 import InstagramPosts from "components/InstagramPost";
 import { useEffect, useState } from "react";
-import API from "../../api/api";
+import API from "../../services/apiService";
 
-const InstagramWatchPage = () => {
+const InstagramUsersPage = () => {
 
 	const [postURLS, setPostURLS] = useState<string[]>();
 	const [sort, setSort] = useState(getItemLocalStorage("sort", "user"));
@@ -70,4 +70,4 @@ const InstagramWatchPage = () => {
 	);
 };
 
-export default InstagramWatchPage;
+export default InstagramUsersPage;

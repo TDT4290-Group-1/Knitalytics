@@ -1,15 +1,13 @@
-from helpers.FilterInstagramPosts import FilterInstagramPosts
-from helpers.APIAgent import APIAgent
-from api.DataCollectorInterface import DataCollector
-
+from utils.instagram_processer import InstagramProcesser
+from utils.instagram_api_agent import InstagramAPIAgent
 from typing import List
 
 
-class InstagramCollector(DataCollector):
+class InstagramDataCollector():
     def __init__(self, access_token, user_id) -> None:
         self.access_token = access_token
-        self.APIAgent = APIAgent(access_token, user_id)
-        self.hlp = FilterInstagramPosts()
+        self.APIAgent = InstagramAPIAgent(access_token, user_id)
+        self.hlp = InstagramProcesser()
         self.user_id = user_id
 
     # returns a list of 'amount' most popular hashtags co-appearing with 'query'

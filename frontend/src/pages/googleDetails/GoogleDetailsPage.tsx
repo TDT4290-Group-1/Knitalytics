@@ -11,7 +11,7 @@ import InstagramPosts from "components/InstagramPost";
 import RelatedWords from "components/RelatedWords";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
-import API from "../../api/api";
+import API from "../../services/apiService";
 import { TrendChart } from "components/TrendChart";
 import { SelectedWordContext } from "context/selectedWordContext";
 

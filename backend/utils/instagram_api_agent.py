@@ -3,7 +3,7 @@ import requests
 import json
 
 
-class APIAgent:
+class InstagramAPIAgent:
     def __init__(self, access_token, user_id) -> None:
         self.base_url = "https://graph.facebook.com/v15.0"
         self.access_token = access_token
@@ -48,7 +48,8 @@ class APIAgent:
         }
         endpoint = "/" + self.user_id
         try:
-            response = requests.get(url=self.base_url + endpoint, params=PARAMS)
+            response = requests.get(
+                url=self.base_url + endpoint, params=PARAMS)
             return json.loads(response.text)
         except KeyError:
             return json.loads(response.text)
@@ -62,7 +63,8 @@ class APIAgent:
         }
         endpoint = "/ig_hashtag_search"
         try:
-            response = requests.get(url=self.base_url + endpoint, params=PARAMS)
+            response = requests.get(
+                url=self.base_url + endpoint, params=PARAMS)
             return json.loads(response.text)["data"][0]["id"]
         except KeyError:
             return json.loads(response.text)

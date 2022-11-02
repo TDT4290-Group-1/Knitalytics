@@ -12,8 +12,8 @@ import {
 import { useContext, useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import theme from "../theme";
-import  API  from "api/api";
-import { GraphData } from "../../models/trendingword";
+import  API  from "services/apiService";
+import { GraphData } from "../models/trendingword";
 import {nb} from "date-fns/locale";
 import { SelectedWordContext } from "context/selectedWordContext";
 

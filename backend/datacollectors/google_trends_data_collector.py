@@ -1,9 +1,13 @@
 import pandas as pd
 import werkzeug.exceptions
-from api.DataCollectorInterface import DataCollector, COLUMN_NAMES
-
 from pytrends.request import TrendReq
 import pytrends.exceptions
+
+COLUMN_NAMES = {
+    "word": "word",
+    "frequency_growth": "frequency_growth",
+    "search_count": "search_count",
+}
 
 KNITTING_TOPIC = "/m/047fr"  # google specific encoding of "Knitting" topic
 COLUMN_MAPPER = {
@@ -20,7 +24,7 @@ VALID_TIMEFRAMES = {
 }
 
 
-class GoogleTrendsDataCollector(DataCollector):
+class GoogleTrendsDataCollector():
     def __init__(self, host_language="en-US", tz=120) -> None:
         self.pytrends_client = TrendReq(host_language, tz)
 
@@ -56,7 +60,8 @@ class GoogleTrendsDataCollector(DataCollector):
         Returns:
             pandas.DataFrame
         """
-        self._set_parameters(search_term=search_term, timeframe=timeframe, geo=geo)
+        self._set_parameters(search_term=search_term,
+                             timeframe=timeframe, geo=geo)
         kw_list = [self.search_term]
         self.pytrends_client.build_payload(
             kw_list, geo=self.geo, timeframe=self.timeframe

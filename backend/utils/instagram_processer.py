@@ -4,7 +4,7 @@ from operator import itemgetter
 import re
 
 
-class FilterInstagramPosts:
+class InstagramProcesser:
     def parse_hashtag_from_posts(
         self, posts: List[str], filteredOutWords: str
     ) -> List[str]:

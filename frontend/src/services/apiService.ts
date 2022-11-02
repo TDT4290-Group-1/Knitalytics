@@ -1,7 +1,7 @@
 
-import {GraphData, TrendingWord} from "../../models/trendingword";
+import {GraphData, TrendingWord} from "../models/trendingword";
 import axios from "axios";
-import { getListLocalStorage } from "api/localStorage";
+import { getListLocalStorage } from "services/localStorageService";
 
 const client = axios.create({ baseURL: "http://127.0.0.1:5000/" });
 /**
