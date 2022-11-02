@@ -1,7 +1,7 @@
 import { Center, Table, TableContainer, Thead, Tr, Th, Td, Tbody, Button, Checkbox, Flex, Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import theme from "../theme";
-import { TrendingWord } from "../../models/trendingword";
+import { TrendingWord } from "../models/trendingword";
 import { ArrowDownIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { SelectedWordContext } from "context/selectedWordContext";

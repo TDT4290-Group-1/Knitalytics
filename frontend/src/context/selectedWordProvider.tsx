@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import { TrendingWord } from "../../models/trendingword";
+import { TrendingWord } from "../models/trendingword";
 import { SelectedWordContext } from "./selectedWordContext";
 
 interface wordProp {

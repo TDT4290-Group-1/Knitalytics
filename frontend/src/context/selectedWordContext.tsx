@@ -1,5 +1,5 @@
 import { createContext, Dispatch, SetStateAction } from "react";
-import { TrendingWord } from "../../models/trendingword";
+import { TrendingWord } from "../models/trendingword";
 
 
 

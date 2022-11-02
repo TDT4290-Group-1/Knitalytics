@@ -1,7 +1,7 @@
 import { Center, chakra, VStack } from "@chakra-ui/react";
 import ContentBox from "components/ContentBox";
-import  API  from "api/api";
-import {TrendingWord} from "../../../models/trendingword";
+import  API  from "services/apiService";
+import {TrendingWord} from "../../models/trendingword";
 import { useState } from "react";
 
 

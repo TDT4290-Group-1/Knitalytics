@@ -1,5 +1,5 @@
 import { Text, Center, VStack, Input, HStack, Box, IconButton } from "@chakra-ui/react";
-import { getListLocalStorage, setItemLocalStorage } from "api/localStorage";
+import { getListLocalStorage, setItemLocalStorage } from "services/localStorageService";
 import HashtagBox from "./HashtagBox";
 
 import {
@@ -20,7 +20,7 @@ const SettingsBox = ({title, storagePath, validateInput, tooltip} : SettingsBoxP
 	const [input, setInput] = useState("");
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => setInput(event.target.value);
 	const [listFromStorage, setListFromStorage] = useState(
-		getListLocalStorage(storagePath)
+		getListLocalStorage(storagePath, "knit, strik, insta")
 			.split(",")
 			.filter(element => element));
 

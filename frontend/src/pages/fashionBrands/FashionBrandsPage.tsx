@@ -1,5 +1,5 @@
-import AddLink, {Link} from "components/Links/AddLink";
-import LinkList from "components/Links/LinkList";
+import AddLink, {Link} from "components/links/AddLink";
+import LinkList from "components/links/LinkList";
 import { Heading, VStack, Text } from "@chakra-ui/react";
 import {useState, useEffect} from "react";
 

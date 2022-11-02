@@ -1,7 +1,7 @@
 import {
 	chakra, HStack, Icon, VStack,
 } from "@chakra-ui/react";
-import { TrendingWord } from "../../models/trendingword";
+import { TrendingWord } from "../models/trendingword";
 import { BiTrendingUp, BiAbacus } from "react-icons/bi";
 
 interface Props {

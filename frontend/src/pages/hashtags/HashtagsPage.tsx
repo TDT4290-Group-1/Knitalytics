@@ -1,8 +1,8 @@
 import { Box, Grid, GridItem, VStack, Center, chakra, Text } from "@chakra-ui/react";
 import InstagramPosts from "components/InstagramPost";
-import { getListLocalStorage} from "api/localStorage";
+import { getListLocalStorage} from "services/localStorageService";
 import { useState, useEffect } from "react";
-import API from "../../api/api";
+import API from "../../services/apiService";
 
 interface HashtagData {
 	hashtag: string,
