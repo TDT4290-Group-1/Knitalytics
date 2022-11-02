@@ -31,17 +31,102 @@ Returns a list of all trending words related to the word "Knitting" or the given
     }
 ]
 ```
-#TODO
+
 ## GET /api/v1/interest_over_time/
 Returns a list of relative seach interest for the work "Knitting" ot the given seach term from Google Trends for the past year
 ### Argument:
   - **"search_term(optional)":** The word to get trending data for.
 
+### Response:
+ ```json
+[
+    {
+        "date": 1636243200000,
+        "relative_search_value": 86
+    },
+    {
+        "date": 1641686400000,
+        "relative_search_value": 95
+    },
+    {
+        "date": 1642291200000,
+        "relative_search_value": 87
+    },
+    {
+        "date": 1644710400000,
+        "relative_search_value": 83
+    },
+   
+    {
+        "date": 1648944000000,
+        "relative_search_value": 69
+    },
+    {
+        "date": 1650758400000,
+        "relative_search_value": 52
+    },
+    {
+        "date": 1651363200000,
+        "relative_search_value": 51
+    },
+    {
+        "date": 1651968000000,
+        "relative_search_value": 48
+    },
+    {
+        "date": 1652572800000,
+        "relative_search_value": 50
+    },
+    {
+        "date": 1653177600000,
+        "relative_search_value": 53
+    },
+    {
+        "date": 1656806400000,
+        "relative_search_value": 56
+    },
+    {
+        "date": 1658620800000,
+        "relative_search_value": 61
+    },
+    {
+        "date": 1659225600000,
+        "relative_search_value": 63
+    },
+    {
+        "date": 1662249600000,
+        "relative_search_value": 71
+    },
+    {
+        "date": 1662854400000,
+        "relative_search_value": 75
+    },
+    {
+        "date": 1663459200000,
+        "relative_search_value": 85
+    },
+    {
+        "date": 1664064000000,
+        "relative_search_value": 90
+    },
+    {
+        "date": 1665878400000,
+        "relative_search_value": 82
+    },
+    {
+        "date": 1666483200000,
+        "relative_search_value": 85
+    }
+] 
+  ```
+
+
+
 ## GET /api/v1/related_hashtags/
-Return a list with related hastags for the given query hashtag
+Returns a list with related hastags for the given query hashtag
 ### Arguments:
   - **"query(required)":** the word we want to get related hashtags for.
-  - **"filtererdOutWords(optional)":** the hastags we want to filter out, if the contains these words.
+  - **"filtererdOutWords(optional)":** the hastags we want to filter out, if them contains these words.
   
  ### Response
  
@@ -62,7 +147,7 @@ Return a list with related hastags for the given query hashtag
 
 
 ## GET /api/v1/related_post_URLS/
-Return a list of related Instrgram post URLs for the given query
+Returns a list of related Instrgram post URLs for the given query
 ### Arguments:
   - **"query(required)":** the word we want to get related post urls for.
   - **"amount(optional":** the amount of related post urls we want
@@ -83,12 +168,8 @@ Return a list of related Instrgram post URLs for the given query
 ]
 ```
 
-## GET /api/v1/business_hashtags/
-### TODO:
-
-
 ## GET /api/v1/business_posts_urls/
-Return a list of Instagram post URLs from the given followed users list.
+Returns a list of Instagram post URLs from the given followed users list.
 ### Arguments:
   - **"followedUsers(required)":** a list Instagram users we want to get posts for
   - **"sort(optional)":** whether we want to sort the post based on the number of ´likes´or ´comments´
