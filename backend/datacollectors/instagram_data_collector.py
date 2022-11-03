@@ -3,7 +3,7 @@ from utils.instagram_api_agent import InstagramAPIAgent
 from typing import List
 
 
-class InstagramDataCollector():
+class InstagramDataCollector:
     def __init__(self, access_token, user_id) -> None:
         self.access_token = access_token
         self.APIAgent = InstagramAPIAgent(access_token, user_id)
@@ -18,8 +18,7 @@ class InstagramDataCollector():
         self.query = query
         id = self.APIAgent.get_hashtag_id(query)
         if type(id) is str:
-            posts = self.APIAgent.get_posts_from_hashtag(
-                id, "like_count, caption")
+            posts = self.APIAgent.get_posts_from_hashtag(id, "like_count, caption")
             if type(posts) is not str:
                 return self.hlp.parse_hashtag_from_posts(posts, filteredOutWords)[
                     :amount
@@ -36,11 +35,10 @@ class InstagramDataCollector():
         self.query = query
         id = self.APIAgent.get_hashtag_id(query)
         if type(id) is str:
-            posts = self.APIAgent.get_posts_from_hashtag(
-                id, "like_count, permalink")
+            posts = self.APIAgent.get_posts_from_hashtag(id, "like_count, permalink")
             if type(posts) is not str:
-                post_url = self.hlp.get_post_url(posts)
-                return post_url[:amount]
+                post_urls = self.hlp.get_post_urls(posts)
+                return post_urls[:amount]
             # this will be an error message
             return posts
         # this will be an error message
@@ -50,8 +48,7 @@ class InstagramDataCollector():
         all_posts = []
         post_urls = []
         for ig_user in ig_users:
-            posts = self.APIAgent.get_posts_from_ig_user(ig_user)[
-                : int(post_amount)]
+            posts = self.APIAgent.get_posts_from_ig_user(ig_user)[: int(post_amount)]
             # if posts is str means it's an error message
             if type(posts) is not str:
                 all_posts += posts

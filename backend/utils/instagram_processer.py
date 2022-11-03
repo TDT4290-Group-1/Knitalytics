@@ -3,55 +3,42 @@ import unicodedata as ud
 from operator import itemgetter
 import re
 
+#
+
 
 class InstagramProcesser:
-    def parse_hashtag_from_posts(
-        self, posts: List[str], filteredOutWords: str
-    ) -> List[str]:
-        captions = self.get_captions(posts)
-        return self.parse_hashtag_from_captions(captions, filteredOutWords)
+    """Helper class with methods used by InstagramDataCollector to parse, filter and sort Instagram posts."""
 
-    def parse_hashtag_from_captions(self, captions, filteredOutWords: str) -> List[str]:
-        hashtags = self.parse_hashtags_from_captions(captions)
-        hashtags = self.__remove_spamhashtags__(hashtags, filteredOutWords)
-        hashtags = self.__remove_foreign_languages__(hashtags)
-        hashtags = self.__sort_popular_hashtags__(hashtags)
+    def parse_hashtag_from_posts(self, posts: List, filteredOutWords: str) -> List[str]:
+        """
+        posts: list of Instagram posts
+        filteredOutWords: string in format "xx, yy, zz"
+        returns: a list of hashtags from the posts the method received
+        """
 
+        captions = self._get_captions(posts)
+        hashtags = self._parse_filter_captions(captions, filteredOutWords)
         return hashtags
+        # returns url to all 'posts'
 
-    # parse all captions from 'posts'
-
-    def parse_hashtags_from_captions(self, captions: List[str]) -> List[str]:
-        hashtags = []
-        for caption in captions:
-            hashtag_list = re.findall(r"#(\w+)", caption)
-            hashtags += hashtag_list
-        return hashtags
-
-    # remove posts that has less than threshold amount of likes, default 200
-
-    def remove_unpopular_posts(self, posts: List[str], threshold=200) -> List[str]:
-        popular_posts: List[str] = []
+    def get_post_urls(self, posts: List) -> List[str]:
+        """
+        posts: a list of Instagram posts
+        returns: a list of all the urls in 'posts'
+        """
+        post_urls = []
         for post in posts:
-            # try to pass all posts that does not contain a like_count
-            try:
-                if post["like_count"] > threshold:
-                    popular_posts.append(post)
-            except Exception:
-                pass
-        return popular_posts
-
-    # returns url to all 'posts'
-
-    def get_post_url(self, posts: List[str]) -> List[str]:
-        post_url = []
-        for post in posts:
-            post_url.append(post["permalink"])
-        return post_url
+            post_urls.append(post["permalink"])
+        return post_urls
 
     # sort the list "posts" after the amount of likes, in descending order
 
-    def sort_posts(self, posts: List[str], sort: str) -> List[str]:
+    def sort_posts(self, posts: List, sort: str) -> List:
+        """
+        posts: a list of Instagram posts
+        sort: a string which indicates the type of sorting to be done
+        returns: a list of all posts sorted
+        """
         if sort == "likes":
             # in case some of the posts do not have a like count
             try:
@@ -62,11 +49,44 @@ class InstagramProcesser:
             return sorted(posts, key=itemgetter("comments_count"), reverse=True)
         return posts
 
+    def _parse_filter_captions(
+        self, captions: List[str], filteredOutWords: str
+    ) -> List[str]:
+        """
+        captions: a list of captions from multiple posts
+        filteredOutWords: string in format "xx, yy, zz"
+        returns: a list of filtered and sorted hashtags
+        """
+        hashtags = self._parse_hashtags_from_captions(captions)
+        hashtags = self._remove_spamhashtags(hashtags, filteredOutWords)
+        hashtags = self._remove_foreign_languages(hashtags)
+        hashtags = self._sort_popular_hashtags(hashtags)
+
+        return hashtags
+
+    # parse all captions from 'posts'
+
+    def _parse_hashtags_from_captions(self, captions: List[str]) -> List[str]:
+        """
+        captions: a list of captions from multiple posts
+        returns: a list of hashtags
+        """
+        hashtags = []
+        for caption in captions:
+            hashtag_list = re.findall(r"#(\w+)", caption)
+            hashtags += hashtag_list
+        return hashtags
+
     # removes hashtags that contains certain words
 
-    def __remove_spamhashtags__(
+    def _remove_spamhashtags(
         self, hashtags: List[str], filteredOutWords: str
     ) -> List[str]:
+        """
+        hashtags: a list of hashtags
+        filteredOutWords: string in format "xx, yy, zz"
+        returns: a list of hashtags with no spam hashtags
+        """
         filteredOutWords = filteredOutWords.replace(",", "|")
         filteredOutWords = filteredOutWords.replace(" ", "")
         relevant_hashtags = []
@@ -78,7 +98,11 @@ class InstagramProcesser:
 
     # removes all hashtags with non-latin/germanic letters
 
-    def __remove_foreign_languages__(self, hashtags: List[str]) -> List[str]:
+    def _remove_foreign_languages(self, hashtags: List[str]) -> List[str]:
+        """
+        hashtags: a list of hashtags
+        returns: a list of hashtags with only roman languages
+        """
         roman_hashtags = []
         for hashtag in hashtags:
             if only_roman_chars(hashtag):
@@ -87,7 +111,11 @@ class InstagramProcesser:
 
     # sorts the hashtags after popularity, most popular first
 
-    def __sort_popular_hashtags__(self, hashtags: List[str]) -> List[str]:
+    def _sort_popular_hashtags(self, hashtags: List[str]) -> List[str]:
+        """
+        hashtags: a list of hashtags
+        returns: a list of hashtags sorted after frequency of usage
+        """
         popular_hashtags_count = {}
         popular_hashtags = []
         for hashtag in hashtags:
@@ -96,14 +124,18 @@ class InstagramProcesser:
                 popular_hashtags_count[hashtag] = 1
             else:
                 popular_hashtags_count[hashtag] += 1
-        popular_hashtags_count = sorted(
+        sorted_hashtags = sorted(
             popular_hashtags_count, key=popular_hashtags_count.get, reverse=True
         )
-        return popular_hashtags_count
+        return sorted_hashtags
 
     # returns all captions from 'posts'
 
-    def get_captions(self, posts: List[str]) -> List[str]:
+    def _get_captions(self, posts: List) -> List[str]:
+        """
+        posts: a list of Instagram posts
+        retunrs: a list of all captions in 'posts'
+        """
         captions: List[str] = []
         for post in posts:
             captions.append(post["caption"])
