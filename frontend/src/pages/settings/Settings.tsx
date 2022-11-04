@@ -1,5 +1,5 @@
 import { Center, SimpleGrid, GridItem, chakra } from "@chakra-ui/react";
-import SettingsBox from "../../components/Settings/SettingsBox";
+import SettingsBox from "components/settings/SettingsBox";
 import theme from "theme";
 import API from "../../services/apiService";
 
