@@ -24,7 +24,7 @@ VALID_TIMEFRAMES = {
 }
 
 
-class GoogleTrendsDataCollector():
+class GoogleTrendsDataCollector:
     def __init__(self, host_language="en-US", tz=120) -> None:
         self.pytrends_client = TrendReq(host_language, tz)
 
@@ -60,8 +60,7 @@ class GoogleTrendsDataCollector():
         Returns:
             pandas.DataFrame
         """
-        self._set_parameters(search_term=search_term,
-                             timeframe=timeframe, geo=geo)
+        self._set_parameters(search_term=search_term, timeframe=timeframe, geo=geo)
         kw_list = [self.search_term]
         self.pytrends_client.build_payload(
             kw_list, geo=self.geo, timeframe=self.timeframe
