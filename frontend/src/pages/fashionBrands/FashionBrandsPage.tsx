@@ -5,13 +5,7 @@ import {useState, useEffect} from "react";
 
 const FashionBrandsPage = () => {
 
-	let stored_links = "[]";
-
-	if(localStorage.getItem("links") !== "undefined"){
-		stored_links = localStorage.getItem("links") as string;
-	}
-
-	const [links, setLinks] = useState(() => JSON.parse(stored_links));
+	const [links, setLinks] = useState(() => JSON.parse(localStorage.getItem("links") as string) || []);
 
 	useEffect(() => {
 		localStorage.setItem("links", JSON.stringify(links));
