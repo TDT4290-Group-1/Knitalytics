@@ -41,8 +41,16 @@ def create_app():
         """
         return description, 429
 
+    def authenticate_request(request):
+        print(os.getenv("USER_AUTH"))
+        print(request.args.get("user_auth"))
+        if os.getenv("USER_AUTH") != request.args.get("user_auth"):
+            abort(401, "User not logged in")
+
     @app.route("/api/v1/trends", methods=["GET"])
     def getTrendingWords():
+        authenticate_request(request)
+
         # 'frequency_growth' or 'search_count'. Used to show the most searched words or the fastest growing words.
         search_term = request.args.get(
             "search_term", ""
@@ -74,6 +82,8 @@ def create_app():
 
     @app.route("/api/v1/interest_over_time/", methods=["GET"])
     def getInterestOverTime():
+        authenticate_request(request)
+
         search_term = request.args.get(
             "search_term", ""
         )  # search term to search for. If empty, the default search term is used.
@@ -85,6 +95,8 @@ def create_app():
 
     @app.route("/api/v1/related_hashtags")
     def getRelatedHashtags():
+        authenticate_request(request)
+
         instaCollector = InstagramDataCollector(
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
         )
@@ -100,6 +112,8 @@ def create_app():
     # Takes a hashtags and an amount: {query: str, amount: int}
     @app.route("/api/v1/related_post_URLS")
     def getRelatedPostURLS():
+        authenticate_request(request)
+
         instaCollector = InstagramDataCollector(
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
         )
@@ -115,6 +129,8 @@ def create_app():
 
     @app.route("/api/v1/business_posts_urls")
     def getBusinessPostURLS():
+        authenticate_request(request)
+
         try:
             instaCollector = InstagramDataCollector(
                 os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
@@ -133,6 +149,8 @@ def create_app():
 
     @app.route("/api/v1/business_user")
     def getBusinessUser():
+        authenticate_request(request)
+
         instaCollector = InstagramDataCollector(
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
         )
@@ -145,6 +163,8 @@ def create_app():
 
     @app.route("/api/v1/hashtag_id")
     def getHashtagId():
+        authenticate_request(request)
+
         instaCollector = InstagramDataCollector(
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
         )
