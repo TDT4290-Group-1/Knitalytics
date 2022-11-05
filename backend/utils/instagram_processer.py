@@ -3,8 +3,6 @@ import unicodedata as ud
 from operator import itemgetter
 import re
 
-#
-
 
 class InstagramProcesser:
     """Helper class with methods used by InstagramDataCollector to parse, filter and sort Instagram posts."""
@@ -12,14 +10,12 @@ class InstagramProcesser:
     def parse_hashtag_from_posts(self, posts: List, filteredOutWords: str) -> List[str]:
         """
         posts: list of Instagram posts
-        filteredOutWords: string in format "xx, yy, zz"
+        filteredOutWords: string in format "word1, word2, word3"
         returns: a list of hashtags from the posts the method received
         """
-
         captions = self._get_captions(posts)
         hashtags = self._parse_filter_captions(captions, filteredOutWords)
         return hashtags
-        # returns url to all 'posts'
 
     def get_post_urls(self, posts: List) -> List[str]:
         """
@@ -31,13 +27,11 @@ class InstagramProcesser:
             post_urls.append(post["permalink"])
         return post_urls
 
-    # sort the list "posts" after the amount of likes, in descending order
-
     def sort_posts(self, posts: List, sort: str) -> List:
         """
         posts: a list of Instagram posts
         sort: a string which indicates the type of sorting to be done
-        returns: a list of all posts sorted
+        returns: a list of sorted posts
         """
         if sort == "likes":
             # in case some of the posts do not have a like count
@@ -64,8 +58,6 @@ class InstagramProcesser:
 
         return hashtags
 
-    # parse all captions from 'posts'
-
     def _parse_hashtags_from_captions(self, captions: List[str]) -> List[str]:
         """
         captions: a list of captions from multiple posts
@@ -76,8 +68,6 @@ class InstagramProcesser:
             hashtag_list = re.findall(r"#(\w+)", caption)
             hashtags += hashtag_list
         return hashtags
-
-    # removes hashtags that contains certain words
 
     def _remove_spamhashtags(
         self, hashtags: List[str], filteredOutWords: str
@@ -96,8 +86,6 @@ class InstagramProcesser:
                 relevant_hashtags.append(hashtag)
         return relevant_hashtags
 
-    # removes all hashtags with non-latin/germanic letters
-
     def _remove_foreign_languages(self, hashtags: List[str]) -> List[str]:
         """
         hashtags: a list of hashtags
@@ -108,8 +96,6 @@ class InstagramProcesser:
             if only_roman_chars(hashtag):
                 roman_hashtags.append(hashtag)
         return roman_hashtags
-
-    # sorts the hashtags after popularity, most popular first
 
     def _sort_popular_hashtags(self, hashtags: List[str]) -> List[str]:
         """
@@ -128,8 +114,6 @@ class InstagramProcesser:
             popular_hashtags_count, key=popular_hashtags_count.get, reverse=True
         )
         return sorted_hashtags
-
-    # returns all captions from 'posts'
 
     def _get_captions(self, posts: List) -> List[str]:
         """

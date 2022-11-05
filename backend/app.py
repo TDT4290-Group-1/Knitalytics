@@ -16,30 +16,9 @@ load_dotenv()
 
 def create_app():
 
-    # bør definere api linker slikt
-    # @app.route("/api/v1/trends/<string:keyword>")
-    # def get_trends(keyword: str):
-    #     data_collector: DataCollector = GoogleTrendsDataCollector()
-    #     data: List = data_collector.get_data(keyword)
-    #     return json.dumps(data)
-
     app = Flask(__name__)
     CORS(app)
     app.config["CORS_HEADERS"] = "Content-Type"
-
-    def add_dataframe_from_collector(
-        trending_words_dataframes: List[DataFrame],
-        dataframe_to_add: pd.DataFrame,
-    ):
-        trending_words_dataframes.append(dataframe_to_add)
-
-    @app.errorhandler(werkzeug.exceptions.TooManyRequests)
-    def handle_too_many_requests(error):
-        description = """
-            Could not fetch Trends data due to too many requests to Google.
-            Wait some time, then try refreshing the page.
-        """
-        return description, 429
 
     @app.route("/api/v1/trends", methods=["GET"])
     def getTrendingWords():
@@ -74,6 +53,7 @@ def create_app():
 
     @app.route("/api/v1/interest_over_time/", methods=["GET"])
     def getInterestOverTime():
+        """Returns the interest values and corresponding dates of 'search_term"""
         search_term = request.args.get(
             "search_term", ""
         )  # search term to search for. If empty, the default search term is used.
@@ -85,6 +65,7 @@ def create_app():
 
     @app.route("/api/v1/related_hashtags")
     def getRelatedHashtags():
+        """Returns a list of most popular hashtags co-appearing with the query"""
         instaCollector = InstagramDataCollector(
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
         )
@@ -97,9 +78,9 @@ def create_app():
         filteredOutWords = args.get("filteredOutWords", default="[+]", type=str)
         return instaCollector.get_related_hashtags(query, filteredOutWords)
 
-    # Takes a hashtags and an amount: {query: str, amount: int}
     @app.route("/api/v1/related_post_URLS")
     def getRelatedPostURLS():
+        """Returns a list of URLS (string) to posts with the hashtag: 'query'"""
         instaCollector = InstagramDataCollector(
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
         )
@@ -113,8 +94,9 @@ def create_app():
 
         return instaCollector.get_related_post_urls(query, amount)
 
-    @app.route("/api/v1/business_posts_urls")
-    def getBusinessPostURLS():
+    @app.route("/api/v1/users_post_urls")
+    def getUsersPostURLS():
+        """Returns a list of URLS (string) to posts from 'followedUsers'"""
         try:
             instaCollector = InstagramDataCollector(
                 os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
@@ -124,15 +106,16 @@ def create_app():
             if "followedUsers" not in args:
                 abort(422, "Missing query parameter followedUsers")
             sort = args.get("sort", default="user", type=str)
-            postAmount = args.get("postAmount", default=10, type=str)
+            postAmount = args.get("postAmount", default=7, type=str)
             followedUsers = args.get("followedUsers", type=str)
             users = json.loads(followedUsers)
-            return instaCollector.get_business_post_urls(users, sort, postAmount)
+            return instaCollector.get_users_post_urls(users, sort, postAmount)
         except ValueError as e:
             return str(e)
 
     @app.route("/api/v1/business_user")
     def getBusinessUser():
+        """Method is used to check if 'ig_user' exists. Returns an error object if it does not"""
         instaCollector = InstagramDataCollector(
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
         )
@@ -145,6 +128,7 @@ def create_app():
 
     @app.route("/api/v1/hashtag_id")
     def getHashtagId():
+        """Returns the id of the 'hashtag', if hashtag does not exist it returns an error object"""
         instaCollector = InstagramDataCollector(
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
         )
@@ -154,6 +138,12 @@ def create_app():
             abort(422, "Missing query parameter hashtag")
         hashtag = json.loads(args.get("hashtag", type=str))
         return instaCollector.get_hashtag_id(hashtag)
+
+    def add_dataframe_from_collector(
+        trending_words_dataframes: List[DataFrame],
+        dataframe_to_add: pd.DataFrame,
+    ):
+        trending_words_dataframes.append(dataframe_to_add)
 
     return app
 
