@@ -11,20 +11,25 @@ interface HashtagData {
 
 const HashtagsPage = () => {
 
+	// stores all followed hashtags
 	const [hashtags] = useState<string[]>(
 		getListLocalStorage("followedHashtags")
 			.split(",")
 			.filter(element => element));
+
+	// stores all followed hashtags and their related post urls
 	const [hashtagsData, setHashtagsData] = useState<HashtagData[]>([]);
 
+	// fetches all posts related to the followed hashtags.
 	useEffect(() => {
 		const fetchPosts = async () => {
 			const tempHashtagsData: HashtagData[] = [];
 
+			// loops through all followed hashtags
 			for (const hashtag of hashtags) {
 				try {
 					//Await waits for api call to resolve promise before using variable
-					const posts = await API.getAllRelatedPostURLS(hashtag);
+					const posts = await API.getRelatedPostURLS(hashtag);
 					const hashtagData: HashtagData = {
 						hashtag: hashtag,
 						hashtagUrls: posts

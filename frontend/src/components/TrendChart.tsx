@@ -33,7 +33,7 @@ export const TrendChart = () => {
 	const {trendingWord} = useContext(SelectedWordContext);
 
 	useEffect(() => {
-		trendingWord && API.getInteresOvertimeForSearchTerm(trendingWord.word).then((stats) => {
+		trendingWord && API.getInterestOvertimeForSearchTerm(trendingWord.word).then((stats) => {
 			setGraphData(stats);
 		}).catch(error => {
 			console.error("Failed to fetch graph data: %o", error);

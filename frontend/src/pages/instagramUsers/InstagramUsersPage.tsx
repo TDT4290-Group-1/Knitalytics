@@ -7,22 +7,30 @@ import API from "../../services/apiService";
 
 const InstagramUsersPage = () => {
 
+	// urls to posts to dispaly
 	const [postURLS, setPostURLS] = useState<string[]>();
-	const [sort, setSort] = useState(getItemLocalStorage("sort", "user"));
-	const [postAmount, setPostAmount] = useState(getItemLocalStorage("postAmount", "5"));
 
+	// the type of sorting to be done of the posts when displayed. Default: user
+	const [sort, setSort] = useState(getItemLocalStorage("sort", "user"));
+
+	// amount of posts to be retrieved by each followed user
+	const [postAmount, setPostAmount] = useState(getItemLocalStorage("postAmount", "7"));
+
+	// retrieves all post urls. Is called upon when user changes sorting or post amount
 	useEffect(() => {
 		const userString: string = getListLocalStorage("followedUsers").replace(" ", "");
 		const userList = userString ? userString.split(",") : [];
 		handleAPICall(userList);
-		setItemLocalStorage(postAmount, "postAmount");
-		setItemLocalStorage(sort, "sort");
+		setItemLocalStorage("postAmount", postAmount);
+		setItemLocalStorage("sort", sort);
 	},[sort, postAmount]);
 
 	const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => setSort(event.target.value);
 	const handlePostAmountChange = (postAmount: string) => setPostAmount(postAmount);
+
+	// handles the api call
 	const handleAPICall = (userList: string[]) => {
-		API.getBusinessPostURLS(userList, sort, postAmount).then((postURLS) => {
+		API.getUsersPostURLS(userList, sort, postAmount).then((postURLS) => {
 			setPostURLS(postURLS);
 		}).catch(error => {
 			console.error("Failed to fetch post urls: %o", error);

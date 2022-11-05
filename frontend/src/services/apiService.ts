@@ -18,7 +18,7 @@ class API {
 	 * - [last_day | last_week | last_month | last_three_months | last_year]
 	 * @returns a JSON list of trening words with the gived metric value
 	 */
-	async getAllTrendingWords(search_term: string, filter: boolean, timeframe: string): Promise<TrendingWord[]> {
+	async getTrendingWords(search_term: string, filter: boolean, timeframe: string): Promise<TrendingWord[]> {
 		let url = "/api/v1/trends";
 		const params = {"search_term": search_term, "filter": filter, "timeframe": timeframe}; // build dictionary so we can loop
 		
@@ -42,38 +42,61 @@ class API {
 	 * @param searchTerm The given search term to get interest over time for.
      * @returns a JSON list of with date and relative interest value.
      */
-	async getInteresOvertimeForSearchTerm(searchTerm:string):Promise<GraphData[]> {
+	async getInterestOvertimeForSearchTerm(searchTerm:string):Promise<GraphData[]> {
 		const response = await client.get(`/api/v1/interest_over_time/?search_term=${searchTerm}`);
 		return response.data;
 	}
 
-	async getAllRelatedHashtags(query: string): Promise<string[]> {
+	/**
+	 * @param query The main hashtag to get related hashtags from
+	 * @returns a JSON list of most popular hashtags co-appearing with query
+	 */
+	async getRelatedHashtags(query: string): Promise<string[]> {
+		//filteredOutWords format: "word, word1, word2"
 		const filteredOutWords = getListLocalStorage("filteredOutWords");
-		//filteredOutWords format: "word, word1, word2". String with comma between each word
 		const response = await client.get("/api/v1/related_hashtags", { params: { query, filteredOutWords } });
 		return response.data;
 	}
 
-	async getAllRelatedPostURLS(query: string):Promise<string[]> {
+	/**
+	 * @param query The hashtag to find related posts to
+	 * @returns a JSON list with the URLS to the most popular posts with the hashtag 'query'
+	 */
+	async getRelatedPostURLS(query: string):Promise<string[]> {
 		const response = await client.get("/api/v1/related_post_URLS", { params: {  query } });
 		return response.data;
 	}
 
-	async getBusinessPostURLS(followedUsers: string[], sort: string, postAmount: string):Promise<string[]> {
-		const response = await client.get("/api/v1/business_posts_urls", { params: { followedUsers: JSON.stringify(followedUsers), sort, postAmount } });
+	/**
+	 * @param followedUsers a list of all Instagram usernames to find posts from
+	 * @param sort a string which says what to sort the post on. Options: user, likes, comments
+	 * @param postAmount a number (format of a string) whcih says how many posts per user should be returned
+	 * @returns a JSON list with the URLS of the posts of the 'followedUsers'
+	 */
+	async getUsersPostURLS(followedUsers: string[], sort: string, postAmount: string):Promise<string[]> {
+		const response = await client.get("/api/v1/users_post_urls", { params: { followedUsers: JSON.stringify(followedUsers), sort, postAmount } });
 		return response.data;
 	}
+
+	/**
+	 * @param username a string with the username of the Instagram business user
+	 * @returns a JSON object with the user id of the Instagram business user. Error message if user does not exist.
+	 */
 	async getBusinessUser(username: string):Promise<{id?: string, error?: {error_user_msg: string}}> {
 		const response = await client.get("/api/v1/business_user", { params: { username: JSON.stringify(username) } });
 		return response.data;
 	}
+
+	/**
+	 * @param hashtag a string with hashtag
+	 * @returns a JSON object with the hashtag id of the hashtag. Error message if hashtag does not exist.
+	 */
 	async getHashtagId(hashtag: string):Promise<{error?: {error_user_msg: string}}> {
 		const response = await client.get("/api/v1/hashtag_id", { params: { hashtag: JSON.stringify(hashtag) } });
 		return response.data;
 	}
 	
 }
-
 
 export default new API();
 

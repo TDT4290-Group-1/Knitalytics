@@ -1,7 +1,6 @@
 from flask import abort
 from typing import List
 from flask import Flask, request
-import werkzeug.exceptions
 from datacollectors.google_trends_data_collector import GoogleTrendsDataCollector
 from datacollectors.instagram_data_collector import InstagramDataCollector
 from flask_cors import CORS
@@ -30,7 +29,8 @@ def create_app():
         # the 'type' argument is a function that compares the GET argument value with the literal string "true"
         # and sets the value of 'filter' variable correspondingly.
         # This allows all specifications of "true" and "false" to be evaluated correctly, e.g. "TRUE" is also accepted as a value
-        filter = request.args.get("filter", False, type=lambda a: a.lower() == "true")
+        filter = request.args.get(
+            "filter", False, type=lambda a: a.lower() == "true")
 
         # retrive timeframe arg
         timeframe = request.args.get("timeframe", "")
@@ -47,7 +47,8 @@ def create_app():
             google_response,
         )
 
-        main_data_frame = pd.concat(trending_words_dataframes).reset_index(drop=True)
+        main_data_frame = pd.concat(
+            trending_words_dataframes).reset_index(drop=True)
 
         return main_data_frame.to_json(orient="records", force_ascii=False)
 
@@ -75,7 +76,8 @@ def create_app():
             # Returns http error to frontend
             abort(422, "Missing query parameter query")
         query = args.get("query", default="", type=str)
-        filteredOutWords = args.get("filteredOutWords", default="[+]", type=str)
+        filteredOutWords = args.get(
+            "filteredOutWords", default="[+]", type=str)
         return instaCollector.get_related_hashtags(query, filteredOutWords)
 
     @app.route("/api/v1/related_post_URLS")
