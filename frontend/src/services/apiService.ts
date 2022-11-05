@@ -3,7 +3,7 @@ import {GraphData, TrendingWord} from "../models/trendingword";
 import axios from "axios";
 import { getListLocalStorage } from "services/localStorageService";
 
-const client = axios.create({ baseURL: "http://127.0.0.1:5000/" });
+const client = axios.create({ baseURL: "https://knitalytics-backend.herokuapp.com/" });
 /**
  * API abstraction of endpoints that interact with the backend
  */
