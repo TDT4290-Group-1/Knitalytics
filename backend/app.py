@@ -1,6 +1,7 @@
 from flask import abort
 from typing import List
 from flask import Flask, request
+import werkzeug.exceptions
 from datacollectors.google_trends_data_collector import GoogleTrendsDataCollector
 from datacollectors.instagram_data_collector import InstagramDataCollector
 from flask_cors import CORS
@@ -19,8 +20,28 @@ def create_app():
     CORS(app)
     app.config["CORS_HEADERS"] = "Content-Type"
 
+    def add_dataframe_from_collector(
+        trending_words_dataframes: List[DataFrame],
+        dataframe_to_add: pd.DataFrame,
+    ):
+        trending_words_dataframes.append(dataframe_to_add)
+
+    @app.errorhandler(werkzeug.exceptions.TooManyRequests)
+    def handle_too_many_requests(error):
+        description = """
+            Could not fetch Trends data due to too many requests to Google.
+            Wait some time, then try refreshing the page.
+        """
+        return description, 429
+
+    def authenticate_request(request):
+        if os.getenv("USER_AUTH") != request.args.get("user_auth"):
+            abort(401, "User not logged in")
+
     @app.route("/api/v1/trends", methods=["GET"])
     def getTrendingWords():
+        authenticate_request(request)
+
         # 'frequency_growth' or 'search_count'. Used to show the most searched words or the fastest growing words.
         search_term = request.args.get(
             "search_term", ""
@@ -29,8 +50,7 @@ def create_app():
         # the 'type' argument is a function that compares the GET argument value with the literal string "true"
         # and sets the value of 'filter' variable correspondingly.
         # This allows all specifications of "true" and "false" to be evaluated correctly, e.g. "TRUE" is also accepted as a value
-        filter = request.args.get(
-            "filter", False, type=lambda a: a.lower() == "true")
+        filter = request.args.get("filter", False, type=lambda a: a.lower() == "true")
 
         # retrive timeframe arg
         timeframe = request.args.get("timeframe", "")
@@ -47,14 +67,15 @@ def create_app():
             google_response,
         )
 
-        main_data_frame = pd.concat(
-            trending_words_dataframes).reset_index(drop=True)
+        main_data_frame = pd.concat(trending_words_dataframes).reset_index(drop=True)
 
         return main_data_frame.to_json(orient="records", force_ascii=False)
 
     @app.route("/api/v1/interest_over_time/", methods=["GET"])
     def getInterestOverTime():
         """Returns the interest values and corresponding dates of 'search_term"""
+        authenticate_request(request)
+
         search_term = request.args.get(
             "search_term", ""
         )  # search term to search for. If empty, the default search term is used.
@@ -67,6 +88,8 @@ def create_app():
     @app.route("/api/v1/related_hashtags")
     def getRelatedHashtags():
         """Returns a list of most popular hashtags co-appearing with the query"""
+        authenticate_request(request)
+
         instaCollector = InstagramDataCollector(
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
         )
@@ -76,13 +99,14 @@ def create_app():
             # Returns http error to frontend
             abort(422, "Missing query parameter query")
         query = args.get("query", default="", type=str)
-        filteredOutWords = args.get(
-            "filteredOutWords", default="[+]", type=str)
+        filteredOutWords = args.get("filteredOutWords", default="[+]", type=str)
         return instaCollector.get_related_hashtags(query, filteredOutWords)
 
     @app.route("/api/v1/related_post_URLS")
     def getRelatedPostURLS():
         """Returns a list of URLS (string) to posts with the hashtag: 'query'"""
+        authenticate_request(request)
+
         instaCollector = InstagramDataCollector(
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
         )
@@ -99,6 +123,8 @@ def create_app():
     @app.route("/api/v1/users_post_urls")
     def getUsersPostURLS():
         """Returns a list of URLS (string) to posts from 'followedUsers'"""
+        authenticate_request(request)
+
         try:
             instaCollector = InstagramDataCollector(
                 os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
@@ -118,6 +144,8 @@ def create_app():
     @app.route("/api/v1/business_user")
     def getBusinessUser():
         """Method is used to check if 'ig_user' exists. Returns an error object if it does not"""
+        authenticate_request(request)
+
         instaCollector = InstagramDataCollector(
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
         )
@@ -131,6 +159,8 @@ def create_app():
     @app.route("/api/v1/hashtag_id")
     def getHashtagId():
         """Returns the id of the 'hashtag', if hashtag does not exist it returns an error object"""
+        authenticate_request(request)
+
         instaCollector = InstagramDataCollector(
             os.getenv("ACCESS_TOKEN"), os.getenv("USER_ID")
         )

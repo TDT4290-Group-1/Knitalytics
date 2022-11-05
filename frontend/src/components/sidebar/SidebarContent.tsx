@@ -7,7 +7,7 @@ import {
 	BoxProps,
 } from "@chakra-ui/react";
 import { IconType } from "react-icons";
-import { BiGroup, BiSortZA, BiHash } from "react-icons/bi";
+import { BiGroup, BiSortZA, BiHash, BiLock } from "react-icons/bi";
 import {
 	FiSettings, FiLink
 } from "react-icons/fi";
@@ -30,6 +30,7 @@ const LinkItems: Array<LinkItemProps> = [
 	{ name: "Hashtags", icon: BiHash, path: "/Hashtags" },
 	{ name: "Links", icon: FiLink, path: "/FashionBrands" },
 	{ name: "Settings", icon: FiSettings, path: "/settings" },
+	{ name: "Login", icon: BiLock, path: "/login" },
 ];
   
 export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {

@@ -6,7 +6,6 @@
   "dependencies": {
     "@chakra-ui/icons": "^2.0.10",
     "@chakra-ui/react": "^2.3.2",
-    "@dhaiwat10/react-link-preview": "^1.14.2",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@fontsource/nunito": "^4.5.10",

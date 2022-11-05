@@ -7,12 +7,14 @@ import InstagramUsersPage from "pages/instagramUsers";
 import SettingsPage from "pages/settings";
 import HashtagsPage from "pages/hashtags/HashtagsPage";
 import FashionBrandsPage from "pages/fashionBrands/FashionBrandsPage";
+import LoginPage from "pages/login";
 
 const Router = () => {
 	return (
 		<Routes>
 			<Route path="/" element={<HomePage />} />
 			<Route path="/settings" element={<SettingsPage />} />
+			<Route path="/login" element={<LoginPage />} />
 			<Route path="*" element={<NotFound />} />
 			<Route path="/GoogleDetails" element={<GoogleDetailsPage/>}/>
 			<Route path="/InstagramPosts" element={<InstagramUsersPage/>}/>
