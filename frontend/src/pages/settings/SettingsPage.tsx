@@ -3,13 +3,15 @@ import SettingsBox from "components/settings/SettingsBox";
 import theme from "theme";
 import API from "../../services/apiService";
 
-const Settings = () => {
+const SettingsPage = () => {
+
+	// checks whether the hashtag exsists. Alerts the user if not
 	const validateHashtag = async (hashtag: string): Promise<boolean> => {
 		try {
 			const res = await API.getHashtagId(hashtag);
 			const errorMessage = res.error?.error_user_msg;
 			if (errorMessage) {
-				//Enters if statement if errormessage is "falsy"
+				//Enters if statement if error message is "falsy"
 				alert(errorMessage);
 			}			
 			return !errorMessage;
@@ -18,6 +20,8 @@ const Settings = () => {
 		}
 		return false;
 	};
+
+	// checks whether the user exsists. Alerts the user if not
 	const validateUsername = async (userName: string): Promise<boolean> => {
 		try {
 			const res = await API.getBusinessUser(userName);
@@ -32,6 +36,8 @@ const Settings = () => {
 		}
 		return false;
 	};
+
+	// TODO: checks the validity of a filter word
 	const validateFilterWord = async (_filterWord: string): Promise<boolean> => {
 		//No validation, any input is valid
 		return true;
@@ -81,4 +87,4 @@ const Settings = () => {
 	);
 };
 
-export default Settings;
+export default SettingsPage;

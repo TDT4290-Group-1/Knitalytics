@@ -119,8 +119,7 @@ class TestInstagramProcesser:
         ]
 
     def test_remove_foreign_languages(self):
-        roman_hashtags = self.insta_pro._remove_foreign_languages(
-            self.all_hashtags)
+        roman_hashtags = self.insta_pro._remove_foreign_languages(self.all_hashtags)
         manual_roman_hashtags = [
             "hei",
             "likethis",
@@ -137,8 +136,7 @@ class TestInstagramProcesser:
         assert roman_hashtags == manual_roman_hashtags
 
     def test_sort_popular_hashtags(self):
-        popular_hashtags = self.insta_pro._sort_popular_hashtags(
-            self.all_hashtags)
+        popular_hashtags = self.insta_pro._sort_popular_hashtags(self.all_hashtags)
         print(popular_hashtags)
         manual_popular_hashtags = [
             "hei",

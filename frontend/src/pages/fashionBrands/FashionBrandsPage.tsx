@@ -6,8 +6,10 @@ import {useState, useEffect} from "react";
 
 const FashionBrandsPage = () => {
 
+	// stores all links which are already saved in local storage
 	const [links, setLinks] = useState(() => JSON.parse(localStorage.getItem("links") as string) || []);
 
+	// stores all links to local storage
 	useEffect(() => {
 		localStorage.setItem("links", JSON.stringify(links));
 	}, [links]);

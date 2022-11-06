@@ -22,7 +22,7 @@ const HomePage = () => {
 	// check whether trending words have been retrieved
 	if (typeof trendingWords === "undefined") {
 		// fetch the words
-		API.getAllTrendingWords("", filter, timeframe).then((trendingWords) => {
+		API.getTrendingWords("", filter, timeframe).then((trendingWords) => {
 			setTrendingWords(trendingWords as TrendingWord[]);
 		}).catch((error) => {
 			setTrendingWords([]); // set to something defined so we avoid infinite API calls

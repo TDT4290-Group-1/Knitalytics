@@ -4,7 +4,7 @@ import HomePage from "pages/home";
 import NotFound from "pages/error";
 import GoogleDetailsPage from "pages/googleDetails/GoogleDetailsPage";
 import InstagramUsersPage from "pages/instagramUsers";
-import Settings from "pages/settings";
+import SettingsPage from "pages/settings";
 import HashtagsPage from "pages/hashtags/HashtagsPage";
 import FashionBrandsPage from "pages/fashionBrands/FashionBrandsPage";
 
@@ -12,7 +12,7 @@ const Router = () => {
 	return (
 		<Routes>
 			<Route path="/" element={<HomePage />} />
-			<Route path="/settings" element={<Settings />} />
+			<Route path="/settings" element={<SettingsPage />} />
 			<Route path="*" element={<NotFound />} />
 			<Route path="/GoogleDetails" element={<GoogleDetailsPage/>}/>
 			<Route path="/InstagramPosts" element={<InstagramUsersPage/>}/>

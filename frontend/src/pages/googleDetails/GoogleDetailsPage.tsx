@@ -20,21 +20,27 @@ const GoogleDetailsPage = () => {
 	const navigate = useNavigate();
 	const {trendingWord} = useContext(SelectedWordContext);
 
+	// stores all trending hashtags under the 'trendingWord'
 	const [trendingHashtags, setTrendingHashtags] = useState<string[]>();
+
+	// stores all trending posts under the 'trendingWord'
 	const [popularPostUrls, setPopularPostUrls] = useState<string[]>();
+
+	// stores all searches related  to the 'trendingWord
 	const [relatedSearches, setRelatedSearches] = useState<string[]>();
 
 
 
+	// fetches all trending hashtags, trending post urls and related searches to the 'trendingWord'
 	useEffect(() => {
-		trendingWord && API.getAllRelatedHashtags(trendingWord.word).then((trendingHashtags) => {
+		trendingWord && API.getRelatedHashtags(trendingWord.word).then((trendingHashtags) => {
 			setTrendingHashtags(trendingHashtags);
 		}).catch(error => {
 			console.error("Failed to fetch hashtags: %o", error);
 		});
 
 		const tmp: string[] = [];
-		trendingWord && API.getAllTrendingWords(trendingWord.word, false, "").then((trendingWords) => {
+		trendingWord && API.getTrendingWords(trendingWord.word, false, "").then((trendingWords) => {
 			trendingWords.map(trend => tmp.push(trend.word));
 			setRelatedSearches(tmp.slice(0, 10));
 		}).catch(error => {
@@ -42,13 +48,14 @@ const GoogleDetailsPage = () => {
 		});
 
 
-		trendingWord && API.getAllRelatedPostURLS(trendingWord.word).then((popularPost)=>{
+		trendingWord && API.getRelatedPostURLS(trendingWord.word).then((popularPost)=>{
 			setPopularPostUrls(popularPost);
 		}).catch(error => {
 			console.error("Failed to fetch instagram posts: %o", error);
 		});
 	},[]);
 
+	// redirects the user to Google to search for the 'trendingWord'
 	function openInGoogle(){
 		const url = "https://google.com/search?q=" + trendingWord.word;
 

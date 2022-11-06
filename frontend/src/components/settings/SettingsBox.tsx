@@ -32,7 +32,7 @@ const SettingsBox = ({title, storagePath, validateInput, tooltip} : SettingsBoxP
 			const tempList = [...listFromStorage];
 			tempList.push(input);
 			setListFromStorage(tempList);
-			setItemLocalStorage(tempList.toString(), storagePath);
+			setItemLocalStorage(storagePath, tempList.toString());
 		}
 		setInput("");
 	};
@@ -42,7 +42,7 @@ const SettingsBox = ({title, storagePath, validateInput, tooltip} : SettingsBoxP
 		const index = tempList.indexOf(itemName);
 		tempList.splice(index, 1);
 		setListFromStorage(tempList);
-		setItemLocalStorage(tempList.toString(), storagePath);
+		setItemLocalStorage(storagePath, tempList.toString());
 	};
 
 

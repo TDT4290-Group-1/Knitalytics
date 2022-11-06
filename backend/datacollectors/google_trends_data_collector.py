@@ -106,10 +106,21 @@ class GoogleTrendsDataCollector:
             drop=False
         )  # reset the index to get the "word" column again
 
-    # Method used to process the raw data of trending words. Returns a list of TrendingWord objects from the given data frames.
     def __process_trending_word_data__(
         self, data_frame: pd.DataFrame, filter: bool = False
     ) -> pd.DataFrame:
+
+        """
+        Method used to process and filter the raw data of trending words.
+        Args:
+            data_frame: pd.DataFrame
+                The raw data of trending words
+            filter: bool,
+                Whether to filter the data or not
+        Returns:
+            pandas.DataFrame
+        """
+
         processed_data = data_frame.copy()
 
         if filter:
@@ -132,10 +143,22 @@ class GoogleTrendsDataCollector:
 
         return processed_data
 
-    # Method used by the endpoint to get the trending words. Returns a list of TrendingWord objects.
     def get_trending_words(
         self, search_term: str, timeframe: str, filter: bool
     ) -> pd.DataFrame:
+
+        """
+        Method used by the endpoint to get the trending words.
+         Args:
+             search_term: str,
+                 The search term to get related queries for
+             timeframe: str,
+                 The timeframe to get related queries for
+             filter: bool,
+                 Whether to filter the data or not
+         Returns:
+             pandas.DataFrame
+        """
         try:
             word_data = self.__collect_trending_word_data__(
                 search_term=search_term, timeframe=timeframe
@@ -149,10 +172,22 @@ class GoogleTrendsDataCollector:
             else:
                 raise error
 
-    # Method used to get the interest over time for a given keyword. Returns a dataframe of the interest over time in relative numbers.
     def get_interest_over_time(
         self, search_term, timeframe="last_twelve_months", geo="NO"
     ) -> pd.DataFrame:
+        """
+        Method used to get the interest over time for a given keyword.
+         Args:
+             search_term: str,
+                 The search term to get related queries for
+             timeframe: str, default 'last_twelve_months'
+                 The timeframe to get related queries for
+             geo: str, default 'NO'
+                 The geographical region to get related queries for
+         Returns:
+             pandas.DataFrame
+                 Of the interest over time in relative numbers.
+        """
         self._set_parameters(search_term, timeframe, geo)
         kw_list = [self.search_term]
         self.pytrends_client.build_payload(
