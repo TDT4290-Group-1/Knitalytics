@@ -74,7 +74,7 @@ class API {
 	 * @returns a JSON list with the URLS of the posts of the 'followedUsers'
 	 */
 	async getUsersPostURLS(followedUsers: string[], sort: string, postAmount: string):Promise<string[]> {
-		const response = await client.get("/api/v1/users_post_url", { params: {
+		const response = await client.get("/api/v1/users_post_urls", { params: {
 			user_auth: this.user_auth, followedUsers: JSON.stringify(followedUsers), sort, postAmount
 		}});
 		//filteredOutWords format: "word, word1, word2". String with comma between each word
