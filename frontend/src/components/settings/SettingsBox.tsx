@@ -20,7 +20,7 @@ const SettingsBox = ({title, storagePath, validateInput, tooltip} : SettingsBoxP
 	const [input, setInput] = useState("");
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => setInput(event.target.value);
 	const [listFromStorage, setListFromStorage] = useState(
-		getListLocalStorage(storagePath, "knit, strik, insta")
+		getListLocalStorage(storagePath)
 			.split(",")
 			.filter(element => element));
 
