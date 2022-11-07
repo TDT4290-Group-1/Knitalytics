@@ -1,7 +1,6 @@
 from flask import abort
 from typing import List
 from flask import Flask, request
-import werkzeug.exceptions
 from datacollectors.google_trends_data_collector import GoogleTrendsDataCollector
 from datacollectors.instagram_data_collector import InstagramDataCollector
 from flask_cors import CORS
