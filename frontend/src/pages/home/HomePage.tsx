@@ -25,16 +25,11 @@ const HomePage = () => {
 
 	// if no timeframe found in session storage
 	if (typeof initTimeframe === "undefined") {
-		initTimeframe = "last_three_months";
+		initTimeframe = "last_week";
 	} 
 
 	// timeframe to retrieve statistics for
 	const [timeframe, setTimeframe] = useState<string>(initTimeframe);
-
-	console.log(`Timeframe: ${timeframe}`);
-	console.log(`Filter: ${filter}`);
-
-	console.log(`Get trending words: ${typeof trendingWords === "undefined"}`);
 
 	// check whether trending words have been retrieved
 	if (typeof trendingWords === "undefined") {

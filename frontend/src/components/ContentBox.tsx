@@ -28,14 +28,12 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, filter, setFilte
 		"last_twelve_months": "Last year"
 	};
 
-	console.log(`Filter: ${filter}`);
-
 	const {setTrendingWord} = useContext(SelectedWordContext);
 
 	const navigate = useNavigate();
 
 	// are we displaying frequency growth? If not, we are displaying search count
-	const [displayFrequencyGrowth, setDisplayFrequencyGrowth] = useState(false);
+	const [displayFrequencyGrowth, setDisplayFrequencyGrowth] = useState(true);
 
 	function nav(word: TrendingWord){
 		setTrendingWord(word);
