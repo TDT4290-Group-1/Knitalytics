@@ -10,13 +10,14 @@ import ToolTip from "./ToolTip";
 interface Props {
     items: TrendingWord[] | undefined;
 	setTrendingWords: (trendingWords: TrendingWord[] | undefined) => void;
+	filter: boolean;
 	setFilter: (error: boolean) => void;
 	timeframe: string;
 	setTimeframe: (timeframe: string) => void;
 }
 
 
-const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter, timeframe, setTimeframe }: Props) => {
+const ContentBox: React.FC<Props> = ({ items, setTrendingWords, filter, setFilter, timeframe, setTimeframe }: Props) => {
 
 	// conversion from timeframe string to formatted labels to display in dropdown menu
 	const TIMEFRAME_LABELS = {
@@ -32,7 +33,7 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter, timef
 	const navigate = useNavigate();
 
 	// are we displaying frequency growth? If not, we are displaying search count
-	const [displayFrequencyGrowth, setDisplayFrequencyGrowth] = useState(false);
+	const [displayFrequencyGrowth, setDisplayFrequencyGrowth] = useState(true);
 
 	function nav(word: TrendingWord){
 		setTrendingWord(word);
@@ -42,11 +43,13 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter, timef
 	function onCheckboxChanged(checked: boolean) {
 		setTrendingWords(undefined);
 		setFilter(checked);
+		sessionStorage.wordFilter = checked;
 	}
 
 	function timeFrameClicked(timeframe: string) {
 		setTrendingWords(undefined); // we have to retrieve words again
 		setTimeframe(timeframe); // set the new timeframe
+		sessionStorage.wordTimeframe = timeframe;
 	}
 
 	function sortWords(word1: TrendingWord, word2: TrendingWord) {
@@ -83,6 +86,7 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, setFilter, timef
 										border="black" 
 										size="sm"
 										margin="2%"
+										isChecked={filter}
 										onChange={(e) => onCheckboxChanged(e.target.checked)}
 									>
 										Filter

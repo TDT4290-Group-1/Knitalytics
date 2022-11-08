@@ -7,18 +7,30 @@ import { useState } from "react";
 
 const HomePage = () => {
 
-	// words to dispaly
+	let initFilter: boolean = sessionStorage?.wordFilter === "true";
+	let initTimeframe: string = sessionStorage?.wordTimeframe;
+
+	// words to display
 	const [trendingWords, setTrendingWords] = useState<TrendingWord[] | undefined>(undefined); // use undefined as check whether loaded or not
 
 	// whether error occurred
-	const [trendingWordsError, setTrendingWordsError] = useState(undefined);
+	const [trendingWordsError, setTrendingWordsError] = useState<string | undefined>(undefined);
 
 	// whether to remove commonly occurring 
-	const [filter, setFilter] = useState(false);
+	if (typeof initFilter === "undefined") {
+		initFilter = false;
+	}
+
+	const [filter, setFilter] = useState<boolean>(initFilter);
+
+	// if no timeframe found in session storage
+	if (typeof initTimeframe === "undefined") {
+		initTimeframe = "last_week";
+	} 
 
 	// timeframe to retrieve statistics for
-	const [timeframe, setTimeframe] = useState("last_three_months");
-	
+	const [timeframe, setTimeframe] = useState<string>(initTimeframe);
+
 	// check whether trending words have been retrieved
 	if (typeof trendingWords === "undefined") {
 		// fetch the words
@@ -68,6 +80,7 @@ const HomePage = () => {
 				<ContentBox
 					items={trendingWords}
 					setTrendingWords={setTrendingWords}
+					filter={filter}
 					setFilter={setFilter}
 					timeframe={timeframe}
 					setTimeframe={setTimeframe}

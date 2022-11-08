@@ -58,7 +58,6 @@ Will generate html file that shows the test coverage
 
 ## Fix Formatting
 
-
 ```bash
 $ black ./ --check
 ```
