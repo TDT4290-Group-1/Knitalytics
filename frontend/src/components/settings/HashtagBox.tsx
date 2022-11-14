@@ -15,6 +15,7 @@ const HashtagBox = ({ name, deleteCallback }: HashtagBoxProps) => {
 			variant='solid'
 			colorScheme="teal"
 			m={1}
+			data-testid="hashtag-box"
 
 		>
 			<TagLabel>{name}</TagLabel>

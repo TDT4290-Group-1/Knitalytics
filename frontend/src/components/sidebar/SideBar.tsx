@@ -13,7 +13,7 @@ import { MobileNav } from "./MobileNav";
 export default function SimpleSidebar({ children }: { children: ReactNode }) {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	return (
-		<Box minH="100vh" bg={useColorModeValue("white", "gray.900")}>
+		<Box id="side-bar" minH="100vh" bg={useColorModeValue("white", "gray.900")}>
 			<SidebarContent
 				onClose={() => onClose}
 				display={{ base: "none", md: "block" }}

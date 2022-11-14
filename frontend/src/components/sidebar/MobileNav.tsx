@@ -27,7 +27,7 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 			<IconButton
 				variant="outline"
 				onClick={onOpen}
-				aria-label="open menu"
+				aria-label="open-menu"
 				icon={<FiMenu color="white" />}
 			/>
   

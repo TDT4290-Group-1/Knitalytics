@@ -3,8 +3,3 @@ export interface TrendingWord {
     frequency_growth?: number;
     search_count?: number;
   }
-
-export interface GraphData{
-  date: number;
-  relative_search_value: number;
-}

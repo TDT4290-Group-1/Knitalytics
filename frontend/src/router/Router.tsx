@@ -8,6 +8,8 @@ import SettingsPage from "pages/settings";
 import HashtagsPage from "pages/hashtags/HashtagsPage";
 import FashionBrandsPage from "pages/fashionBrands/FashionBrandsPage";
 
+
+
 const Router = () => {
 	return (
 		<Routes>

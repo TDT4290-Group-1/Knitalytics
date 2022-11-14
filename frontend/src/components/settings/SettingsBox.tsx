@@ -74,7 +74,7 @@ const SettingsBox = ({title, storagePath, validateInput, tooltip} : SettingsBoxP
 				/>
 				<IconButton variant='ghost'
 					onClick={handleButtonPress}
-					icon={<AiOutlineSend width="50px" color={theme.colors.hovergreen}/>} aria-label={"Add"}
+					icon={<AiOutlineSend width="50px" color={theme.colors.hovergreen}/>} aria-label={"add-button"}
 				/>
 			</HStack>
 		</VStack>
