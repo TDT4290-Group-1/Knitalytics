@@ -13,7 +13,7 @@ import { useContext, useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import theme from "../theme";
 import  API  from "services/apiService";
-import { GraphData } from "../models/trendingword";
+import { GraphData } from "../models/graphdata";
 import {nb} from "date-fns/locale";
 import { SelectedWordContext } from "context/selectedWordContext";
 

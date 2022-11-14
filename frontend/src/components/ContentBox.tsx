@@ -70,19 +70,20 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, filter, setFilte
 		}
 	}
 
-	console.log(Object.entries(TIMEFRAME_LABELS));
-
 	return (
-		<Center >
+		<Center>
 			<TableContainer minHeight={"40vh"} maxHeight={"60vh"} overflowY={"scroll"} minWidth={"65%"} borderRadius={"lg"}>
-				<Table variant='simple' color={theme.colors.forest} size={"md"} background={theme.colors.palehovergreen}>
+				<Table id="content-table" variant='simple' color={theme.colors.forest} size={"md"} background={theme.colors.palehovergreen}>
 					<Thead position="sticky" top={0} bgColor={theme.colors.lighthovergreen}>
 						<Tr borderBottom="2px" color={theme.colors.forest} borderRadius={"lg"} justifyContent="space-between">
 							<Th  fontSize="sm">Word</Th> 
 							<Th fontSize="sm" isNumeric margin="2%" width="100%">
 								<Flex alignItems={"center"} justifyContent="flex-end">
-									<ToolTip tooltip="Filter out all results that is also among top results the past twelve months"/>
-									<Checkbox colorScheme='red' 
+									<ToolTip
+										tooltip="Filter out all results that is also among top results the past twelve months"/>
+									<Checkbox 
+										aria-label="filter-checkbox"
+										colorScheme='red' 
 										border="black" 
 										size="sm"
 										margin="2%"
@@ -144,7 +145,7 @@ const ContentBox: React.FC<Props> = ({ items, setTrendingWords, filter, setFilte
 									} else {
 										return;
 									}
-								}):<Tr><Td>Loading...</Td></Tr>
+								}):<Tr ><Td>Loading...</Td></Tr>
 						}
 					</Tbody>
 				</Table>

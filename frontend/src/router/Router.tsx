@@ -9,6 +9,8 @@ import HashtagsPage from "pages/hashtags/HashtagsPage";
 import FashionBrandsPage from "pages/fashionBrands/FashionBrandsPage";
 import LoginPage from "pages/login";
 
+
+
 const Router = () => {
 	return (
 		<Routes>

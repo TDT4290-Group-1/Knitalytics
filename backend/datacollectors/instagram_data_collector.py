@@ -33,6 +33,7 @@ class InstagramDataCollector:
                     :amount
                 ]
             # this will be an error message
+            print(posts)
             return posts
         # this will be an error message
         return id

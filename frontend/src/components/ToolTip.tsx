@@ -6,14 +6,21 @@ interface TooltipProps{
 }
 
 const ToolTip = ({ tooltip } : TooltipProps) => {
-	return (<Tooltip label={tooltip}
-		openDelay={500}
-		color={"forest"}
-		bg={"lighthovergreen"}
-		border={"1px solid teal"}
-		borderRadius={"lg"}
-		placement='auto'>
-		<InfoOutlineIcon color={"forest"}/>					
-	</Tooltip>);
+	return (
+		<div
+			data-testid="tool-tip"
+		>
+			<Tooltip label={tooltip}
+				openDelay={500}
+	
+				color={"forest"}
+				bg={"lighthovergreen"}
+				border={"1px solid teal"}
+				borderRadius={"lg"}
+				placement='auto'>
+				<InfoOutlineIcon color={"forest"}/>					
+			</Tooltip>
+		</div>
+	);
 };
 export default ToolTip;

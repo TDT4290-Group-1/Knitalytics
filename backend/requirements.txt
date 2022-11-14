@@ -8,6 +8,7 @@ flake8
 
 # testing
 pytest 
+coverage
 
 # backend server
 flask 
@@ -24,3 +25,4 @@ requests
 # Jupyter notebooks
 jupyter 
 jupytext 
+

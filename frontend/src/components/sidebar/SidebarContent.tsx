@@ -35,7 +35,7 @@ const LinkItems: Array<LinkItemProps> = [
   
 export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 	return (
-		<Box
+		<Box id="sidebar-content"
 			bg={useColorModeValue("forest", "gray.900")}
 			borderRight="1px"
 			borderRightColor={useColorModeValue("gray.200", "gray.700")}
@@ -43,7 +43,7 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 			pos="fixed"
 			h="full"
 			{...rest}>
-			<Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
+			<Flex id = "burger-menu" h="20" alignItems="center" mx="8" justifyContent="space-between">
 				<Text fontSize="2xl" fontWeight="bold" color={"white"}>
             Knitalytics
 				</Text>

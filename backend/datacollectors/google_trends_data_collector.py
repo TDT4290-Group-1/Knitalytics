@@ -188,18 +188,27 @@ class GoogleTrendsDataCollector:
              pandas.DataFrame
                  Of the interest over time in relative numbers.
         """
-        self._set_parameters(search_term, timeframe, geo)
-        kw_list = [self.search_term]
-        self.pytrends_client.build_payload(
-            kw_list, geo=self.geo, timeframe=self.timeframe
-        )
-        response_dateframe = self.pytrends_client.interest_over_time()
-        date_frame = response_dateframe
-        date_frame["date"] = response_dateframe.index
-        date_frame = response_dateframe.reset_index(drop=True)
-        date_frame = date_frame[["date", self.search_term]]
-        date_frame = date_frame.rename(
-            columns={self.search_term: "relative_search_value"}
-        )
-
-        return date_frame
+        try:
+            self._set_parameters(search_term, timeframe, geo)
+            kw_list = [self.search_term]
+            self.pytrends_client.build_payload(
+                kw_list, geo=self.geo, timeframe=self.timeframe
+            )
+            response_dataframe = self.pytrends_client.interest_over_time()
+            data_frame = response_dataframe
+            data_frame["date"] = response_dataframe.index
+            data_frame = response_dataframe.reset_index(drop=True)
+            data_frame = data_frame[["date", self.search_term]]
+            data_frame = data_frame.rename(
+                columns={self.search_term: "relative_search_value"}
+            )
+            print(data_frame)
+            return data_frame
+        except pytrends.exceptions.ResponseError as error:
+            if (
+                error.response.status_code == 429
+            ):  # if the response code is 429, we raise a Werkzeug HTTPError
+                raise werkzeug.exceptions.TooManyRequests from error
+            else:
+                raise error
+        

@@ -47,6 +47,11 @@ firebase-debug.log*
 firebase-debug.*.log*
 
 
+# Test files
+__snapshots__/
+coverage/
+
+
 ###BACKEND
 !**/backend/**
 .DS_Store
