@@ -5,6 +5,7 @@ from datacollectors.google_trends_data_collector import GoogleTrendsDataCollecto
 from datacollectors.instagram_data_collector import InstagramDataCollector
 from flask_cors import CORS
 import json
+import werkzeug
 import pandas as pd
 from pandas import DataFrame
 import os
