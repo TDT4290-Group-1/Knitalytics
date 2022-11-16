@@ -16,7 +16,7 @@ load_dotenv()
 def create_app():
 
     app = Flask(__name__)
-    CORS(app)
+    CORS(app, resources={r"/api/*": {"origins": "https://knitalytics.web.app/"}})
     app.config["CORS_HEADERS"] = "Content-Type"
 
     def add_dataframe_from_collector(
